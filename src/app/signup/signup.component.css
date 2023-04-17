@@ -1,0 +1,53 @@
+.container {
+  background-image: linear-gradient(180deg, rgb(202, 230, 255), white);
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.usertypebtn {
+  border-radius: 8px;
+  background-color: #1C94FF;
+  border-color: #1C94FF;
+  color: white;
+}
+
+.usertypebtn:hover {
+  background-color: white;
+  color: #1C94FF;
+}
+
+
+.signupbtn {
+  padding: 10px;
+  margin:20px 0px;
+  width: auto;
+  border-radius: 8px;
+  background-color: #1C94FF;
+  border-color: #1C94FF;
+  color: white;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.signupbtn:hover {
+  background-color: white;
+  color: #1C94FF;
+}
+
+.form-select {
+  margin: 20px 0px;
+  padding:10px;
+  color: #1C94FF;
+  font-weight: 700;
+  /* background-color: transparent; */
+}
+
+input {
+  margin: 20px 0px;
+  padding:10px;
+  color: #1C94FF;
+  font-weight: 700;
+  /* background-color: transparent; */
+}
+
+
