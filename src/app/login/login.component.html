@@ -1,4 +1,4 @@
-<div class="container">
+<!-- <div class="container-fluid">
   <div class="row">
 
     <div class="img-div col-lg-5">
@@ -31,7 +31,7 @@
       </form>
     </div>
   </div>
-</div>
+</div> -->
 
 
 
@@ -126,3 +126,47 @@ Previous code
 </div>
 
  -->
+
+
+
+  <div class="container-fluid">
+    <div class="title-box p-3">Log in to start</div>
+    <div class="main-content">
+
+    <div class="login-container">
+      <div class="row">
+
+        <div class="img-div col-lg-5">
+          <img src="../../assets/img/writer.svg" alt="" class="img-fluid" style="padding: 10px">
+        </div>
+        <div class="form-div col-lg-7 text-center" style="margin:auto ">
+          <img src="../../assets/img/LekhanWithTagline.svg" alt="logo" class="logo img-fluid" >
+
+          <form [formGroup]="loginForm" (ngSubmit)="onLogin(loginForm)">
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName="usermail" placeholder="Enter registered mail" [ngClass]="{'is-invalid':loginSubmitted && loginForm.controls.usermail.errors}" type="email" class="form-control">
+              <div *ngIf="loginSubmitted && loginForm.controls.usermail.errors" class="text-danger">
+                <div *ngIf="loginSubmitted && loginForm.controls.usermail.errors.required">usermail can't be empty</div>
+                <div *ngIf="loginSubmitted && loginForm.controls.usermail.errors.email">email not valid</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName="userpass" placeholder="Enter password" [ngClass]="{'is-invalid':loginSubmitted && loginForm.controls.userpass.errors}" type="password" class="form-control">
+              <div *ngIf="loginSubmitted && loginForm.controls.userpass.errors" class="text-danger">
+                <div *ngIf="loginSubmitted && loginForm.controls.userpass.errors.required">password is required</div>
+                <div *ngIf="loginSubmitted && loginForm.controls.userpass.errors.minLength">password should be at least 3 charachers</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <button class="loginbtn" id="loginbtn" type="submit"><strong>Login to the application</strong></button>
+              <p style="margin-bottom: 30px;"><strong>Don't have an account? </strong><a href="#" style="color: #1C94FF;" routerLink="/Signup"><strong>Sign up</strong></a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

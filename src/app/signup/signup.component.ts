@@ -49,7 +49,6 @@ export class SignupComponent {
       return;
     }
     this.cmsData.addUser(userDetails);
-    this.router.navigate(['Login'])
   }
 
   checkPasswords(form:FormGroup){

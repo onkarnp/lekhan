@@ -1,67 +1,71 @@
-<div class="container">
-  <div class="row">
-    <div class="img-div col-lg-5">
-      <img src="../../assets/img/writer.svg" alt="" class="img-fluid" style="padding: 10px">
-    </div>
-    <div class="form-div col-lg-7 text-center" style="margin:auto ">
-      <img src="../../assets/img/LekhanWithTagline.svg" alt="logo" class="logo img-fluid" >
-
-
-      <form [formGroup]="signupForm" (ngSubmit)="onSignup(signupForm)">
-        <div class="form-group col-lg-7" style="margin:auto">
-          <input formControlName=username placeholder="Enter username" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.username.errors}" type="text" class="form-control">
-          <div *ngIf="signupSubmitted && signupForm.controls.username.errors" class="text-danger">
-            <div *ngIf="signupSubmitted && signupForm.controls.username.errors.required">username can't be empty</div>
-          </div>
+<div class="container-fluid">
+  <div class="title-box p-3">Register as a user</div>
+  <div class="main-content">
+    <div class="signup-container">
+      <div class="row">
+        <div class="img-div col-lg-5">
+          <img src="../../assets/img/writer.svg" alt="" class="img-fluid" style="padding: 10px">
         </div>
+        <div class="form-div col-lg-7 text-center" style="margin:auto ">
+          <img src="../../assets/img/LekhanWithTagline.svg" alt="logo" class="logo img-fluid" >
 
-        <div class="form-group col-lg-7" style="margin:auto">
-          <select class="form-select" formControlName="usertypeid" aria-placeholder="Select usertype">
-            <option disabled hidden value="" style="color: #1C94FF; font-weight: 700;">Select usertype</option>
-            <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" style="color: #1C94FF; font-weight: 700;">{{items.type}}</option>
-            <!-- <option disabled selected hidden style="color: #1C94FF; font-weight: 700;">Select usertype</option> -->
-            <!-- <option value="1" style="color: #1C94FF; font-weight: 700;">Usertype: Author</option> -->
 
-            <!-- <option value="2" style="color: #1C94FF; font-weight: 700;">Usertype: QualityAnalyst</option> -->
-            <!-- <option value="3" style="color: #1C94FF; font-weight: 700;">Usertype: ControlRoom</option> -->
-          </select>
-          <div *ngIf="signupSubmitted && signupForm.controls.usertypeid.errors" class="text-danger">
-            <div *ngIf="signupSubmitted && signupForm.controls.usertypeid.errors.required">usertype not selected</div>
-          </div>
+          <form [formGroup]="signupForm" (ngSubmit)="onSignup(signupForm)">
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName=username placeholder="Enter username" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.username.errors}" type="text" class="form-control">
+              <div *ngIf="signupSubmitted && signupForm.controls.username.errors" class="text-danger">
+                <div *ngIf="signupSubmitted && signupForm.controls.username.errors.required">username can't be empty</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <select class="form-select" formControlName="usertypeid" aria-placeholder="Select usertype">
+                <option disabled hidden value="" style="color: #1C94FF; font-weight: 700;">Select usertype</option>
+                <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" style="color: #1C94FF; font-weight: 700;">{{items.type}}</option>
+                <!-- <option disabled selected hidden style="color: #1C94FF; font-weight: 700;">Select usertype</option> -->
+                <!-- <option value="1" style="color: #1C94FF; font-weight: 700;">Usertype: Author</option> -->
+
+                <!-- <option value="2" style="color: #1C94FF; font-weight: 700;">Usertype: QualityAnalyst</option> -->
+                <!-- <option value="3" style="color: #1C94FF; font-weight: 700;">Usertype: ControlRoom</option> -->
+              </select>
+              <div *ngIf="signupSubmitted && signupForm.controls.usertypeid.errors" class="text-danger">
+                <div *ngIf="signupSubmitted && signupForm.controls.usertypeid.errors.required">usertype not selected</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName="usermail" placeholder="Enter registration mail" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.usermail.errors}" type="email" class="form-control">
+              <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors" class="text-danger">
+                <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors.required">usermail can't be empty</div>
+                <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors.email">email not valid</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName="userpass" placeholder="Enter password" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.userpass.errors}" (input)="checkPasswords(signupForm)" type="password" class="form-control">
+              <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors" class="text-danger">
+                <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors.required">password is required</div>
+                <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors.minLength">password should be at least 3 charachers</div>
+              </div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <input formControlName="userpass1" placeholder="Confirm Password" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.userpass1.errors}" (input)="checkPasswords(signupForm)" type="password" class="form-control">
+              <div *ngIf="signupSubmitted && signupForm.controls.userpass1.errors" class="text-danger">
+                <div *ngIf="signupSubmitted && signupForm.controls.userpass1.errors.required">Password confirmation is required</div>
+                <!-- <div *ngIf="isValid('userpass1')"><p style="color:red;">Passwords do not match coming from method</p></div> -->
+              </div>
+              <div *ngIf=!passwordsMatch><p style="color:red;">Passwords do not match</p></div>
+            </div>
+
+            <div class="form-group col-lg-7" style="margin:auto">
+              <button class="signupbtn" id="signupbtn" type="submit"><strong>Sign up as a new user</strong></button>
+              <p style="margin-bottom: 30px;"><strong>Already have an account? </strong><a style="color: #1C94FF;" routerLink="/Login"><strong>Login</strong></a></p>
+            </div>
+          </form>
+
         </div>
-
-        <div class="form-group col-lg-7" style="margin:auto">
-          <input formControlName="usermail" placeholder="Enter registration mail" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.usermail.errors}" type="email" class="form-control">
-          <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors" class="text-danger">
-            <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors.required">usermail can't be empty</div>
-            <div *ngIf="signupSubmitted && signupForm.controls.usermail.errors.email">email not valid</div>
-          </div>
-        </div>
-
-        <div class="form-group col-lg-7" style="margin:auto">
-          <input formControlName="userpass" placeholder="Enter password" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.userpass.errors}" (input)="checkPasswords(signupForm)" type="password" class="form-control">
-          <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors" class="text-danger">
-            <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors.required">password is required</div>
-            <div *ngIf="signupSubmitted && signupForm.controls.userpass.errors.minLength">password should be at least 3 charachers</div>
-          </div>
-        </div>
-
-        <div class="form-group col-lg-7" style="margin:auto">
-          <input formControlName="userpass1" placeholder="Confirm Password" [ngClass]="{'is-invalid':signupSubmitted && signupForm.controls.userpass1.errors}" (input)="checkPasswords(signupForm)" type="password" class="form-control">
-          <div *ngIf="signupSubmitted && signupForm.controls.userpass1.errors" class="text-danger">
-            <div *ngIf="signupSubmitted && signupForm.controls.userpass1.errors.required">Password confirmation is required</div>
-          </div>
-          <div *ngIf=!passwordsMatch><p style="color:red;">Passwords do not match</p></div>
-        </div>
-
-        <div class="form-group col-lg-7" style="margin:auto">
-          <button class="signupbtn" id="signupbtn" type="submit"><strong>Sign up as a new user</strong></button>
-          <p style="margin-bottom: 30px;"><strong>Already have an account? </strong><a style="color: #1C94FF;" routerLink="/Login"><strong>Login</strong></a></p>
-        </div>
-      </form>
-
+      </div>
     </div>
   </div>
 </div>
-
-

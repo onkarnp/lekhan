@@ -48,8 +48,8 @@ export class LoginComponent {
     if(this.loginForm.invalid){
       return;
     }
-    this.cmsData.checkUserByMailPassword(loginCredentials);
-    this.router.navigate(['Home'])
+    this.cmsData.loginByMailPassword(loginCredentials);
+    
 
   }
 }

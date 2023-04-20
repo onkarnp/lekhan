@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class CmsServiceService {
   url = "http://localhost:3000/api/v1/cms"
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private router:Router) { }
   //To get usertypes available
   getUsertypes(){
     return this.http.get(this.url + '/usertypes');
@@ -21,6 +21,7 @@ export class CmsServiceService {
     console.log(userDetails);
     this.http.post(this.url + '/users', userDetails).subscribe((results)=> {
       console.log(results);
+      this.router.navigate(['/login']);
       alert(results);
     }, (error) => {
       console.log(error);
@@ -28,14 +29,15 @@ export class CmsServiceService {
     });
   }
 
-  checkUserByMailPassword(data:any){
-    this.http.post(this.url + "/users/login", data).subscribe((results)=> {
+  loginByMailPassword(data:any){
+    this.http.post(this.url + "/login", data).subscribe((results)=> {
+      this.router.navigate(['/home'])
       console.log(results);
       alert(results);
 
-    }, (error) => {
-      console.log(error);
-      alert(error.message);
+    }, (myerror) => {
+      console.log(myerror);
+      alert(myerror.error);
     })
   }
 

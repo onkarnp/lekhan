@@ -1,52 +1,9 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-
-
-<nav class="navbar navbar-expand-sm navbar-light bg-light">
-  <div class="container">
-    <h2><strong><a routerLink="Home" class="navbar-brand">Lekhan.</a></strong></h2>
-    <button class="navbar-toggler" data-toggle="collapse" data-target="#mynav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="mynav">
-      <ul class="navbar-nav ml-auto text-center">
-        <li class="nav-item "> <a routerlink="Home" class="nav-link active">Create</a> </li>
-        <li class="nav-item "> <a routerlink="Home" class="nav-link">Create</a> </li>
-        <li class="nav-item "> <a routerlink="Home" class="nav-link">About</a> </li>
-        <li class="nav-item "> <a routerlink="Home" class="nav-link">Contact</a> </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
-
-<div class="nav-container">
-  <ul>
-    <li><a routerLink="Home">home</a></li>
-    <li><a [routerLink]="['About']">about</a></li>
-    <li><a routerLink="Contact">contact</a></li>
-    <li><a routerLink="Signup">signup</a></li>
-    <li><a routerLink="Login">login</a></li>
-  </ul>
-</div>
-<div class="component-container">
-  <router-outlet></router-outlet>
-</div>
-
-<!-- <app-login></app-login> -->
-<!-- <app-signup></app-signup> -->
-
-
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced. * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<mat-drawer-container>
+  <mat-drawer mode="side" [opened]="sideBarOpen">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-header (toggleSidebarForMe)="sideBarToggler()"></app-header>
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

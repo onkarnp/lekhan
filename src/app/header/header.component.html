@@ -1,0 +1,26 @@
+<mat-toolbar>
+  <mat-toolbar-row class="justify-content-between">
+    <button mat-icon-button (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
+    <div>
+      <!-- <ul>
+        <li> -->
+          <button mat-button [matMenuTriggerFor]="menu" class="user d-flex align-items-center">
+            <mat-icon>account_circle</mat-icon>
+            Username
+          </button>
+          <mat-menu #menu="matMenu" class="make-items-center" style="margin:auto">
+
+            <button mat-menu-item>
+              <mat-icon >account_circle</mat-icon>
+              Update profile
+            </button>
+            <button mat-menu-item>
+              <mat-icon >exit_to_app</mat-icon>
+              Logout
+            </button>
+          </mat-menu>
+        <!-- </li>
+      </ul> -->
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
