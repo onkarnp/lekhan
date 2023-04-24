@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { HomepageComponent } from './homepage/homepage.component'
-import { ErrorComponent } from './error/error.component';
-import { SignupComponent } from './signup/signup.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HeaderComponent } from './header/header.component';
-import { SidenavComponent } from './sidenav/sidenav.component';
-import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component'
+import { ToastrModule } from 'ngx-toastr'
+
+//Componenets
+import { AppComponent } from './app.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomepageComponent } from './components/homepage/homepage.component'
+import { ErrorComponent } from './components/error/error.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SidenavComponent } from './components/sidenav/sidenav.component';
+import { HomeComponent } from './components/home/home.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component'
 
 //Material components module
 import { MatButtonModule } from '@angular/material/button';
@@ -23,6 +26,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
+import { CreateComponent } from './components/create/create.component';
+import { TemplateComponent } from './components/template/template.component';
 
 
 @NgModule({
@@ -35,7 +41,9 @@ import { MatCardModule } from '@angular/material/card';
     HeaderComponent,
     SidenavComponent,
     HomeComponent,
-    DashboardComponent
+    DashboardComponent,
+    CreateComponent,
+    TemplateComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +52,12 @@ import { MatCardModule } from '@angular/material/card';
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 2000,
+      progressBar: true,
+      progressAnimation: 'increasing',
+      preventDuplicates: true
+    }),
 
     //material imports
     MatButtonModule,
@@ -53,7 +67,8 @@ import { MatCardModule } from '@angular/material/card';
     MatIconModule,
     MatDividerModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -12,6 +12,6 @@ export class ErrorComponent {
 
   constructor(private router:Router){ }
   takeMeHome(){
-    this.router.navigate(['Home'])
+    this.router.navigate(['home'])
   }
 }

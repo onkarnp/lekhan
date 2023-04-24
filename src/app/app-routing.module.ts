@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomepageComponent } from './homepage/homepage.component'
-import { ErrorComponent } from './error/error.component';
-import { SignupComponent } from './signup/signup.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { HomepageComponent } from './components/homepage/homepage.component'
+import { ErrorComponent } from './components/error/error.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CreateComponent } from './components/create/create.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'contact', component:HomepageComponent},
   {path: 'signup', component:SignupComponent},
   {path: 'login', component:LoginComponent},
+  {path: 'create', component:CreateComponent},
   //The error route must be last route
   {path: '**', component:ErrorComponent}
 ];

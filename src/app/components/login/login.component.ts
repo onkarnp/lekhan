@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CmsServiceService } from '../service/cms-service.service';
-import User from '../model/user';
+import { UserService } from '../../service/user.service';
+import User from '../../model/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,7 +19,7 @@ export class LoginComponent {
   usertypes: any;
   errorMessage: string = "";
 
-  constructor(private formBuilder:FormBuilder, private cmsData:CmsServiceService ,private http:HttpClient, private router:Router){}
+  constructor(private formBuilder:FormBuilder, private userService:UserService ,private http:HttpClient, private router:Router){}
 
   ngOnInit(){
     //validations
@@ -30,7 +30,7 @@ export class LoginComponent {
     })
 
     //To get all usertyes
-    this.cmsData.getUsertypes().subscribe((results) => {
+    this.userService.getUsertypes().subscribe((results) => {
       console.log("results", results);
       this.usertypes = results;
       console.log(this.usertypes);
@@ -48,8 +48,8 @@ export class LoginComponent {
     if(this.loginForm.invalid){
       return;
     }
-    this.cmsData.loginByMailPassword(loginCredentials);
-    
+    this.userService.login(loginCredentials);
+
 
   }
 }

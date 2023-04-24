@@ -1,9 +1,36 @@
-<div class="client-sidenav">
-  <div class="logo">
-    <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
-  </div>
-  <mat-divider></mat-divider>
+<div class="logo">
+  <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
+</div>
+<mat-divider></mat-divider>
 
+<!-- <mat-form-field appearance="fill">
+    <mat-label>Usertype</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let items of usertypes" [value]="items.usertypeid">
+      </mat-option>
+    </mat-select>
+  </mat-form-field> -->
+
+
+<form>
+  <select class="form-select" formControlName="usertypeid" formControlName="usertypeid" aria-placeholder="Usertype">
+    <option disabled hidden value="" style="color: white">Select menu</option>
+    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" ><strong>{{items.type}} menu</strong></option>
+  </select>
+</form>
+
+<div class="select">
+  <select class="form-select" formControlName="usertypeid" aria-placeholder="Usertype">
+    <option disabled hidden value="" style="color: white">Select menu
+      <span class="material-icons-outlined" style="color:white">
+      expand_more
+      </span>
+    </option>
+    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" ><strong>{{items.type}} menu</strong></option>
+  </select>
+</div>
+
+<div class="client-sidenav">
   <mat-nav-list>
 
     <p class=" subheader mt-2">Applications</p>
@@ -63,7 +90,7 @@
     </mat-list-item>
 
     <mat-list-item>
-      <a routerLink="/error" routerLinkActive="list-item-active">
+      <a routerLink="/create" routerLinkActive="list-item-active">
         <mat-icon>edit</mat-icon> Write content
       </a>
     </mat-list-item>

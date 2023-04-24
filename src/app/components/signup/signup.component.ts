@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ValidatorFn, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { CmsServiceService } from '../service/cms-service.service';
-import User from '../model/user';
+import { UserService } from '../../service/user.service';
+import User from '../../model/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -18,7 +18,7 @@ export class SignupComponent {
   errorMessage: string = "";
   passwordsMatch:boolean = true;
 
-  constructor(private formBuilder:FormBuilder, private cmsData:CmsServiceService ,private http:HttpClient, private router:Router){}
+  constructor(private formBuilder:FormBuilder, private userService:UserService ,private http:HttpClient, private router:Router){}
 
   ngOnInit(){
     //validations
@@ -32,7 +32,7 @@ export class SignupComponent {
 
 
     //To get all usertyes
-    this.cmsData.getUsertypes().subscribe((results) => {
+    this.userService.getUsertypes().subscribe((results) => {
       console.log("results", results);
       this.usertypes = results;
       console.log(this.usertypes);
@@ -48,7 +48,7 @@ export class SignupComponent {
     if(this.signupForm.invalid || (!this.passwordsMatch)){
       return;
     }
-    this.cmsData.addUser(userDetails);
+    this.userService.signUp(userDetails);
   }
 
   checkPasswords(form:FormGroup){
