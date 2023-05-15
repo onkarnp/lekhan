@@ -34,22 +34,19 @@ export class LoginComponent {
       console.log("results", results);
       this.usertypes = results;
       console.log(this.usertypes);
-
+    }, (error) => {
+      console.log(error);
     })
   }
 
 
   onLogin(form: FormGroup){
     this.loginSubmitted=true;
-
     const loginCredentials = {usermail: form.value.usermail, userpass: form.value.userpass};
     // console.log(loginCredentials);
-
     if(this.loginForm.invalid){
       return;
     }
     this.userService.login(loginCredentials);
-
-
   }
 }

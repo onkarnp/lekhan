@@ -1,163 +1,38 @@
-<!-- <div class="container-fluid page">
-  <div class="page__box p-3">Home</div>
-  <div class="page__content shadow p-3 position-relative">
-    <div class="page__content-data position-absolute text-center">
+<div class="container-fluid">
+  <div class="title-box p-4">Homepage</div>
+  <div class="main-content" *ngIf="publishedArticles">
+    <div *ngFor="let article of publishedArticles">
 
 
-      <mat-card class="example-card">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>Shiba Inu</mat-card-title>
-          <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+      <mat-card class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+        <mat-card-header style="margin:5px">
+          <mat-card-title style=""><strong>{{article.title}}</strong></mat-card-title>
+          <!-- <mat-card-subtitle>Author name</mat-card-subtitle> -->
         </mat-card-header>
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+        <img mat-card-image class="img-fluid" src="{{article.image}}">
         <mat-card-content>
-          <p>
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-          </p>
+          <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars" (click)="this.maxChars = this.article.description.length;">Read more</span></a></p>
+          <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.author}}</i></mat-card-subtitle>
+
+          <mat-card-subtitle>{{article.crcheckeddate}}</mat-card-subtitle>
         </mat-card-content>
-        <mat-card-actions>
+        <!-- <mat-card-actions>
           <button mat-button>LIKE</button>
           <button mat-button>SHARE</button>
-        </mat-card-actions>
+        </mat-card-actions> -->
       </mat-card>
+
 
 
     </div>
   </div>
-</div> -->
-
-
-<div class="container-fluid">
-  <div class="title-box p-3">Homepage</div>
-  <div class="main-content">
-
-
-    <mat-card class="content-card">
-      <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Title for content 1</mat-card-title>
-        <!-- <mat-card-subtitle>Author-</mat-card-subtitle> -->
-      </mat-card-header>
-      <img mat-card-image class="img-fluid" src="https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-
-aliqua. Ultrices dui sapien eget mi. Aliquam ultrices sagittis orci a. Amet justo donec enim diam. Blandit libero volutpat sed cras ornare arcu. Diam maecenas ultricies mi eget. Facilisis magna etiam tempor orci. Habitant morbi tristique senectus et. Quis vel eros donec ac odio tempor orci. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Lectus arcu bibendum at varius vel pharetra. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet.
-
-Sodales ut etiam sit amet. Euismod nisi porta lorem mollis. Ornare arcu odio ut sem nulla pharetra. Sapien et ligula ullamcorper malesuada proin libero nunc. Malesuada pellentesque elit eget gravida cum sociis natoque. Neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac. Faucibus nisl tincidunt eget nullam non nisi est sit. Nulla at volutpat diam ut venenatis tellus in metus. Rhoncus mattis rhoncus urna neque viverra justo. In nibh mauris cursus mattis molestie a iaculis at. Egestas sed tempus urna et pharetra pharetra massa massa ultricies. Aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat. Egestas erat imperdiet sed euismod nisi porta. Euismod elementum nisi quis eleifend quam. Quis hendrerit dolor magna eget. Phasellus egestas tellus rutrum tellus pellentesque. Neque viverra justo nec ultrices. Quis commodo odio aenean sed adipiscing diam donec adipiscing.
-
-Pharetra convallis posuere morbi leo. Pretium lectus quam id leo in vitae turpis. Enim eu turpis egestas pretium aenean. Urna nec tincidunt praesent semper feugiat nibh sed pulvinar. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Vulputate ut pharetra sit amet aliquam id. Vitae suscipit tellus mauris a diam. Est velit egestas dui id ornare. Sit amet mauris commodo quis imperdiet massa. At tempor commodo ullamcorper a lacus vestibulum. Pharetra convallis posuere morbi leo urna. A cras semper auctor neque vitae tempus quam. Mattis pellentesque id nibh tortor id aliquet lectus proin nibh.
-
-Vestibulum morbi blandit cursus risus at ultrices mi tempus. Id donec ultrices tincidunt arcu non. Erat nam at lectus urna. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Pellentesque nec nam aliquam sem et tortor consequat id porta. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam. Est sit amet facilisis magna etiam tempor orci eu. Sit amet nulla facilisi morbi. Enim praesent elementum facilisis leo vel fringilla. Aliquet eget sit amet tellus cras adipiscing. Pellentesque adipiscing commodo elit at. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Morbi non arcu risus quis. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Eget duis at tellus at urna condimentum mattis. Dui vivamus arcu felis bibendum ut tristique et egestas quis. Risus commodo viverra maecenas accumsan lacus vel facilisis. Consectetur adipiscing elit ut aliquam. Convallis posuere morbi leo urna molestie at elementum eu. Viverra mauris in aliquam sem fringilla ut morbi.
-
-Ut venenatis tellus in metus vulputate eu scelerisque felis. Sit amet cursus sit amet dictum sit amet justo. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Ut lectus arcu bibendum at varius vel. Adipiscing enim eu turpis egestas pretium. Lorem sed risus ultricies tristique. Nec feugiat nisl pretium fusce id velit. In fermentum posuere urna nec tincidunt praesent semper. Ultrices in iaculis nunc sed augue lacus. Enim nunc faucibus a pellentesque sit amet porttitor eget. Proin sed libero enim sed faucibus. Eu turpis egestas pretium aenean. Varius sit amet mattis vulputate enim nulla aliquet porttitor lacus.
-        </p>
-        <mat-card-subtitle>Author-</mat-card-subtitle>
-        <h3><p><strong>Onkar Panchare</strong></p></h3>
-      </mat-card-content>
-
-      <!-- <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
-    </mat-card>
-
-
-    <mat-card class="content-card mat-elevation-z8">
-      <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Title for content 1</mat-card-title>
-        <!-- <mat-card-subtitle>Author name</mat-card-subtitle> -->
-      </mat-card-header>
-      <img mat-card-image class="img-fluid" src="https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-
-aliqua. Ultrices dui sapien eget mi. Aliquam ultrices sagittis orci a. Amet justo donec enim diam. Blandit libero volutpat sed cras ornare arcu. Diam maecenas ultricies mi eget. Facilisis magna etiam tempor orci. Habitant morbi tristique senectus et. Quis vel eros donec ac odio tempor orci. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Lectus arcu bibendum at varius vel pharetra. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet.
-
-Sodales ut etiam sit amet. Euismod nisi porta lorem mollis. Ornare arcu odio ut sem nulla pharetra. Sapien et ligula ullamcorper malesuada proin libero nunc. Malesuada pellentesque elit eget gravida cum sociis natoque. Neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac. Faucibus nisl tincidunt eget nullam non nisi est sit. Nulla at volutpat diam ut venenatis tellus in metus. Rhoncus mattis rhoncus urna neque viverra justo. In nibh mauris cursus mattis molestie a iaculis at. Egestas sed tempus urna et pharetra pharetra massa massa ultricies. Aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat. Egestas erat imperdiet sed euismod nisi porta. Euismod elementum nisi quis eleifend quam. Quis hendrerit dolor magna eget. Phasellus egestas tellus rutrum tellus pellentesque. Neque viverra justo nec ultrices. Quis commodo odio aenean sed adipiscing diam donec adipiscing.
-
-Pharetra convallis posuere morbi leo. Pretium lectus quam id leo in vitae turpis. Enim eu turpis egestas pretium aenean. Urna nec tincidunt praesent semper feugiat nibh sed pulvinar. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Vulputate ut pharetra sit amet aliquam id. Vitae suscipit tellus mauris a diam. Est velit egestas dui id ornare. Sit amet mauris commodo quis imperdiet massa. At tempor commodo ullamcorper a lacus vestibulum. Pharetra convallis posuere morbi leo urna. A cras semper auctor neque vitae tempus quam. Mattis pellentesque id nibh tortor id aliquet lectus proin nibh.
-
-Vestibulum morbi blandit cursus risus at ultrices mi tempus. Id donec ultrices tincidunt arcu non. Erat nam at lectus urna. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Pellentesque nec nam aliquam sem et tortor consequat id porta. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam. Est sit amet facilisis magna etiam tempor orci eu. Sit amet nulla facilisi morbi. Enim praesent elementum facilisis leo vel fringilla. Aliquet eget sit amet tellus cras adipiscing. Pellentesque adipiscing commodo elit at. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Morbi non arcu risus quis. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Eget duis at tellus at urna condimentum mattis. Dui vivamus arcu felis bibendum ut tristique et egestas quis. Risus commodo viverra maecenas accumsan lacus vel facilisis. Consectetur adipiscing elit ut aliquam. Convallis posuere morbi leo urna molestie at elementum eu. Viverra mauris in aliquam sem fringilla ut morbi.
-
-Ut venenatis tellus in metus vulputate eu scelerisque felis. Sit amet cursus sit amet dictum sit amet justo. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Ut lectus arcu bibendum at varius vel. Adipiscing enim eu turpis egestas pretium. Lorem sed risus ultricies tristique. Nec feugiat nisl pretium fusce id velit. In fermentum posuere urna nec tincidunt praesent semper. Ultrices in iaculis nunc sed augue lacus. Enim nunc faucibus a pellentesque sit amet porttitor eget. Proin sed libero enim sed faucibus. Eu turpis egestas pretium aenean. Varius sit amet mattis vulputate enim nulla aliquet porttitor lacus.
-        </p>
-        <mat-card-subtitle>Author-</mat-card-subtitle>
-        <h3><p><strong>Onkar Panchare</strong></p></h3>
-      </mat-card-content>
-      <!-- <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
-    </mat-card>
-
-
-
-    <mat-card class="content-card mat-elevation-z8">
-      <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Title for content 1</mat-card-title>
-        <!-- <mat-card-subtitle>Author name</mat-card-subtitle> -->
-      </mat-card-header>
-      <img mat-card-image class="img-fluid" src="https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-
-aliqua. Ultrices dui sapien eget mi. Aliquam ultrices sagittis orci a. Amet justo donec enim diam. Blandit libero volutpat sed cras ornare arcu. Diam maecenas ultricies mi eget. Facilisis magna etiam tempor orci. Habitant morbi tristique senectus et. Quis vel eros donec ac odio tempor orci. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Lectus arcu bibendum at varius vel pharetra. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet.
-
-Sodales ut etiam sit amet. Euismod nisi porta lorem mollis. Ornare arcu odio ut sem nulla pharetra. Sapien et ligula ullamcorper malesuada proin libero nunc. Malesuada pellentesque elit eget gravida cum sociis natoque. Neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac. Faucibus nisl tincidunt eget nullam non nisi est sit. Nulla at volutpat diam ut venenatis tellus in metus. Rhoncus mattis rhoncus urna neque viverra justo. In nibh mauris cursus mattis molestie a iaculis at. Egestas sed tempus urna et pharetra pharetra massa massa ultricies. Aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat. Egestas erat imperdiet sed euismod nisi porta. Euismod elementum nisi quis eleifend quam. Quis hendrerit dolor magna eget. Phasellus egestas tellus rutrum tellus pellentesque. Neque viverra justo nec ultrices. Quis commodo odio aenean sed adipiscing diam donec adipiscing.
-
-Pharetra convallis posuere morbi leo. Pretium lectus quam id leo in vitae turpis. Enim eu turpis egestas pretium aenean. Urna nec tincidunt praesent semper feugiat nibh sed pulvinar. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Vulputate ut pharetra sit amet aliquam id. Vitae suscipit tellus mauris a diam. Est velit egestas dui id ornare. Sit amet mauris commodo quis imperdiet massa. At tempor commodo ullamcorper a lacus vestibulum. Pharetra convallis posuere morbi leo urna. A cras semper auctor neque vitae tempus quam. Mattis pellentesque id nibh tortor id aliquet lectus proin nibh.
-
-Vestibulum morbi blandit cursus risus at ultrices mi tempus. Id donec ultrices tincidunt arcu non. Erat nam at lectus urna. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Pellentesque nec nam aliquam sem et tortor consequat id porta. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam. Est sit amet facilisis magna etiam tempor orci eu. Sit amet nulla facilisi morbi. Enim praesent elementum facilisis leo vel fringilla. Aliquet eget sit amet tellus cras adipiscing. Pellentesque adipiscing commodo elit at. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Morbi non arcu risus quis. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Eget duis at tellus at urna condimentum mattis. Dui vivamus arcu felis bibendum ut tristique et egestas quis. Risus commodo viverra maecenas accumsan lacus vel facilisis. Consectetur adipiscing elit ut aliquam. Convallis posuere morbi leo urna molestie at elementum eu. Viverra mauris in aliquam sem fringilla ut morbi.
-
-Ut venenatis tellus in metus vulputate eu scelerisque felis. Sit amet cursus sit amet dictum sit amet justo. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Ut lectus arcu bibendum at varius vel. Adipiscing enim eu turpis egestas pretium. Lorem sed risus ultricies tristique. Nec feugiat nisl pretium fusce id velit. In fermentum posuere urna nec tincidunt praesent semper. Ultrices in iaculis nunc sed augue lacus. Enim nunc faucibus a pellentesque sit amet porttitor eget. Proin sed libero enim sed faucibus. Eu turpis egestas pretium aenean. Varius sit amet mattis vulputate enim nulla aliquet porttitor lacus.
-        </p>
-        <mat-card-subtitle>Author-</mat-card-subtitle>
-        <h3><p><strong>Onkar Panchare</strong></p></h3>
-      </mat-card-content>
-      <!-- <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
-    </mat-card>
-
-    <mat-card class="content-card mat-elevation-z8">
-      <mat-card-header>
-        <!-- <div mat-card-avatar class="example-header-image"></div> -->
-        <mat-card-title>Title for content 1</mat-card-title>
-        <!-- <mat-card-subtitle>Author name</mat-card-subtitle> -->
-      </mat-card-header>
-      <img mat-card-image class="img-fluid" src="https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg" alt="Photo of a Shiba Inu">
-      <mat-card-content>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-
-aliqua. Ultrices dui sapien eget mi. Aliquam ultrices sagittis orci a. Amet justo donec enim diam. Blandit libero volutpat sed cras ornare arcu. Diam maecenas ultricies mi eget. Facilisis magna etiam tempor orci. Habitant morbi tristique senectus et. Quis vel eros donec ac odio tempor orci. Tortor aliquam nulla facilisi cras fermentum odio eu feugiat. Lectus arcu bibendum at varius vel pharetra. Ullamcorper malesuada proin libero nunc consequat interdum varius sit amet.
-
-Sodales ut etiam sit amet. Euismod nisi porta lorem mollis. Ornare arcu odio ut sem nulla pharetra. Sapien et ligula ullamcorper malesuada proin libero nunc. Malesuada pellentesque elit eget gravida cum sociis natoque. Neque gravida in fermentum et sollicitudin ac. Gravida quis blandit turpis cursus in hac. Faucibus nisl tincidunt eget nullam non nisi est sit. Nulla at volutpat diam ut venenatis tellus in metus. Rhoncus mattis rhoncus urna neque viverra justo. In nibh mauris cursus mattis molestie a iaculis at. Egestas sed tempus urna et pharetra pharetra massa massa ultricies. Aenean sed adipiscing diam donec adipiscing tristique risus nec feugiat. Egestas erat imperdiet sed euismod nisi porta. Euismod elementum nisi quis eleifend quam. Quis hendrerit dolor magna eget. Phasellus egestas tellus rutrum tellus pellentesque. Neque viverra justo nec ultrices. Quis commodo odio aenean sed adipiscing diam donec adipiscing.
-
-Pharetra convallis posuere morbi leo. Pretium lectus quam id leo in vitae turpis. Enim eu turpis egestas pretium aenean. Urna nec tincidunt praesent semper feugiat nibh sed pulvinar. Pretium vulputate sapien nec sagittis aliquam malesuada bibendum arcu. Vulputate ut pharetra sit amet aliquam id. Vitae suscipit tellus mauris a diam. Est velit egestas dui id ornare. Sit amet mauris commodo quis imperdiet massa. At tempor commodo ullamcorper a lacus vestibulum. Pharetra convallis posuere morbi leo urna. A cras semper auctor neque vitae tempus quam. Mattis pellentesque id nibh tortor id aliquet lectus proin nibh.
-
-Vestibulum morbi blandit cursus risus at ultrices mi tempus. Id donec ultrices tincidunt arcu non. Erat nam at lectus urna. Nunc pulvinar sapien et ligula ullamcorper malesuada proin. Pellentesque nec nam aliquam sem et tortor consequat id porta. Metus aliquam eleifend mi in nulla posuere sollicitudin aliquam. Est sit amet facilisis magna etiam tempor orci eu. Sit amet nulla facilisi morbi. Enim praesent elementum facilisis leo vel fringilla. Aliquet eget sit amet tellus cras adipiscing. Pellentesque adipiscing commodo elit at. Suspendisse interdum consectetur libero id faucibus nisl tincidunt eget nullam. Morbi non arcu risus quis. Praesent semper feugiat nibh sed pulvinar proin gravida hendrerit. Eget duis at tellus at urna condimentum mattis. Dui vivamus arcu felis bibendum ut tristique et egestas quis. Risus commodo viverra maecenas accumsan lacus vel facilisis. Consectetur adipiscing elit ut aliquam. Convallis posuere morbi leo urna molestie at elementum eu. Viverra mauris in aliquam sem fringilla ut morbi.
-
-Ut venenatis tellus in metus vulputate eu scelerisque felis. Sit amet cursus sit amet dictum sit amet justo. Viverra accumsan in nisl nisi scelerisque eu ultrices vitae. Ut lectus arcu bibendum at varius vel. Adipiscing enim eu turpis egestas pretium. Lorem sed risus ultricies tristique. Nec feugiat nisl pretium fusce id velit. In fermentum posuere urna nec tincidunt praesent semper. Ultrices in iaculis nunc sed augue lacus. Enim nunc faucibus a pellentesque sit amet porttitor eget. Proin sed libero enim sed faucibus. Eu turpis egestas pretium aenean. Varius sit amet mattis vulputate enim nulla aliquet porttitor lacus.
-        </p>
-        <mat-card-subtitle>Author-</mat-card-subtitle>
-        <h3><p><strong>Onkar Panchare</strong></p></h3>
-      </mat-card-content>
-      <!-- <mat-card-actions>
-        <button mat-button>LIKE</button>
-        <button mat-button>SHARE</button>
-      </mat-card-actions> -->
-    </mat-card>
-
+  <div *ngIf="!publishedArticles">
+    <app-notfound></app-notfound>
   </div>
 </div>
+
+<script>
+  function showFullParagraph(){
+    this.maxChars = this.article.description.length;
+  }
+</script>

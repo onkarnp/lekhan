@@ -16,6 +16,10 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component'
+import { CreateComponent } from './components/create/create.component';
+import { TemplateComponent } from './components/template/template.component';
+import { NotfoundComponent } from './components/notfound/notfound.component';
+import { CardDetailsComponent } from './components/card-details/card-details.component';
 
 //Material components module
 import { MatButtonModule } from '@angular/material/button';
@@ -27,8 +31,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
-import { CreateComponent } from './components/create/create.component';
-import { TemplateComponent } from './components/template/template.component';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -43,7 +46,9 @@ import { TemplateComponent } from './components/template/template.component';
     HomeComponent,
     DashboardComponent,
     CreateComponent,
-    TemplateComponent
+    TemplateComponent,
+    NotfoundComponent,
+    CardDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,7 +73,8 @@ import { TemplateComponent } from './components/template/template.component';
     MatDividerModule,
     MatListModule,
     MatCardModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

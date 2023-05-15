@@ -14,20 +14,6 @@
   border-color: white;
 }
 
-mat-form-field{
-}
-
-mat-label{
-  color: #818cf8;
-}
-
-mat-option{
-  color: #818cf8;
-}
-mat-select-content{
-   color: #818cf8;
-}
-
 select{
   background: #0f172a;
   color: white;

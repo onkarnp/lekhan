@@ -1,36 +1,16 @@
 <div class="logo">
-  <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
+  <a routerLink="/home">
+    <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
+  </a>
 </div>
 <mat-divider></mat-divider>
 
-<!-- <mat-form-field appearance="fill">
-    <mat-label>Usertype</mat-label>
-    <mat-select>
-      <mat-option *ngFor="let items of usertypes" [value]="items.usertypeid">
-      </mat-option>
-    </mat-select>
-  </mat-form-field> -->
-
-
-<form>
-  <select class="form-select" formControlName="usertypeid" formControlName="usertypeid" aria-placeholder="Usertype">
-    <option disabled hidden value="" style="color: white">Select menu</option>
-    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" ><strong>{{items.type}} menu</strong></option>
+  <select class="form-select" [(ngModel)]="selectedMenu" (change)="toHome()">
+    <option selected disabled hidden [ngValue]="0" style="color: white">Reader menu</option>
+    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" >{{items.type}} menu</option>
   </select>
-</form>
 
-<div class="select">
-  <select class="form-select" formControlName="usertypeid" aria-placeholder="Usertype">
-    <option disabled hidden value="" style="color: white">Select menu
-      <span class="material-icons-outlined" style="color:white">
-      expand_more
-      </span>
-    </option>
-    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" ><strong>{{items.type}} menu</strong></option>
-  </select>
-</div>
-
-<div class="client-sidenav">
+<div class="client-sidenav" *ngIf="selectedMenu === 0">
   <mat-nav-list>
 
     <p class=" subheader mt-2">Applications</p>
@@ -52,7 +32,7 @@
 
     <mat-list-item>
       <a routerLink="/signup" routerLinkActive="list-item-active">
-        <mat-icon>person_add</mat-icon> Signup
+        <mat-icon>how_to_reg</mat-icon> Signup
       </a>
     </mat-list-item>
     <!-- <a mat-list-item routerLink="/Dashboard" routerLinkActive="list-item-active">
@@ -67,11 +47,7 @@
 
 
 
-<div class="author-sidenav">
-  <div class="logo">
-    <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
-  </div>
-  <mat-divider></mat-divider>
+<div class="author-sidenav" *ngIf="selectedMenu === 1">
 
   <mat-nav-list>
 
@@ -118,11 +94,7 @@
 
 
 
-<div class="qa-sidenav">
-  <div class="logo">
-    <img src="../../assets/img/LekhanInWhite.svg" alt="App logo" class="img-fluid">
-  </div>
-  <mat-divider></mat-divider>
+<div class="qa-sidenav" *ngIf="selectedMenu === 2">
 
   <mat-nav-list>
 

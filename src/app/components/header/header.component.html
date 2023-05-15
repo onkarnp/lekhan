@@ -1,15 +1,29 @@
 <mat-toolbar>
   <mat-toolbar-row class="justify-content-between">
-    <button mat-icon-button (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
+    <button mat-icon-button *ngIf="sidebarOpen" (click)="toggleSidebar()"><mat-icon>menu_open</mat-icon></button>
+    <button mat-icon-button *ngIf="!sidebarOpen" (click)="toggleSidebar()"><mat-icon>menu</mat-icon></button>
     <div>
       <!-- <ul>
         <li> -->
-          <button mat-button [matMenuTriggerFor]="menu" class="user d-flex align-items-center">
+          <a routerLink="/login" style="color:black">
+            <button mat-button>
+              <mat-icon>login</mat-icon>
+              Sign in
+            </button>
+          </a>
+
+          <a routerLink="/signup" >
+            <button mat-button color="primary">
+              <mat-icon>how_to_reg</mat-icon>
+              Register
+            </button>
+          </a>
+
+          <button mat-button [matMenuTriggerFor]="menu" color="primary">
             <mat-icon>account_circle</mat-icon>
             Username
           </button>
           <mat-menu #menu="matMenu" class="make-items-center" style="margin:auto">
-
             <button mat-menu-item>
               <mat-icon >account_circle</mat-icon>
               Update profile
