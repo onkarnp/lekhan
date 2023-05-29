@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+// import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 import User from '../model/user'
 import { Router } from '@angular/router';
@@ -21,12 +22,24 @@ export class UserService {
 
   constructor(private http:HttpClient, private router:Router, private toastr: ToastrService) { }
 
+  ngOnInit(): void{
+    // this.checkIfLoggedIn();
+  }
+
   setLoggedIn(value: boolean) {
     this.isLoggedIn.next(value);
   }
 
   setUserDetails(value: any) {
     this.userDetails.next(value);
+  }
+
+  getLoggedIn():boolean{
+    return this.isLoggedIn.getValue();
+  }
+
+  getUserDetails():object{
+    return this.userDetails.getValue();
   }
 
 
@@ -37,9 +50,9 @@ export class UserService {
 
 
   //To add user onto users table
-  signUp(userDetails: User){
+  async signUp(userDetails: User){
     console.log(userDetails);
-    this.http.post(this.url + '/users', userDetails, this.httpOptions).subscribe((results)=> {
+    await this.http.post(this.url + '/users', userDetails, this.httpOptions).subscribe((results)=> {
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
@@ -57,15 +70,24 @@ export class UserService {
   }
 
   //To login to the application
-  login(data:any){
-    this.http.post(this.url + "/login", data, this.httpOptions).subscribe((results)=> {
+  async login(data:any){
+    await this.http.post(this.url + "/login", data, this.httpOptions).subscribe((results)=> {
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
+      // console.log(jsObj);
+
       if(jsObj.success){
-        this.setLoggedIn(true);
-        this.setUserDetails(jsObj.data);
-        this.toastr.success(jsObj.message, 'Success');
-        this.router.navigate(['/home'])
+        this.http.get(this.url + "/user", this.httpOptions).subscribe((results) => {
+          var resultString=JSON.stringify(results);
+          var jsObj = JSON.parse(resultString);
+          // console.log(jsObj);
+          this.setLoggedIn(true);
+          this.setUserDetails(jsObj.data);
+
+          this.toastr.success(jsObj.message, 'Success');
+          this.router.navigate(['/home'])
+        })
+
       }
       else{
         this.setLoggedIn(false);
@@ -82,41 +104,41 @@ export class UserService {
 
   checkCookieExists(cookieName: string): boolean {
     const cookies = document.cookie.split(';');
-
     for (let i = 0; i < cookies.length; i++) {
       const cookie = cookies[i].trim();
-
-      if (cookie.startsWith(cookieName + '=')) {
+      if (cookie.startsWith(cookieName + '='))
         return true;
-      }
     }
     return false;
   }
 
-  checkIfLoggedIn(){
-    if(!this.checkCookieExists('cmscookie'))
-      return;
+  async checkIfLoggedIn(){
+    console.log(this.checkCookieExists('cmscookie'));
     try{
-      this.http.get(this.url + "/user", this.httpOptions).subscribe((results) => {
+      await this.http.get(this.url + "/user", this.httpOptions).subscribe((results) => {
         var resultString=JSON.stringify(results);
         var jsObj = JSON.parse(resultString);
         console.log(jsObj);
         if(jsObj.success){
           this.setLoggedIn(true);
           this.setUserDetails(jsObj.data);
-          return true;
+          return;
           // this.toastr.success(jsObj.message,'Success')
         }
         else{
-          this.setLoggedIn(false);
-          this.setUserDetails(null);
+          this.isLoggedIn.next(false);
+          // this.setLoggedIn(false);
+          this.userDetails.next(null);
+          // this.setUserDetails(null);
           return false;
         }
       }, (err) => {
         console.log(err);
-        this.setLoggedIn(false);
-        this.setUserDetails(null);
-        return false;
+        this.isLoggedIn.next(false);
+        // this.setLoggedIn(false);
+        this.userDetails.next(null);
+        // this.setUserDetails(null);
+        return;
         // this.toastr.info('Please login to the application','Info')
       })
       }
@@ -124,4 +146,17 @@ export class UserService {
       console.log(e);
     }
   }
+
+  logout(){
+    // console.log(document.cookie);
+    // this.cookieService.delete('cmscookie');
+    document.cookie = "cmscookie=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    // console.log(document.cookie);
+    this.isLoggedIn.next(false);
+    // this.setLoggedIn(false);
+    this.userDetails.next(null);
+    // this.setUserDetails(null);
+    this.router.navigate(['/home']);
+  }
+
 }

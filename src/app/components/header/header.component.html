@@ -5,30 +5,30 @@
     <div>
       <!-- <ul>
         <li> -->
-          <a routerLink="/login" style="color:black">
+          <a routerLink="/login" *ngIf="!isLoggedIn" style="color:black">
             <button mat-button>
               <mat-icon>login</mat-icon>
               Sign in
             </button>
           </a>
 
-          <a routerLink="/signup" >
+          <a routerLink="/signup" *ngIf="!isLoggedIn">
             <button mat-button color="primary">
               <mat-icon>how_to_reg</mat-icon>
               Register
             </button>
           </a>
 
-          <button mat-button [matMenuTriggerFor]="menu" color="primary">
+          <button mat-button [matMenuTriggerFor]="menu" *ngIf="isLoggedIn" color="primary">
             <mat-icon>account_circle</mat-icon>
-            Username
+            {{userName}}
           </button>
           <mat-menu #menu="matMenu" class="make-items-center" style="margin:auto">
-            <button mat-menu-item>
+            <button mat-menu-item >
               <mat-icon >account_circle</mat-icon>
               Update profile
             </button>
-            <button mat-menu-item>
+            <button mat-menu-item (click)="logout()">
               <mat-icon >exit_to_app</mat-icon>
               Logout
             </button>

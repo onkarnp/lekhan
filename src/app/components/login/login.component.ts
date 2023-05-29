@@ -31,9 +31,9 @@ export class LoginComponent {
 
     //To get all usertyes
     this.userService.getUsertypes().subscribe((results) => {
-      console.log("results", results);
+      // console.log("results", results);
       this.usertypes = results;
-      console.log(this.usertypes);
+      // console.log(this.usertypes);
     }, (error) => {
       console.log(error);
     })

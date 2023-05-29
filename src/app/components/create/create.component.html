@@ -1,6 +1,36 @@
 <div class="container-fluid">
   <div class="title-box p-4">Write content</div>
   <div class="main-content">
+    <div class="container" style=" height: 100%; width: 100%; margin: 10px;">
+
+      <form action="#" method="post">
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-end;">
+          <button type="button" class="btn btn-success " style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
+          <button type="button" class="btn btn-success " style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon>Publish</button>
+        </div>
+
+        <div style="display: flex; flex-direction: row; width: 100%;">
+          <div style="width: 100%;">
+            <label for="title"></label>
+            <input type="text" id="title" name="title" placeholder="Title" required >
+          </div>
+        </div>
+
+        <label for="image"></label>
+        <div class="image-div m-lg-3 m-md-3 m-sm-3">
+          <input type="file" id="image" name="image" accept="image/*" required style="margin:auto; padding: 50px;">
+        </div>
+
+        <label for="content"></label>
+        <textarea id="content" name="content" rows="10" placeholder="Write your thoughts..." required></textarea>
+
+        <!-- <button type="submit">Submit</button> -->
+      </form>
+
+    </div>
 
   </div>
 </div>
+
+

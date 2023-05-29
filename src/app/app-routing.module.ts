@@ -7,6 +7,8 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CreateComponent } from './components/create/create.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 const routes: Routes = [
@@ -18,7 +20,8 @@ const routes: Routes = [
   {path: 'contact', component:HomepageComponent},
   {path: 'signup', component:SignupComponent},
   {path: 'login', component:LoginComponent},
-  {path: 'create', component:CreateComponent},
+  {path: 'create', component:CreateComponent, canActivate: [AuthGuard], data: {allowedUserTypes: [1,2]}},
+  {path: 'unauthorized', component:UnauthorizedComponent},
   //The error route must be last route
   {path: '**', component:ErrorComponent}
 ];

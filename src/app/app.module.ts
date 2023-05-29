@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr'
+import { CookieService } from 'ngx-cookie-service';
 
 //Componenets
 import { AppComponent } from './app.component';
@@ -32,6 +33,9 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { AuthGuard } from 'src/auth/auth.guard';
+
 
 
 @NgModule({
@@ -49,6 +53,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     TemplateComponent,
     NotfoundComponent,
     CardDetailsComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +81,7 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
     MatSelectModule,
     MatDialogModule
   ],
-  providers: [],
+  providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

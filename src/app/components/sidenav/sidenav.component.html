@@ -7,7 +7,7 @@
 
   <select class="form-select" [(ngModel)]="selectedMenu" (change)="toHome()">
     <option selected disabled hidden [ngValue]="0" style="color: white">Reader menu</option>
-    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" >{{items.type}} menu</option>
+    <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" [hidden]="items.usertypeid!=selectedMenu" >{{items.type}} menu</option>
   </select>
 
 <div class="client-sidenav" *ngIf="selectedMenu === 0">
@@ -22,7 +22,7 @@
     </mat-list-item>
 
     <mat-list-item>
-      <a routerLink="/login" routerLinkActive="list-item-active">
+      <a routerLink="/login" *ngIf="!isLoggedIn" routerLinkActive="list-item-active">
         <mat-icon>login</mat-icon> Login
       </a>
     </mat-list-item>
@@ -31,7 +31,7 @@
     </a> -->
 
     <mat-list-item>
-      <a routerLink="/signup" routerLinkActive="list-item-active">
+      <a routerLink="/signup" *ngIf="!isLoggedIn" routerLinkActive="list-item-active">
         <mat-icon>how_to_reg</mat-icon> Signup
       </a>
     </mat-list-item>

@@ -20,7 +20,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   constructor(private formBuilder:FormBuilder, private userService:UserService ,private http:HttpClient, private router:Router){}
   ngOnInit(): void{
 
-    this.userService.checkIfLoggedIn();
+    // this.userService.checkIfLoggedIn();
     this.isLoggedInSubscription = this.userService.isLoggedIn.subscribe(value => {
       this.isLoggedIn = value;
       console.log(this.isLoggedIn);
@@ -29,6 +29,10 @@ export class SidenavComponent implements OnInit, OnDestroy{
     this.userDetailsSubscription = this.userService.userDetails.subscribe(value => {
       this.userDetails = value;
       console.log(this.userDetails);
+      if(this.isLoggedIn)
+        this.selectedMenu = this.userDetails.usertypeid;
+      else
+        this.selectedMenu = 0;
     });
 
     // this.userService.isLoggedIn.subscribe(value => {
@@ -51,7 +55,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
       console.log(errors);
     });
 
-    this.userService.checkIfLoggedIn();
+    // this.userService.checkIfLoggedIn();
   }
 
 

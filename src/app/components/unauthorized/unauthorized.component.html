@@ -1,0 +1,20 @@
+<div class="container-fluid">
+  <div class="title-box p-4">Unauthorized access</div>
+  <div class="main-content">
+    <div class="container">
+      <div>
+        <h1>401: Unauthorized access!</h1>
+        <p>The page you are looking for cannnot be accessed</p>
+        <button mat-raised-button color="primary" (click)="takeMeHome()">Take me home</button>
+      </div>
+
+      <div *ngIf="!isLoggedIn">
+        <p style="margin:20px;"><strong>OR</strong></p>
+        <p>kindly login if you are not</p>
+        <button mat-raised-button color="primary" (click)="takeToLogin()">Proceed to login</button>
+      </div>
+
+
+    </div>
+  </div>
+</div>
