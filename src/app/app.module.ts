@@ -10,7 +10,6 @@ import { CookieService } from 'ngx-cookie-service';
 //Componenets
 import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
-import { HomepageComponent } from './components/homepage/homepage.component'
 import { ErrorComponent } from './components/error/error.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -42,7 +41,6 @@ import { AuthGuard } from 'src/auth/auth.guard';
   declarations: [
     AppComponent,
     LoginComponent,
-    HomepageComponent,
     ErrorComponent,
     SignupComponent,
     HeaderComponent,
@@ -53,7 +51,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
     TemplateComponent,
     NotfoundComponent,
     CardDetailsComponent,
-    UnauthorizedComponent,
+    UnauthorizedComponent
   ],
   imports: [
     BrowserModule,

@@ -2,34 +2,33 @@
   <div class="title-box p-4">Write content</div>
   <div class="main-content">
     <div class="container" style=" height: 100%; width: 100%; margin: 10px;">
-
-      <form action="#" method="post">
+      <form [formGroup]="contentForm" (ngSubmit)="saveContent()">
 
         <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-          <button type="button" class="btn btn-success " style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
-          <button type="button" class="btn btn-success " style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon>Publish</button>
+          <button type="submit" (click)="saveContent()" class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden">Save</span></button>
+          <button type="button" (click)="publishContent()" class="btn btn-success" (mouseenter)="isPublishButtonHidden = !isPublishButtonHidden" (mouseleave)="isPublishButtonHidden = !isPublishButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon><span *ngIf="!isPublishButtonHidden">Publish</span></button>
         </div>
 
-        <div style="display: flex; flex-direction: row; width: 100%;">
-          <div style="width: 100%;">
-            <label for="title"></label>
-            <input type="text" id="title" name="title" placeholder="Title" required >
+        <label for="title"></label>
+        <input class="form-control" type="text" id="title" formControlName="title" placeholder="Input title here..." required>
+
+        <div class="image-div row">
+          <div class="col-lg-6 col-md-12" style="text-align: center;">
+            <img id="imagePreview" *ngIf="selectedFile" [src]="imageFilePreviewUrl" alt="Can't show preview, check image again">
+            <img id="noImage" *ngIf="!selectedFile" src="../../../assets/img/noImage.png">
+          </div>
+          <div class="col-lg-6 col-md-12" style="text-align: center;">
+            <label for="imageUpload"></label>
+            <input class="form-control" type="file" id="imageUpload" formControlName="imageUpload" (change)="onFileSelected($event)" accept="image/*">
           </div>
         </div>
 
-        <label for="image"></label>
-        <div class="image-div m-lg-3 m-md-3 m-sm-3">
-          <input type="file" id="image" name="image" accept="image/*" required style="margin:auto; padding: 50px;">
-        </div>
+        <label for="description"></label>
+        <textarea class="form-control" id="description" formControlName="description" required (input)="adjustTextAreaHeight()" placeholder="Write your thoughts..."></textarea>
 
-        <label for="content"></label>
-        <textarea id="content" name="content" rows="10" placeholder="Write your thoughts..." required></textarea>
-
-        <!-- <button type="submit">Submit</button> -->
       </form>
 
     </div>
-
   </div>
 </div>
 

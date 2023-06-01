@@ -37,15 +37,22 @@ export class ContentService {
   }
 
 
-  // getPublishedArticles(){
-  //   this.http.get(this.url + "/published").subscribe((results) => {
-  //     var resultString=JSON.stringify(results);
-  //     var jsObj = JSON.parse(resultString);
-  //     return jsObj;
-  //   }, (err)=>{
-  //     console.log(err);
-  //     this.toastr.error(err.error.message, 'Error')
-  //   })
-  // }
+ async saveArticle(data:any){
+  await this.http.post(this.url + '/save', {data} , this.httpOptions).subscribe((results)=>{
+    var resultString=JSON.stringify(results);
+    var jsObj = JSON.parse(resultString);
+    console.log(jsObj);
+    if(jsObj.success){
+      this.toastr.success(jsObj.message, 'Success');
+      this.router.navigate(['/home'])
+    }
+    else{
+      this.toastr.error(jsObj.message, 'Failed')
+    }
+  }, (err) => {
+    console.log(err);
+    this.toastr.error(err.error.message, 'Error')
+  })
+ }
 
 }
