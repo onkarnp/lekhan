@@ -89,7 +89,7 @@ input[type="file"]{
 }
 
 textarea{
-  height: 200px;
+  height: 300px;
   resize: none;
   overflow-y: hidden;
 }
@@ -103,7 +103,7 @@ textarea{
   /* height: 100px; */
   padding: 10px;
   text-decoration: none;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   /* border: none; */
   border-radius: 0;
 }
@@ -123,11 +123,11 @@ form {
   background-color: #fff;
   /* background-image: repeating-linear-gradient(white 0px, white 24px, teal 25px); */
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
   padding: 20px;
   margin: 0 auto;
   max-width: auto;
-  margin-top: 30px;
+  /* margin-top: 30px; */
 }
 
 

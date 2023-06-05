@@ -1,25 +1,26 @@
 <div class="container-fluid">
   <div class="title-box p-4">Write content</div>
   <div class="main-content">
-    <div class="container" style=" height: 100%; width: 100%; margin: 10px;">
+    <div class="container m-lg-4" style=" height: 100%; width: 100%; margin: 10px;">
       <form [formGroup]="contentForm" (ngSubmit)="saveContent()">
 
         <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-          <button type="submit" (click)="saveContent()" class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden">Save</span></button>
+          <button type="submit" (click)="saveContent()"  class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden"></span>Save</button>
           <button type="button" (click)="publishContent()" class="btn btn-success" (mouseenter)="isPublishButtonHidden = !isPublishButtonHidden" (mouseleave)="isPublishButtonHidden = !isPublishButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon><span *ngIf="!isPublishButtonHidden">Publish</span></button>
         </div>
 
         <label for="title"></label>
-        <input class="form-control" type="text" id="title" formControlName="title" placeholder="Input title here..." required>
+        <input class="form-control" type="text" formControlName="title" id="title" placeholder="Input title here..." required>
 
-        <div class="image-div row">
-          <div class="col-lg-6 col-md-12" style="text-align: center;">
-            <img id="imagePreview" *ngIf="selectedFile" [src]="imageFilePreviewUrl" alt="Can't show preview, check image again">
+
+        <div class="image-div row p-5">
+          <div class="col-lg-6 col-md-12" [hidden]="!selectedFile" style="display: flex; justify-content: center; text-align: center;">
+            <img id="imagePreview" *ngIf="selectedFile" [src]="filePreviewUrl" alt="Can't show preview, check image again">
             <img id="noImage" *ngIf="!selectedFile" src="../../../assets/img/noImage.png">
           </div>
-          <div class="col-lg-6 col-md-12" style="text-align: center;">
-            <label for="imageUpload"></label>
-            <input class="form-control" type="file" id="imageUpload" formControlName="imageUpload" (change)="onFileSelected($event)" accept="image/*">
+          <div class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <label for="file"></label>
+            <input class="form-control" type="file" formControlName="file" id="file" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg, .svg">
           </div>
         </div>
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, isEmpty } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/service/user.service';
 import { ContentService } from 'src/app/service/content.service';
@@ -16,8 +16,9 @@ export class CreateComponent implements OnInit {
   isPublishButtonHidden=true;
   contentForm!:FormGroup;
   selectedFile!:File;
-  imageFilePreviewUrl: string='';
-  sampleDataUrl: string='';
+  fileContentArrayBuffer!:ArrayBuffer;
+  filePreviewUrl: string='';
+  // formData = new FormData();
 
   isLoggedIn: boolean = false;
   userDetails: any = null;
@@ -26,6 +27,7 @@ export class CreateComponent implements OnInit {
   // @ViewChild('fileInput') fileInput:any;
 
   constructor(private contentService:ContentService, private formBuilder: FormBuilder,private userService:UserService ,private http:HttpClient, private toastr: ToastrService){}
+
 
   ngOnInit(){
     this.userService.checkIfLoggedIn();
@@ -39,74 +41,74 @@ export class CreateComponent implements OnInit {
       console.log(this.userDetails);
     });
 
-    this.contentForm = this.formBuilder.group({
-      title: ['', Validators.required],
-      imageUpload: ['', Validators.required],
-      description: ['', Validators.required]
-    })
+    // this.contentForm = this.formBuilder.group({
+    //   title: ['', Validators.required],
+    //   file: [null, Validators.required],
+    //   description: ['', Validators.required]
+    // })
 
-  //   this.contentForm = new FormGroup({
-  //   title: new FormControl(null, Validators.required),
-  //   imageUpload: new FormControl(null, Validators.required),
-  //   description: new FormControl(null, Validators.required)
-  // });
+    this.contentForm = new FormGroup({
+    title: new FormControl('', Validators.required),
+    file: new FormControl(null, Validators.required),
+    description: new FormControl('', Validators.required)
+  });
   }
 
   adjustTextAreaHeight(){
     const textarea: HTMLElement|any = document.querySelector('textarea');
     textarea.style.height= 'auto';
-    textarea.style.height= textarea.scrollHeight + 'px';
+    textarea.style.height= (textarea.scrollHeight<300)?'300px':textarea.scrollHeight + 'px';
   }
 
-
-  onFileSelected(event: Event){
-    const inputElement: any = event.target as HTMLInputElement;
-    this.selectedFile = inputElement.files[0];
+  //Event listener for file preview
+  onFileSelected(event:any){
+    console.log(event);
+    this.selectedFile = event.target.files[0];
+    // const inputElement: any = event.target as HTMLInputElement;
+    // this.selectedFile = inputElement.files[0];
     console.log(this.selectedFile);
+
     const reader= new FileReader();
     reader.onloadend = (e:any) => {
-      this.imageFilePreviewUrl = e.target.result;
-      console.log("imagePreviewUrl: ", this.imageFilePreviewUrl);
+      this.filePreviewUrl = e.target.result;
+      // console.log("filePreviewUrl: ", this.filePreviewUrl);
       };
     reader.readAsDataURL(this.selectedFile);
   }
 
-  // previewSelectedFile(){
-  //   const reader= new FileReader();
-  //   reader.onload = (e:any) => {
-  //     this.imageFilePreviewUrl = e.target.result;
-  //   };
-  //   reader.readAsDataURL(this.selectedImageFile);
-  // }
-
-
+  //Function calling content service to save content
   saveContent(){
-    // const reader= new FileReader();
-    // reader.onload = (e:any) => {
-    //     const fileContentArrayBuffer = e.target.result as ArrayBuffer;
-    //     console.log("fileContentArrayBuffer: ", fileContentArrayBuffer);
-    // }
-    // reader.readAsArrayBuffer(this.selectedFile);
+    if(!this.contentForm.valid){
+      this.toastr.info('Please input all fields', 'Info')
+      return;
+    }
+    const reader= new FileReader();
+    reader.onload = (e:any) => {
+        console.log(e);
 
-    // if(this.contentForm.invalid){
-    //   this.toastr.info('Please input all fields', 'Info')
-    //   return;
-    // }
+        this.fileContentArrayBuffer = e.target.result;
+        // this.fileContentArrayBuffer = e.target.result as ArrayBuffer;
+        console.log("fileContentArrayBuffer: ", this.fileContentArrayBuffer);
+    }
+    reader.readAsArrayBuffer(this.selectedFile);
 
-    // const data = {title: this.contentForm.value.title, description: this.contentForm.value.description, imageUpload: this.contentForm.value.imageUpload, userid: this.userDetails.userid, status: 'saved'};
+    const formData = new FormData()
+    formData.append('title', this.contentForm.value.title);
+    formData.append('description', this.contentForm.value.description);
+    const fileBlob = new Blob([this.fileContentArrayBuffer])
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('author', this.userDetails.userid);
+    formData.append('status', 'saved');
 
-    // const formData = new FormData(); debugger;
-
-    // formData.append('title', this.contentForm.value.title);
-    // formData.append('imageUpload', this.contentForm.value.imageUpload);
-    // formData.append('description', this.contentForm.value.description);
-    // formData.append('userid', this.userDetails.userid);
-    // formData.append('status', 'saved');
-
-    // this.contentService.saveArticle(data);
+    console.log(formData.get('title'));
+    console.log(formData.get('description'));
+    console.log(formData.get('file'));
+    console.log(formData.get('author'));
+    console.log(formData.get('status'));
+    this.contentService.saveArticle(formData);
   }
 
-
+  //Function calling content service to publish content
   publishContent(){
 
   }
