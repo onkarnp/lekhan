@@ -95,7 +95,7 @@ export class CreateComponent implements OnInit {
     const formData = new FormData()
     formData.append('title', this.contentForm.value.title);
     formData.append('description', this.contentForm.value.description);
-    const fileBlob = new Blob([this.fileContentArrayBuffer])
+    // const fileBlob = new Blob([this.fileContentArrayBuffer])
     formData.append('file', this.selectedFile, this.selectedFile.name);
     formData.append('author', this.userDetails.userid);
     formData.append('status', 'saved');
