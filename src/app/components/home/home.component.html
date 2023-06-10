@@ -9,12 +9,17 @@
           <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
           <!-- <mat-card-subtitle>Author name</mat-card-subtitle> -->
         </mat-card-header>
-        <img mat-card-image class="img-fluid" src="{{article.image}}">
-        <mat-card-content>
-          <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars" (click)="this.maxChars = this.article.description.length;">Read more</span></a></p>
-          <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.author}}</i></mat-card-subtitle>
+        <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+        <!-- <img mat-card-image class="img-fluid" src={{article.image}}> -->
 
-          <mat-card-subtitle>{{article.crcheckeddate}}</mat-card-subtitle>
+        <!-- {{article.image}} -->
+        <mat-card-content>
+          <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+          <!-- <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars" (click)="this.maxChars = this.article.description.length;">Read more</span></a></p> -->
+
+          <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle>
+
+          <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
         </mat-card-content>
         <!-- <mat-card-actions>
           <button mat-button>LIKE</button>

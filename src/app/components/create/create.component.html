@@ -4,8 +4,9 @@
     <div class="container m-lg-4" style=" height: 100%; width: 100%; margin: 10px;">
       <form [formGroup]="contentForm" (ngSubmit)="saveContent()">
 
-        <div style="display: flex; flex-direction: row; justify-content: flex-end;">
-          <button type="submit" (click)="saveContent()"  class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden"></span>Save</button>
+        <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+          <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
+          <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden"></span>Save</button>
           <button type="button" (click)="publishContent()" class="btn btn-success" (mouseenter)="isPublishButtonHidden = !isPublishButtonHidden" (mouseleave)="isPublishButtonHidden = !isPublishButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon><span *ngIf="!isPublishButtonHidden">Publish</span></button>
         </div>
 

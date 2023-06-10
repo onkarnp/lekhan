@@ -85,7 +85,19 @@ export class UserService {
           this.setUserDetails(jsObj.data);
 
           this.toastr.success(jsObj.message, 'Success');
-          this.router.navigate(['/home'])
+          switch(jsObj.data.usertypeid){
+            case 1:
+              this.router.navigate(['/create']); break;
+            case 2:
+              this.router.navigate(['/dashboard']); break;
+            case 3:
+              this.router.navigate(['/error']); break;
+            case 4:
+              this.router.navigate(['/error']); break;
+            default:
+              this.router.navigate(['/error']); break;
+          }
+          // this.router.navigate(['/home'])
         })
 
       }

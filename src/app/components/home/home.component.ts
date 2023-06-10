@@ -17,22 +17,73 @@ export class HomeComponent implements OnInit{
   maxChars = 100;
   constructor(private dialog: MatDialog, private userService:UserService, private contentService:ContentService ,private http:HttpClient){}
   ngOnInit(): void {
-    this.http.get('http://localhost:3000/api/v1/cms/published').subscribe((results) => {
+    // this.http.get('http://localhost:3000/api/v1/cms/published').subscribe((results) => {
+    //   var resultString=JSON.stringify(results);
+    //   var jsObj = JSON.parse(resultString);
+    //   if(jsObj.success){
+    //     this.publishedArticles = jsObj.data;
+    //     // console.log("published articles", this.publishedArticles);
+    //   }
+    //   else{
+    //     console.log(jsObj.message);
+    //   }
+
+    // },(error)=>{
+    //   console.log(error);
+
+    // })
+
+    this.contentService.getPublishedArticles().subscribe((results) => {
+      console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
+        // console.log(jsObj.data);
         this.publishedArticles = jsObj.data;
-        // console.log("published articles", this.publishedArticles);
+        // this.publishedArticles = this.modifyArticlesData(jsObj.data);
+        console.log("publishedArticles",this.publishedArticles);
+
       }
       else{
         console.log(jsObj.message);
-      }
 
-    },(error)=>{
-      console.log(error);
+      }
 
     })
   }
+
+  // modifyArticlesData(data: any[]): any[] {
+  //   return data.map((article) => {
+  //     const modifiedArticle = { ...article };
+
+  //     // Convert imgdata to URL
+  //     modifiedArticle.imgurl = this.convertBufferToURL(modifiedArticle.imgdata);
+
+  //     // Format submissiondate as 'YYYY-MM-DD'
+  //     modifiedArticle.submissiondate = this.formatDate(modifiedArticle.submissiondate);
+
+  //     return modifiedArticle;
+  //   });
+  // }
+
+  // convertBufferToURL(bufferData: Buffer): string {
+  //   const base64Data = bufferData.toString('base64');
+  //   const mimeType = 'image/jpeg'; // Replace with the actual MIME type of your image
+  //   return `data:${mimeType};base64,${base64Data}`;
+  // }
+
+  // convertBlobToURL(blobData: Blob): string {
+  //   const reader = new FileReader();
+  //   reader.readAsDataURL(blobData);
+  //   return reader.result as string;
+  // }
+
+  // formatDate(dateString: string): string {
+  //   const date = new Date(dateString);
+  //   return date.toISOString().split('T')[0];
+  // }
+
+
 
   openCardDetails(article:any){
     const dialogRef = this.dialog.open(CardDetailsComponent, {
@@ -43,6 +94,10 @@ export class HomeComponent implements OnInit{
       width:'100%',
     });
   }
+
+
+
+
 
 
 }

@@ -5,7 +5,7 @@
 </div>
 <mat-divider></mat-divider>
 
-  <select class="form-select" [(ngModel)]="selectedMenu" (change)="toHome()">
+  <select class="form-select" [(ngModel)]="selectedMenu" (change)="toHome()" [hidden]="true">
     <option selected disabled hidden [ngValue]="0" style="color: white">Reader menu</option>
     <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" [hidden]="items.usertypeid!=selectedMenu" >{{items.type}} menu</option>
   </select>
@@ -15,13 +15,13 @@
 
     <p class=" subheader mt-2">Applications</p>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/home">
       <a routerLink="/home" routerLinkActive="list-item-active">
         <mat-icon>home</mat-icon> Home
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/login">
       <a routerLink="/login" *ngIf="!isLoggedIn" routerLinkActive="list-item-active">
         <mat-icon>login</mat-icon> Login
       </a>
@@ -30,7 +30,7 @@
       <mat-icon>settings</mat-icon> Settings
     </a> -->
 
-    <mat-list-item>
+    <mat-list-item routerLink="/signup">
       <a routerLink="/signup" *ngIf="!isLoggedIn" routerLinkActive="list-item-active">
         <mat-icon>how_to_reg</mat-icon> Signup
       </a>
@@ -51,39 +51,83 @@
 
   <mat-nav-list>
 
-    <p class=" subheader mt-2">Applications</p>
+    <!-- <p class=" subheader mt-2">Applications</p> -->
 
-    <mat-list-item>
-      <a routerLink="/home" routerLinkActive="list-item-active">
-        <mat-icon>home</mat-icon> Home
-      </a>
-    </mat-list-item>
-
-    <mat-list-item>
-      <a routerLink="/notfound" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon> My articles
-      </a>
-    </mat-list-item>
-
-    <mat-list-item>
+    <mat-list-item routerLink="/create" style="background: #3B71CA;">
+      <!-- <button class="create-button btn btn-outline-primary"> -->
       <a routerLink="/create" routerLinkActive="list-item-active">
-        <mat-icon>edit</mat-icon> Write content
+        <!-- <button class="create-button btn btn-outline-primary">Create content</button> -->
+        <mat-icon>post_add</mat-icon>Create new content
+      </a>
+      <!-- </button> -->
+    </mat-list-item>
+
+    <!-- <a routerLink="/create" routerLinkActive="list-item-active">
+      <mat-icon>edit</mat-icon> Write content
+    </a> -->
+
+    <mat-list-item (click)="toggleNestedList()">
+      <a [ngClass]="{'active-list': showNestedList,'not-active-list':!showNestedList}"  >
+        <mat-icon>dashboard</mat-icon> My articles
+        <mat-icon>{{showNestedList ? 'expand_less' : 'expand_more'}}</mat-icon>
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+<!-- ******************nested-list******************** -->
+
+<!-- <mat-list-item *ngIf="showNestedList"> -->
+  <!-- <ng-container *ngIf="showNestedList"> -->
+    <div class="nested-list" *ngIf="showNestedList" style="display: flex; flex-direction: column;">
+
+      <mat-list-item routerLink="/home" style="padding-left: 40px;">
+        <a routerLink="/home" routerLinkActive="list-item-active" data-toggle="tooltip" title="article title">
+          <mat-icon>article</mat-icon> Article title
+        </a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>view_list</mat-icon>All articles</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>bookmark</mat-icon>Saved</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>bookmark_added</mat-icon>Finalized</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>timeline</mat-icon>QA requested</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>check</mat-icon>QA checked</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>done_all</mat-icon>CR checked</a>
+      </mat-list-item>
+      <mat-list-item class="active-list" style="padding-left: 40px;">
+        <a href=""><mat-icon>fact_check</mat-icon>Published</a>
+      </mat-list-item>
+
+    </div>
+
+  <!-- </ng-container> -->
+<!-- </mat-list-item> -->
+
+
+<!-- ******************nested list ends******************** -->
+
+
+    <mat-list-item routerLink="/error">
       <a routerLink="/error" routerLinkActive="list-item-active">
         <mat-icon>timeline</mat-icon> Track status
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/error">
       <a routerLink="/error" routerLinkActive="list-item-active">
-        <mat-icon>description</mat-icon> Archives
+        <mat-icon>table</mat-icon> Archives
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/error">
       <a routerLink="/error" routerLinkActive="list-item-active">
         <mat-icon>settings</mat-icon> Settings
       </a>
@@ -100,37 +144,37 @@
 
     <p class=" subheader mt-2">Applications</p>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/home">
       <a routerLink="/home" routerLinkActive="list-item-active">
         <mat-icon>home</mat-icon> Home
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/dashboard">
       <a routerLink="/dashboard" routerLinkActive="list-item-active">
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/dashboard">
       <a routerLink="/dashboard" routerLinkActive="list-item-active">
         <mat-icon>task_alt</mat-icon> Check requests
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/dashboard">
       <a routerLink="/dashboard" routerLinkActive="list-item-active">
         <mat-icon>list_alt</mat-icon> Pool
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/dashboard">
       <a routerLink="/dashboard" routerLinkActive="list-item-active">
         <mat-icon>description</mat-icon> Archives
       </a>
     </mat-list-item>
 
-    <mat-list-item>
+    <mat-list-item routerLink="/error">
       <a routerLink="/error" routerLinkActive="list-item-active">
         <mat-icon>settings</mat-icon> Settings
       </a>

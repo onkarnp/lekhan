@@ -1,9 +1,9 @@
 <div class="container-fluid">
   <div class="title-box p-4">{{article.title}}</div>
   <div class="main-content">
-    <img class="img-fluid" style="width: 100%; height: auto;" src="{{article.image}}">
-    <p style="padding: 40px; font-size: large;">{{article.description}}</p>
+    <img class="img-fluid" style="width: 100%; height: auto;" src="{{article.base64FileData}}">
+    <p style="padding: 40px;">{{article.description}}</p>
   </div>
-  <p style="font-size: large; padding: 0 40px;"><i><strong>{{article.author}}</strong></i></p>
-  <p style="font-size: large; padding: 0 40px;">{{article.crcheckeddate}}</p>
+  <p style="padding: 0 40px;"><i><strong>{{article.authorname}}</strong></i></p>
+  <p style="padding: 0 40px;">{{article.submissiondate}}</p>
 </div>

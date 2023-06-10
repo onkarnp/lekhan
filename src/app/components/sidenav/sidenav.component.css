@@ -31,6 +31,11 @@ select{
   letter-spacing: 1px;
 }
 
+.create-button{
+  color: #94a3b8;
+  /* border-color: white; */
+}
+
 a{
   text-decoration: none;
   color: #94a3b8;
@@ -45,6 +50,7 @@ mat-nav-list{
 
 mat-list-item:hover{
   border-radius: 5px;
+  /* background: white; */
   background: #2c3344;
 }
 
@@ -53,12 +59,21 @@ mat-icon{
   padding-right: 35px;
 }
 
+/* css for my articles tab */
+.active-list{
+  color: #f2f5f7;
+}
+.not-active-list{
+  text-decoration: none;
+  color: #94a3b8;
+}
+
 .list-item-active {
   color: #f2f5f7;
 }
-.list-item-active ::ng-deep .mat-list-item-content {
+/* .list-item-active ::ng-deep .mat-list-item-content {
   background: #2c3344;
-}
-.list-item-active ::ng-deep .mat-list-item-content:hover {
+} */
+/* .list-item-active ::ng-deep .mat-list-item-content:hover {
   background: #2c3344;
-}
+} */

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription, isEmpty } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
@@ -14,6 +14,7 @@ import { ContentService } from 'src/app/service/content.service';
 export class CreateComponent implements OnInit {
   isSaveButtonHidden=true;
   isPublishButtonHidden=true;
+  formNotSaved = false;
   contentForm!:FormGroup;
   selectedFile!:File;
   fileContentArrayBuffer!:ArrayBuffer;
@@ -41,18 +42,19 @@ export class CreateComponent implements OnInit {
       console.log(this.userDetails);
     });
 
-    // this.contentForm = this.formBuilder.group({
-    //   title: ['', Validators.required],
-    //   file: [null, Validators.required],
-    //   description: ['', Validators.required]
-    // })
-
     this.contentForm = new FormGroup({
-    title: new FormControl('', Validators.required),
-    file: new FormControl(null, Validators.required),
-    description: new FormControl('', Validators.required)
-  });
+      title: new FormControl('', Validators.required),
+      file: new FormControl(null, Validators.required),
+      description: new FormControl('', Validators.required)
+    });
+
+    this.contentForm.valueChanges.subscribe(()=>{
+      this.formNotSaved = true;
+    })
+
   }
+
+
 
   adjustTextAreaHeight(){
     const textarea: HTMLElement|any = document.querySelector('textarea');
@@ -76,7 +78,7 @@ export class CreateComponent implements OnInit {
     reader.readAsDataURL(this.selectedFile);
   }
 
-  //Function calling content service to save content
+  //Function to save content
   saveContent(){
     if(!this.contentForm.valid){
       this.toastr.info('Please input all fields', 'Info')
@@ -105,12 +107,71 @@ export class CreateComponent implements OnInit {
     console.log(formData.get('file'));
     console.log(formData.get('author'));
     console.log(formData.get('status'));
-    this.contentService.saveArticle(formData);
+    this.contentService.saveArticle(formData).subscribe((results)=>{
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      console.log(jsObj);
+      if(jsObj.success){
+        this.formNotSaved = false;
+        this.toastr.success(jsObj.message, 'Success');
+      }
+      else{
+        this.toastr.error(jsObj.message, 'Failed')
+      }
+    }, (err) => {
+      console.log(err);
+      this.toastr.error(err.error.message, 'Error')
+    })
   }
 
-  //Function calling content service to publish content
+  //Function to publish content
   publishContent(){
+    if(this.formNotSaved){
+      this.toastr.info("Please save the article first", 'Info');
+      return
+    }
+    if(!this.contentForm.valid){
+      this.toastr.info("Please input all fields");
+      return
+    }
+    const formData = new FormData()
+    formData.append('title', this.contentForm.value.title);
+    formData.append('description', this.contentForm.value.description);
+    // const fileBlob = new Blob([this.fileContentArrayBuffer])
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    formData.append('author', this.userDetails.userid);
+    formData.append('status', 'saved');
 
+    console.log(formData.get('title'));
+    console.log(formData.get('description'));
+    console.log(formData.get('file'));
+    console.log(formData.get('author'));
+    console.log(formData.get('status'));
+    this.contentService.publishArticle(formData).subscribe((results)=>{
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      console.log(jsObj);
+      if(jsObj.success){
+        const data = {title: formData.get('title'), author: formData.get('author')}
+        this.http.post('http://localhost:3000/api/v1/cms' + '/publish',data).subscribe((results)=>{
+          var resultString=JSON.stringify(results);
+          var jsObj = JSON.parse(resultString);
+          console.log(jsObj);
+          if(jsObj.success){
+            this.toastr.success(jsObj.message, 'Success');
+          }
+          else{
+            this.toastr.error(jsObj.message, 'Failed')
+          }
+        })
+      }
+      else{
+        this.toastr.error(jsObj.message, 'Failed')
+      }
+    }, (err) => {
+      console.log(err);
+      this.toastr.error(err.error.message, 'Error')
+    })
   }
 
 

@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 export class SidenavComponent implements OnInit, OnDestroy{
   usertypes: any;
   selectedMenu = 0;
+  showNestedList = false;
   isLoggedIn: boolean = false;
   userDetails: any = null;
   isLoggedInSubscription: Subscription = new Subscription();
@@ -77,6 +78,10 @@ export class SidenavComponent implements OnInit, OnDestroy{
     // perform logout logic
     this.userService.setLoggedIn(false);
     this.userService.setUserDetails(null);
+  }
+
+  toggleNestedList():void {
+    this.showNestedList = !this.showNestedList;
   }
 
   ngOnDestroy() {
