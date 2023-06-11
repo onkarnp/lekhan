@@ -9,6 +9,7 @@ import { CreateComponent } from './components/create/create.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { NotfoundComponent } from './components/notfound/notfound.component';
+import { ArchivesComponent } from './components/archives/archives.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,8 @@ const routes: Routes = [
   {path: 'create', component:CreateComponent, canActivate: [AuthGuard], data: {allowedUserTypes: [1,2]}},
   {path: 'unauthorized', component:UnauthorizedComponent},
   {path: 'notfound', component:NotfoundComponent},
+  {path: 'archives', component:ArchivesComponent},
+
 
   //The error route must be last route
   {path: '**', component:ErrorComponent}

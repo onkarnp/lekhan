@@ -1,20 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from 'src/app/service/user.service';
-import { ContentService } from 'src/app/service/content.service';
 import { HttpClient } from '@angular/common/http';
-import { Emitters } from 'src/app/shared/emitters';
-import { SlicePipe } from '@angular/common';
-import { MatDialog } from '@angular/material/dialog'
-import { CardDetailsComponent } from '../card-details/card-details.component'
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ContentService } from 'src/app/service/content.service';
+import { UserService } from 'src/app/service/user.service';
+import { CardDetailsComponent } from '../card-details/card-details.component';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-archives',
+  templateUrl: './archives.component.html',
+  styleUrls: ['./archives.component.css']
 })
-export class HomeComponent implements OnInit{
+export class ArchivesComponent implements OnInit{
   publishedArticles:any;
-  maxChars = 100;
   constructor(private dialog: MatDialog, private userService:UserService, private contentService:ContentService ,private http:HttpClient){}
   ngOnInit(): void {
     this.contentService.getPublishedArticles().subscribe((results) => {
@@ -42,5 +39,4 @@ export class HomeComponent implements OnInit{
       width:'100%',
     });
   }
-
 }

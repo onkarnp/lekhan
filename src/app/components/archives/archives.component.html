@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="title-box p-4">Content archives</div>
+  <div class="main-content">
+    <div class="table-responsive" style="width: 100%;">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr class="table-primary" style="vertical-align: middle;">
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Finalized date</th>
+            <th scope="col">Quality checker</th>
+            <th scope="col">QA checked date</th>
+            <th scope="col">Assigned CR</th>
+            <th scope="col">CR checked date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+            <th scope="row">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+            <td>{{article.authorname}}</td>
+            <td>{{article.submissiondate}}</td>
+            <td>{{article.assignedqaname}}</td>
+            <td>{{article.qacheckeddate}}</td>
+            <td>{{article.assignedcrname}}</td>
+            <td>{{article.crcheckeddate}}</td>
+            <td class="text-success">Published</td>
+          </tr>
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

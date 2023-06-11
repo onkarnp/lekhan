@@ -53,7 +53,7 @@
 
     <!-- <p class=" subheader mt-2">Applications</p> -->
 
-    <mat-list-item routerLink="/create" style="background: #3B71CA;">
+    <mat-list-item routerLink="/create" (click)="showNestedList=false" style="background: #3B71CA;">
       <!-- <button class="create-button btn btn-outline-primary"> -->
       <a routerLink="/create" routerLinkActive="list-item-active">
         <!-- <button class="create-button btn btn-outline-primary">Create content</button> -->
@@ -67,7 +67,7 @@
     </a> -->
 
     <mat-list-item (click)="toggleNestedList()">
-      <a [ngClass]="{'active-list': showNestedList,'not-active-list':!showNestedList}"  >
+      <a [ngClass]="{'active-list-item': showNestedList,'not-active-list-item':!showNestedList}"  >
         <mat-icon>dashboard</mat-icon> My articles
         <mat-icon>{{showNestedList ? 'expand_less' : 'expand_more'}}</mat-icon>
       </a>
@@ -78,32 +78,26 @@
 <!-- <mat-list-item *ngIf="showNestedList"> -->
   <!-- <ng-container *ngIf="showNestedList"> -->
     <div class="nested-list" *ngIf="showNestedList" style="display: flex; flex-direction: column;">
-
-      <mat-list-item routerLink="/home" style="padding-left: 40px;">
-        <a routerLink="/home" routerLinkActive="list-item-active" data-toggle="tooltip" title="article title">
-          <mat-icon>article</mat-icon> Article title
-        </a>
+      <mat-list-item (click)="selectAllArticles()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 1}"><mat-icon>view_list</mat-icon>All articles</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>view_list</mat-icon>All articles</a>
+      <mat-list-item (click)="selectSaved()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 2}"><mat-icon>bookmark</mat-icon>Saved</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>bookmark</mat-icon>Saved</a>
+      <mat-list-item (click)="selectFinalized()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 3}"><mat-icon>bookmark_added</mat-icon>Finalized</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>bookmark_added</mat-icon>Finalized</a>
+      <mat-list-item (click)="selectQARequested()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 4}"><mat-icon>timeline</mat-icon>QA requested</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>timeline</mat-icon>QA requested</a>
+      <mat-list-item (click)="selectQAChecked()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 5}"><mat-icon>check</mat-icon>QA checked</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>check</mat-icon>QA checked</a>
+      <mat-list-item (click)="selectCRRequested()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 6}"><mat-icon>timeline</mat-icon>CR requested</p>
       </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>done_all</mat-icon>CR checked</a>
-      </mat-list-item>
-      <mat-list-item class="active-list" style="padding-left: 40px;">
-        <a href=""><mat-icon>fact_check</mat-icon>Published</a>
+      <mat-list-item (click)="selectPublished()" style="padding-left: 40px;">
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 7}"><mat-icon>done_all</mat-icon>Published</p>
       </mat-list-item>
 
     </div>
@@ -115,19 +109,13 @@
 <!-- ******************nested list ends******************** -->
 
 
-    <mat-list-item routerLink="/error">
-      <a routerLink="/error" routerLinkActive="list-item-active">
-        <mat-icon>timeline</mat-icon> Track status
-      </a>
-    </mat-list-item>
-
-    <mat-list-item routerLink="/error">
-      <a routerLink="/error" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/archives" (click)="showNestedList=false">
+      <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>table</mat-icon> Archives
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/error">
+    <mat-list-item routerLink="/error" (click)="showNestedList=false">
       <a routerLink="/error" routerLinkActive="list-item-active">
         <mat-icon>settings</mat-icon> Settings
       </a>
@@ -135,6 +123,48 @@
 
   </mat-nav-list>
 </div>
+
+<mat-drawer mode="side" [opened]="showArticlesList">
+  <div class="articles-list">
+
+    <mat-nav-list>
+      <mat-list-item (click)="closeArticlesList()">
+        <p style="margin: 10px 0px;"><mat-icon>arrow_back_ios</mat-icon>Go back</p>
+      </mat-list-item>
+
+      <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;">
+        <div style="margin: 10px 0px;">
+          <p style="font-size: medium;"><mat-icon>fact_check</mat-icon>{{article.title}}</p>
+          <p style="font-size:smaller;">{{article.submissiondate}}</p>
+          <!-- <hr style="color: white;"> -->
+        </div>
+      </mat-list-item>
+      <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;">
+        <div style="margin: 10px 0px;">
+          <p style="font-size: medium;"><mat-icon>fact_check</mat-icon>{{article.title}}</p>
+          <p style="font-size:smaller;">{{article.submissiondate}}</p>
+          <!-- <hr style="color: white;"> -->
+        </div>
+      </mat-list-item>
+
+    </mat-nav-list>
+  </div>
+</mat-drawer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

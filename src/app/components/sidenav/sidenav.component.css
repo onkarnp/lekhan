@@ -41,7 +41,24 @@ a{
   color: #94a3b8;
   height: 44px !important;
   margin-bottom: 4px;
+}
+a:hover{
+  color: white;
+}
 
+.nested-list {
+  margin: none;
+  color: #94a3b8;
+}
+
+.nested-list p:hover{
+  color: white;
+}
+
+
+.mat-tooltip {
+  background-color: #333;
+  color: white;
 }
 
 mat-nav-list{
@@ -52,6 +69,7 @@ mat-list-item:hover{
   border-radius: 5px;
   /* background: white; */
   background: #2c3344;
+  color: white;
 }
 
 mat-icon{
@@ -60,10 +78,15 @@ mat-icon{
 }
 
 /* css for my articles tab */
-.active-list{
+.list-paragraph{
+  color: #94a3b8;
+  margin: 0%;
+}
+
+.active-list-item{
   color: #f2f5f7;
 }
-.not-active-list{
+.not-active-list-item{
   text-decoration: none;
   color: #94a3b8;
 }
@@ -76,4 +99,34 @@ mat-icon{
 } */
 /* .list-item-active ::ng-deep .mat-list-item-content:hover {
   background: #2c3344;
+} */
+
+
+
+.articles-list p{
+  color: #94a3b8;
+}
+
+
+/* .mat-drawer {
+  left: auto;
+  right: 0;
+} */
+
+mat-drawer{
+  width: 250px;
+  background: #0f172a;
+}
+
+mat-drawer-container{
+  height: 100%;
+}
+
+/* .fixed-item {
+  position: fixed;
+  clear: both;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1;
 } */

@@ -147,13 +147,13 @@ export class CreateComponent implements OnInit {
     console.log(formData.get('file'));
     console.log(formData.get('author'));
     console.log(formData.get('status'));
-    this.contentService.publishArticle(formData).subscribe((results)=>{
+    this.contentService.saveArticle(formData).subscribe((results)=>{
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       console.log(jsObj);
       if(jsObj.success){
         const data = {title: formData.get('title'), author: formData.get('author')}
-        this.http.post('http://localhost:3000/api/v1/cms' + '/publish',data).subscribe((results)=>{
+        this.contentService.publishArticle(data).subscribe((results)=>{
           var resultString=JSON.stringify(results);
           var jsObj = JSON.parse(resultString);
           console.log(jsObj);

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr'
@@ -32,8 +33,10 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { ArchivesComponent } from './components/archives/archives.component';
 
 
 
@@ -51,12 +54,14 @@ import { AuthGuard } from 'src/auth/auth.guard';
     TemplateComponent,
     NotfoundComponent,
     CardDetailsComponent,
-    UnauthorizedComponent
+    UnauthorizedComponent,
+    ArchivesComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
@@ -77,7 +82,8 @@ import { AuthGuard } from 'src/auth/auth.guard';
     MatListModule,
     MatCardModule,
     MatSelectModule,
-    MatDialogModule
+    MatDialogModule,
+    MatTooltipModule
   ],
   providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent]
