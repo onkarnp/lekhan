@@ -10,6 +10,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { AuthGuard } from 'src/auth/auth.guard';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { ArchivesComponent } from './components/archives/archives.component';
+import { ViewarticleComponent } from './components/viewarticle/viewarticle.component';
 
 
 const routes: Routes = [
@@ -24,6 +25,7 @@ const routes: Routes = [
   {path: 'unauthorized', component:UnauthorizedComponent},
   {path: 'notfound', component:NotfoundComponent},
   {path: 'archives', component:ArchivesComponent},
+  {path: 'viewarticle', component:ViewarticleComponent},
 
 
   //The error route must be last route

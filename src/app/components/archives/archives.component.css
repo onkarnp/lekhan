@@ -21,3 +21,10 @@
 tr{
   width: 100px;
 }
+
+.table thead th {
+  position: sticky;
+  top: 0;
+  /* background-color: #f8f9fa; */
+  z-index: 1;
+}

@@ -3,9 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import User from '../model/user'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { JsonPipe } from '@angular/common';
-import { Emitters } from '../shared/emitters';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +12,9 @@ export class ContentService {
   url = "http://localhost:3000/api/v1/cms"
   constructor(private http:HttpClient, private router:Router, private toastr: ToastrService) { }
 
+  selected_status: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  selected_article: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     withCredentials: true //this is required so that Angular returns the Cookies received from the server. The server sends cookies in Set-Cookie header. Without this, Angular will ignore the Set-Cookie header
@@ -21,6 +22,22 @@ export class ContentService {
   httpMultipartOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
     withCredentials: true
+  }
+
+  setSelectedStatus(value: number) {
+    this.selected_status.next(value);
+  }
+
+  getSelectedStatus():number{
+    return this.selected_status.getValue();
+  }
+
+  setSelectedArticle(value: any) {
+    this.selected_article.next(value);
+  }
+
+  getSelectedArticle():object{
+    return this.selected_article.getValue();
   }
 
   //To get published articles
@@ -93,69 +110,28 @@ export class ContentService {
     return this.http.get(url, { params });
   }
 
+  //To save edited article in view article page
+  saveEditedArticle(formData:any): Observable<any>{
+    const url = `${this.url}/save_edited`;
+    return this.http.post(url, formData);
+  }
 
-// //To get published articles
-// login(data:any){
-//   this.http.post(this.url + "/login", data, this.httpOptions).subscribe((results)=> {
-//     var resultString=JSON.stringify(results);
-//     var jsObj = JSON.parse(resultString);
-//     if(jsObj.success){
-//       this.toastr.success(jsObj.message, 'Success');
-//       this.router.navigate(['/home'])
-//     }
-//     else{
-//       this.toastr.error(jsObj.message, 'Failed')
-//     }
-//   }, (err) => {
-//     console.log(err);
-//     this.toastr.error(err.error.message, 'Error')
-//   })
-// }
+  //To publish the edited article in view article page
+  publishEditedContent(data:any): Observable<any>{
+    console.log(data);
 
+    const params = new HttpParams().set('contentid',data.contentid);
+    const url = `${this.url}/publish_edited`;
+    console.log(params);
 
-//  async saveArticle(formData:any){
-//   await this.http.post(this.url + '/save', formData).subscribe((results)=>{
-//     var resultString=JSON.stringify(results);
-//     var jsObj = JSON.parse(resultString);
-//     console.log(jsObj);
-//     if(jsObj.success){
-//       this.toastr.success(jsObj.message, 'Success');
-//     }
-//     else{
-//       this.toastr.error(jsObj.message, 'Failed')
-//     }
-//   }, (err) => {
-//     console.log(err);
-//     this.toastr.error(err.error.message, 'Error')
-//   })
-//  }
+    return this.http.post(url, data);
+  }
 
-//  async publishArticle(formData:any){
-//   await this.http.post(this.url + '/save', formData).subscribe((results)=>{
-//     var resultString=JSON.stringify(results);
-//     var jsObj = JSON.parse(resultString);
-//     console.log(jsObj);
-//     if(jsObj.success){
-//       const data = {title: formData.get('title'), author: formData.get('author')}
-//       this.http.post(this.url + '/publish',data).subscribe((results)=>{
-//         var resultString=JSON.stringify(results);
-//         var jsObj = JSON.parse(resultString);
-//         console.log(jsObj);
-//         if(jsObj.success){
-//           this.toastr.success(jsObj.message, 'Success');
-//         }
-//         else{
-//           this.toastr.error(jsObj.message, 'Failed')
-//         }
-//       })
-//     }
-//     else{
-//       this.toastr.error(jsObj.message, 'Failed')
-//     }
-//   }, (err) => {
-//     console.log(err);
-//     this.toastr.error(err.error.message, 'Error')
-//   })
-//  }
+  //To assign QA for a content
+  assignQA(data:any): Observable<any>{
+    const params = new HttpParams().set('assignedqa',data.assignedqa).set('contentid',data.contentid);
+    const url = `${this.url}/assignqa`;
+    return this.http.get(url, { params });
+  }
 
 }

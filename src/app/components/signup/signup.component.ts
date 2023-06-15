@@ -38,6 +38,7 @@ export class SignupComponent {
       console.log(this.usertypes);
 
     })
+    
 
   }
 

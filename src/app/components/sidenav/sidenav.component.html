@@ -67,7 +67,7 @@
     </a> -->
 
     <mat-list-item (click)="toggleNestedList()">
-      <a [ngClass]="{'active-list-item': showNestedList,'not-active-list-item':!showNestedList}"  >
+      <a [ngClass]="{'active-list-item': selectedStatus,'not-active-list-item':!showNestedList}"  >
         <mat-icon>dashboard</mat-icon> My articles
         <mat-icon>{{showNestedList ? 'expand_less' : 'expand_more'}}</mat-icon>
       </a>
@@ -79,25 +79,25 @@
   <!-- <ng-container *ngIf="showNestedList"> -->
     <div class="nested-list" *ngIf="showNestedList" style="display: flex; flex-direction: column;">
       <mat-list-item (click)="selectAllArticles()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 1}"><mat-icon>view_list</mat-icon>All articles</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 1}"><mat-icon>view_list</mat-icon>All articles</p>
       </mat-list-item>
       <mat-list-item (click)="selectSaved()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 2}"><mat-icon>bookmark</mat-icon>Saved</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 2}"><mat-icon>bookmark</mat-icon>Saved</p>
       </mat-list-item>
       <mat-list-item (click)="selectFinalized()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 3}"><mat-icon>bookmark_added</mat-icon>Finalized</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 3}"><mat-icon>bookmark_added</mat-icon>Finalized</p>
       </mat-list-item>
       <mat-list-item (click)="selectQARequested()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 4}"><mat-icon>timeline</mat-icon>QA requested</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 4}"><mat-icon>timeline</mat-icon>QA requested</p>
       </mat-list-item>
       <mat-list-item (click)="selectQAChecked()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 5}"><mat-icon>check</mat-icon>QA checked</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 5}"><mat-icon>check</mat-icon>QA checked</p>
       </mat-list-item>
       <mat-list-item (click)="selectCRRequested()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 6}"><mat-icon>timeline</mat-icon>CR requested</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 6}"><mat-icon>timeline</mat-icon>CR requested</p>
       </mat-list-item>
       <mat-list-item (click)="selectPublished()" style="padding-left: 40px;">
-        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedState === 7}"><mat-icon>done_all</mat-icon>Published</p>
+        <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 7}"><mat-icon>done_all</mat-icon>Published</p>
       </mat-list-item>
 
     </div>
@@ -124,29 +124,29 @@
   </mat-nav-list>
 </div>
 
-<mat-drawer mode="side" [opened]="showArticlesList">
+<mat-drawer mode="side" [opened]="showArticlesList" position="end">
   <div class="articles-list">
 
     <mat-nav-list>
       <mat-list-item (click)="closeArticlesList()">
-        <p style="margin: 10px 0px;"><mat-icon>arrow_back_ios</mat-icon>Go back</p>
+        <p style="margin: 10px 0px; color: white;"><mat-icon>arrow_back</mat-icon>Go back</p>
       </mat-list-item>
 
-      <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;">
-        <div style="margin: 10px 0px;">
-          <p style="font-size: medium;"><mat-icon>fact_check</mat-icon>{{article.title}}</p>
-          <p style="font-size:smaller;">{{article.submissiondate}}</p>
-          <!-- <hr style="color: white;"> -->
-        </div>
-      </mat-list-item>
-      <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;">
-        <div style="margin: 10px 0px;">
-          <p style="font-size: medium;"><mat-icon>fact_check</mat-icon>{{article.title}}</p>
-          <p style="font-size:smaller;">{{article.submissiondate}}</p>
-          <!-- <hr style="color: white;"> -->
-        </div>
-      </mat-list-item>
+      <div class="scrollable-list">
+        <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;" (click)="viewArticle(article)">
+          <div style="display: flex; flex-direction: row; margin: 10px 0px; color: #94a3b8;">
+            <div style="display: flex; align-items: center; justify-content: center;">
+              <mat-icon class="icon">stars</mat-icon>
+            </div>
+            <div>
+              <p style="font-size: medium; margin: 0%;">{{article.title}}</p>
+              <p style="font-size: smaller; margin: 0%;">{{article.submissiondate}}</p>
+            </div>
+          </div>
+        </mat-list-item>
 
+
+      </div>
     </mat-nav-list>
   </div>
 </mat-drawer>
@@ -180,26 +180,26 @@
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/dashboard">
-      <a routerLink="/dashboard" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/archives">
+      <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>dashboard</mat-icon> Dashboard
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/dashboard">
-      <a routerLink="/dashboard" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/archives">
+      <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>task_alt</mat-icon> Check requests
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/dashboard">
-      <a routerLink="/dashboard" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/archives">
+      <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>list_alt</mat-icon> Pool
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/dashboard">
-      <a routerLink="/dashboard" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/archives">
+      <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>description</mat-icon> Archives
       </a>
     </mat-list-item>

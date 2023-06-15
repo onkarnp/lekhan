@@ -1,11 +1,9 @@
 import { Injectable, OnInit } from '@angular/core';
 // import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import User from '../model/user'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { JsonPipe } from '@angular/common';
-import { Emitters } from '../shared/emitters';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -44,8 +42,26 @@ export class UserService {
 
 
   //To get usertypes available
-  getUsertypes(){
+  getUsertypes(): Observable<any>{
     return this.http.get(this.url + '/usertypes');
+  }
+
+  getAllAuthors(): Observable<any>{
+    const params = new HttpParams().set('usertypeid',1);
+    const url = `${this.url}/users`;
+    return this.http.get(url, { params });
+  }
+
+  getAllQA(): Observable<any>{
+    const params = new HttpParams().set('usertypeid',2);
+    const url = `${this.url}/users`;
+    return this.http.get(url, { params });
+  }
+
+  getAllCR(): Observable<any>{
+    const params = new HttpParams().set('usertypeid',3);
+    const url = `${this.url}/users`;
+    return this.http.get(url, { params });
   }
 
 

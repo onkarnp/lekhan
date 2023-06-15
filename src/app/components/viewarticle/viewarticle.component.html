@@ -1,0 +1,95 @@
+<div class="container-fluid">
+  <div class="title-box p-4">View article</div>
+  <div class="main-content">
+    <div class="viewContentDiv container m-lg-4" *ngIf="!editingmode" style="height: 100%; width: 100%; margin: 10px; padding: 30px;">
+        <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+          <button *ngIf="selected_article.status=='saved'" class="btn btn-inverse btn-outline-success" (click)="editModeOn()" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>edit_note</mat-icon><span></span>Edit</button>
+          <button *ngIf="selected_article.status=='finalized' && selected_article.assignedqa==null && !showRequestQADiv" (click)="openRequestQADiv()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>person</mat-icon><span>Request QA</span></button>
+          <button *ngIf="showRequestQADiv" class="btn btn-inverse btn-outline-danger" (click)="showRequestQADiv=false" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>cancel</mat-icon><span>Cancel</span></button>
+          <button *ngIf="selected_article.status=='saved'" (click)="publishEditedContent()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>publish</mat-icon>Publish</button>
+        </div>
+
+        <div class="request_qa_div" *ngIf="showRequestQADiv">
+          <form [formGroup]="assignQAForm" (ngSubmit)="assignQA(assignQAForm)" style="display: flex; flex-direction: row; justify-content: center; align-items: center; vertical-align: middle;">
+            <select class="form-select" formControlName="requestedQA" aria-placeholder="Request QA for your article">
+              <option disabled hidden value="">Select QA</option>
+              <option *ngFor="let QA of allQA" [ngValue]="QA.userid">{{QA.username}}</option>
+            </select>
+            <button class="btn btn-inverse btn-outline-success" type="submit" style="margin: 0%;">Submit</button>
+          </form>
+        </div>
+
+        <p id="view_title">{{selected_article.title}}</p>
+
+
+        <div class="image-div row p-5">
+          <div class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <img id="imagePreview" src={{selected_article.base64FileData}} alt="Can't show preview, check image again">
+          </div>
+        </div>
+
+        <p id="view_description">{{selected_article.description}}</p>
+        <div id="view_description">
+          <label for=""><strong>Status track:</strong></label>
+          <p>Author: <span>{{selected_article.authorname?selected_article.authorname:'--'}}</span></p>
+          <p>Submission date: <span>{{selected_article.submissiondate?selected_article.submissiondate:'--'}}</span></p>
+          <p>Assigned QA: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'--'}}</span></p>
+          <p>QA checked date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
+          <p>Assigned CR: <span>{{selected_article.assignedcrname?selected_article.assignedcrname:'--'}}</span></p>
+          <p>Published Date: <span>{{selected_article.crcheckeddate?selected_article.crcheckeddate:'--'}}</span></p>
+        </div>
+    </div>
+
+
+
+
+
+
+    <!-- *ngIf="selected_article != null" -->
+
+    <div class="editContentDiv container m-lg-4" *ngIf="editingmode" style="height: 100%; width: 100%; margin: 10px;">
+      <form [formGroup]="contentForm" (ngSubmit)="saveEditedContent()">
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+          <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
+          <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
+          <button type="button" *ngIf="selected_article.status=='saved'" (click)="publishEditedContent()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>publish</mat-icon>Publish</button>
+          <button type="button" (click)="editModeoff()" class="btn btn-inverse btn-outline-danger" style="border: none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>cancel</mat-icon>Cancel editing</button>
+
+        </div>
+
+        <label for="title"></label>
+        <input class="form-control" type="text" formControlName="title" id="title" placeholder="Input title here..." required>
+
+
+        <div class="image-div row p-5">
+          <div *ngIf="filePreviewUrl" style="display: flex; justify-content: end;">
+            <button type="button" (click)="filePreviewUrl=''" class="btn btn-inverse btn-outline-secondary" style="border: none; display: flex; justify-content: center;"><mat-icon>cancel</mat-icon>Delete</button>
+          </div>
+          <div *ngIf="filePreviewUrl" class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <img id="imagePreview" [src]="filePreviewUrl" alt="Can't show preview, check image again">
+          </div>
+
+          <div *ngIf="!filePreviewUrl" class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <label for="file"></label>
+            <input class="form-control" type="file" formControlName="file" id="file" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg, .svg">
+          </div>
+        </div>
+
+        <label for="description"></label>
+        <textarea class="form-control" id="description" formControlName="description" required (input)="adjustTextAreaHeight()" placeholder="Write your thoughts..."></textarea>
+
+      </form>
+    </div>
+
+
+
+    <!-- <div style="display:flex; flex-direction: column; justify-content: center; align-items: center;">
+      <img class= "img-fluid" style="max-width: 100px;max-height: 100px;" src="../../../assets/img/side-menu.png">
+      <h3><strong>Select article to view!</strong></h3>
+    </div> -->
+
+
+
+  </div>
+</div>

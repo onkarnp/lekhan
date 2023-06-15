@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="title-box p-4">Homepage</div>
-  <div class="main-content" *ngIf="publishedArticles">
+  <div class="main-content">
     <div *ngFor="let article of publishedArticles">
 
 
@@ -30,10 +30,18 @@
 
 
     </div>
+
+    <div *ngIf="!publishedArticles" style="display:flex; flex-direction: column; justify-content: center; align-items: center;">
+      <img class= "img-fluid" style="max-width: 100px;max-height: 100px;" src="../../../assets/img/emptyBlack.png">
+      <h3><strong>No articles found!</strong></h3>
+    </div>
   </div>
-  <div *ngIf="!publishedArticles">
+
+
+
+  <!-- <div *ngIf="!publishedArticles">
     <app-notfound></app-notfound>
-  </div>
+  </div> -->
 </div>
 
 <script>

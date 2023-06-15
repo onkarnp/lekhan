@@ -1,0 +1,195 @@
+.title-box{
+  background: #1e293b;
+  color: white;
+  font-size: 25px;
+  min-height: 120px;
+  margin: 0 -1rem;
+}
+
+.main-content{
+  display: flex;
+  /* flex-direction: column; */
+  flex-wrap: wrap;
+  background-color: white;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  margin-top: -3rem;
+  border-radius: 10px;
+  min-height: calc(100vh - 184px);
+}
+
+/* *****************CSS FOR viewContentDiv****************** */
+
+.request_qa_div{
+  display: block;
+  box-sizing: border-box;
+  text-align: right;
+  margin-left: 50%;
+  /* width: auto; */
+  /* width: 100%; */
+  text-decoration: none;
+  border-radius: 0;
+  border-width: 1px;
+  border-color: #cad0da;
+  border-style:solid;
+}
+
+
+
+#view_title{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px 10px;
+  text-decoration: none;
+  margin: 30px 0px;
+  border-radius: 0;
+  font-size: 30px;
+  font-weight: bold;
+  border-width: 1px;
+  border-color: #cad0da;
+  border-style:solid;
+}
+
+#view_description{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 20px 10px;
+  text-decoration: none;
+  margin: 30px 0px;
+  border-radius: 0;
+  font-size: 15px;
+  font-weight: normal;
+  border-width: 1px;
+  border-color: #cad0da;
+  border-style:solid;
+}
+
+
+/* *****************CSS FOR viewContentDiv ENDS HERE****************** */
+
+/* *****************CSS FOR FORM****************** */
+
+form {
+  background-color: #fff;
+  /* background-image: repeating-linear-gradient(white 0px, white 24px, teal 25px); */
+  border-radius: 10px;
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+  padding: 20px;
+  margin: 0 auto;
+  max-width: auto;
+  /* margin-top: 30px; */
+}
+
+
+button[type="submit"] {
+  /* background-color: #4CAF50; */
+  /* color: white; */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+#title{
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  text-decoration: none;
+  margin-bottom: 30px;
+  /* border: none; */
+  border-radius: 0;
+  /* border-bottom: 0px solid #ccc; */
+  font-size: 30px;
+  font-weight: bold;
+  /* font-style: italic; */
+}
+
+#title::placeholder{
+  color: #aaa;
+  font-size: 30px;
+  font-weight: normal;
+}
+
+#title:focus{
+  outline-style: none;
+}
+
+
+.image-div{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  padding: 20px;
+  /* border-radius: 20px; */
+  border-width: 1px;
+  border-color: #cad0da;
+  border-style:solid;
+  margin: auto;
+}
+
+#imagePreview{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  /* margin: auto; */
+  width: 100%;
+  height: 100%;
+}
+
+#noImage{
+  height: 30%;
+  width: 30%;
+}
+/*
+#imageUpload{
+  display: block;
+  text-align: center;
+  padding: 20px;
+} */
+
+input[type="file"]{
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  /* width: fit-content; */
+}
+
+textarea{
+  height: 300px;
+  resize: none;
+  overflow-y: hidden;
+}
+
+#description{
+  display: flex;
+  box-sizing: border-box;
+  line-height: normal;
+  width: 100%;
+  padding: 10px;
+  text-decoration: none;
+  border-radius: 0;
+}
+
+#description::placeholder{
+  color: #aaa;
+  /* font-size: 20px; */
+  font-weight: normal;
+}
+
+/* #description:focus{
+  outline: none;
+} */
+
+
+/* *****************CSS FOR FORM ENDS HERE****************** */

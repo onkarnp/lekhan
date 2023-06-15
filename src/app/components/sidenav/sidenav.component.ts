@@ -14,13 +14,17 @@ export class SidenavComponent implements OnInit, OnDestroy{
   usertypes: any;
   selectedMenu = 0;
   showNestedList = false;
-  selectedState = 0;
+  selectedStatus = 0;
   showArticlesList = false;
   articlesData:any;
   isLoggedIn: boolean = false;
   userDetails: any = null;
+  selected_status: number = 0;
+  selected_article: any = null;
   isLoggedInSubscription: Subscription = new Subscription();
   userDetailsSubscription: Subscription = new Subscription();
+  selectedStatusSubscription: Subscription = new Subscription();
+  selectedArticleSubscription: Subscription = new Subscription();
 
   constructor(private formBuilder:FormBuilder, private userService:UserService, private contentService:ContentService,private http:HttpClient, private router:Router){}
   ngOnInit(): void{
@@ -39,6 +43,18 @@ export class SidenavComponent implements OnInit, OnDestroy{
       else
         this.selectedMenu = 0;
     });
+
+    this.selectedStatusSubscription = this.contentService.selected_status.subscribe(value => {
+      this.selected_status = value;
+      console.log("selected_status", this.selected_status);
+
+    })
+
+    this.selectedArticleSubscription = this.contentService.selected_article.subscribe(value => {
+      this.selected_article = value;
+      console.log("selected_article", this.selected_article);
+
+    })
 
     //To get all usertyes
     this.userService.getUsertypes().subscribe((results) => {
@@ -76,16 +92,17 @@ export class SidenavComponent implements OnInit, OnDestroy{
     }
     else{
       this.showNestedList = true;
-      this.selectedState = 0;
+      this.selectedStatus = 0;
     }
   }
 
   closeArticlesList():void{
+    this.articlesData = null;
     this.showArticlesList = false;
   }
 
   selectAllArticles():void {
-    this.selectedState = 1;
+    this.selectedStatus = 1;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid }
     this.contentService.fetchAllArticles(data).subscribe((results) => {
@@ -103,7 +120,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectSaved():void {
-    this.selectedState = 2;
+    this.selectedStatus = 2;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid, status: 'saved' }
     this.contentService.fetchSavedArticles(data).subscribe((results) => {
@@ -122,7 +139,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectFinalized():void {
-    this.selectedState = 3;
+    this.selectedStatus = 3;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid, status: 'finalized' }
     this.contentService.fetchFinalizedArticles(data).subscribe((results) => {
@@ -141,7 +158,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectQARequested():void {
-    this.selectedState = 4;
+    this.selectedStatus = 4;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid }
     this.contentService.fetchQARequestedArticles(data).subscribe((results) => {
@@ -160,7 +177,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectQAChecked():void {
-    this.selectedState = 5;
+    this.selectedStatus = 5;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid }
     this.contentService.fetchQACheckedArticles(data).subscribe((results) => {
@@ -179,7 +196,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectCRRequested():void {
-    this.selectedState = 6;
+    this.selectedStatus = 6;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid }
     this.contentService.fetchCRRequestedArticles(data).subscribe((results) => {
@@ -198,7 +215,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   selectPublished():void {
-    this.selectedState = 7;
+    this.selectedStatus = 7;
     this.showArticlesList = true;
     const data = { userid: this.userDetails.userid }
     this.contentService.fetchPublishedArticles(data).subscribe((results) => {
@@ -216,9 +233,11 @@ export class SidenavComponent implements OnInit, OnDestroy{
     })
   }
 
-
-
-
+  viewArticle(article:any){
+    this.contentService.setSelectedStatus(this.selectedStatus);
+    this.contentService.setSelectedArticle(article);
+    this.router.navigate(['/viewarticle']);
+  }
 
 
 

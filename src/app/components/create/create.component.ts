@@ -5,6 +5,7 @@ import { Subscription, isEmpty } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/service/user.service';
 import { ContentService } from 'src/app/service/content.service';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-create',
@@ -19,6 +20,7 @@ export class CreateComponent implements OnInit {
   selectedFile!:File;
   fileContentArrayBuffer!:ArrayBuffer;
   filePreviewUrl: string='';
+  createRoute = '/create';
   // formData = new FormData();
 
   isLoggedIn: boolean = false;
@@ -27,7 +29,7 @@ export class CreateComponent implements OnInit {
   userDetailsSubscription: Subscription = new Subscription();
   // @ViewChild('fileInput') fileInput:any;
 
-  constructor(private contentService:ContentService, private formBuilder: FormBuilder,private userService:UserService ,private http:HttpClient, private toastr: ToastrService){}
+  constructor(private contentService:ContentService, private formBuilder: FormBuilder,private userService:UserService ,private http:HttpClient, private toastr: ToastrService, private router:Router){}
 
 
   ngOnInit(){
@@ -51,6 +53,25 @@ export class CreateComponent implements OnInit {
     this.contentForm.valueChanges.subscribe(()=>{
       this.formNotSaved = true;
     })
+
+
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationStart) {
+    //     const currentRoute = event.url;
+    //     if(currentRoute !== this.createRoute && !currentRoute.startsWith(this.createRoute)){
+    //       if (this.formNotSaved) {
+    //         const confirmNavigation = confirm('The form is not saved. Do you want to leave this page?');
+    //         if (!confirmNavigation) {
+    //           // event.stopPropagation();
+    //           // event.preventDefault();
+    //           this.router.navigateByUrl(event.url, { skipLocationChange: true });
+
+    //           // this.router.navigate([event.url], { skipLocationChange: true });
+    //         }
+    //       }
+    //     }
+    //   }
+    // });
 
   }
 
@@ -141,6 +162,7 @@ export class CreateComponent implements OnInit {
     formData.append('file', this.selectedFile, this.selectedFile.name);
     formData.append('author', this.userDetails.userid);
     formData.append('status', 'saved');
+
 
     console.log(formData.get('title'));
     console.log(formData.get('description'));

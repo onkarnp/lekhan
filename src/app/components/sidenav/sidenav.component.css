@@ -1,7 +1,6 @@
-.logo{
+/* .logo{
   width: 120px;
   height: 64px;
-  /* margin: auto; */
   margin-left: 20px;
 }
 
@@ -33,7 +32,6 @@ select{
 
 .create-button{
   color: #94a3b8;
-  /* border-color: white; */
 }
 
 a{
@@ -67,8 +65,15 @@ mat-nav-list{
 
 mat-list-item:hover{
   border-radius: 5px;
-  /* background: white; */
   background: #2c3344;
+  color: white;
+}
+
+mat-list-item:hover p{
+  color: white;
+}
+
+mat-list-item:hover .icon{
   color: white;
 }
 
@@ -77,7 +82,6 @@ mat-icon{
   padding-right: 35px;
 }
 
-/* css for my articles tab */
 .list-paragraph{
   color: #94a3b8;
   margin: 0%;
@@ -94,24 +98,10 @@ mat-icon{
 .list-item-active {
   color: #f2f5f7;
 }
-/* .list-item-active ::ng-deep .mat-list-item-content {
-  background: #2c3344;
-} */
-/* .list-item-active ::ng-deep .mat-list-item-content:hover {
-  background: #2c3344;
-} */
-
-
 
 .articles-list p{
   color: #94a3b8;
 }
-
-
-/* .mat-drawer {
-  left: auto;
-  right: 0;
-} */
 
 mat-drawer{
   width: 250px;
@@ -120,13 +110,126 @@ mat-drawer{
 
 mat-drawer-container{
   height: 100%;
+} */
+
+
+
+
+
+
+
+.logo {
+  width: 120px;
+  height: 64px;
+  margin-left: 20px;
 }
 
-/* .fixed-item {
-  position: fixed;
-  clear: both;
-  top: 0;
-  left: 0;
+.logo img {
+  height: 64px;
+}
+
+.mat-divider {
+  border-top: 2px solid white;
+}
+
+select {
+  background: #0f172a;
+  color: white;
+  height: 44px;
   width: 100%;
-  z-index: 1;
-} */
+  padding-left: 28px;
+}
+
+.subheader {
+  margin-left: 20px;
+  color: #818cf8;
+  font-size: 1rem;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  letter-spacing: 1px;
+}
+
+.create-button {
+  color: #94a3b8;
+}
+
+a {
+  text-decoration: none;
+  color: #94a3b8;
+  height: 44px !important;
+  margin-bottom: 4px;
+}
+
+.nested-list {
+  margin: 0;
+  color: #94a3b8;
+}
+
+.nested-list p:hover {
+  color: white;
+}
+
+.mat-tooltip {
+  background-color: #333;
+  color: white;
+}
+
+mat-nav-list {
+  margin: 0 8px;
+}
+
+mat-list-item:hover {
+  border-radius: 5px;
+  background: #2c3344;
+  color: white;
+}
+
+mat-list-item:hover p,
+mat-list-item:hover a,
+mat-list-item:hover .icon {
+  color: white;
+}
+
+mat-icon {
+  vertical-align: bottom;
+  padding-right: 35px;
+}
+
+.list-paragraph {
+  color: #94a3b8;
+  margin: 0;
+}
+
+.active-list-item,
+.list-item-active {
+  color: #f2f5f7;
+}
+
+.not-active-list-item {
+  text-decoration: none;
+  color: #94a3b8;
+}
+
+.articles-list p {
+  color: #94a3b8;
+}
+
+mat-drawer {
+  width: 250px;
+  background: #0f172a;
+}
+
+mat-drawer-container {
+  height: 100%;
+}
+
+
+.articles-list {
+  overflow: hidden;
+}
+
+.scrollable-list {
+  max-height: auto; /* Adjust the desired height for scrollable area */
+  overflow-y: auto;
+}
+

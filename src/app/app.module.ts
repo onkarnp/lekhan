@@ -37,6 +37,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ArchivesComponent } from './components/archives/archives.component';
+import { ViewarticleComponent } from './components/viewarticle/viewarticle.component';
 
 
 
@@ -56,6 +57,7 @@ import { ArchivesComponent } from './components/archives/archives.component';
     CardDetailsComponent,
     UnauthorizedComponent,
     ArchivesComponent,
+    ViewarticleComponent,
   ],
   imports: [
     BrowserModule,
