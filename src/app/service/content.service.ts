@@ -46,15 +46,15 @@ export class ContentService {
     return this.http.get(url);
   }
 
-  //To save article
+  //To save new article
   saveArticle(formData:any): Observable<any>{
     const url = `${this.url}/save`;
     return this.http.post(url, formData);
   }
 
-  //To publish article
-  publishArticle(formData:any): Observable<any>{
-    const url = `${this.url}/publish`;
+  //To finalize new article
+  finalizeArticle(formData:any): Observable<any>{
+    const url = `${this.url}/finalize`;
     return this.http.post(url, formData);
   }
 
@@ -70,30 +70,57 @@ export class ContentService {
   fetchSavedArticles(data:any): Observable<any>{
     console.log(data);
     const params = new HttpParams().set('userid',data.userid).set('status',data.status);
+    console.log(params);
+
     const url = `${this.url}/saved`;
     return this.http.get(url, { params });
   }
 
   //To fetch finalized articles
   fetchFinalizedArticles(data:any): Observable<any>{
-    console.log(data);
-    const params = new HttpParams().set('userid',data.userid).set('status',data.status);
+    let params;
+    if(data.userid){
+      params = new HttpParams().set('status',data.status).set('userid',data.userid);
+    }
+    else{
+      params = new HttpParams().set('status',data.status);
+    }
     const url = `${this.url}/finalized`;
     return this.http.get(url, { params });
   }
 
    //To fetch QA requested articles
   fetchQARequestedArticles(data:any): Observable<any>{
-    const params = new HttpParams().set('userid',data.userid);
+    let params;
+    if(data.userid){
+      params = new HttpParams().set('userid',data.userid);
+    }
+    if(data.qaid){
+      params = new HttpParams().set('qaid',data.qaid);
+    }
     const url = `${this.url}/qarequested`;
     return this.http.get(url, { params });
   }
 
   //To fetch QA checked articles
   fetchQACheckedArticles(data:any): Observable<any>{
-    const params = new HttpParams().set('userid',data.userid);
+
+    let params;
+    if(data.userid){
+      params = new HttpParams().set('userid',data.userid);
+    }
+    if(data.qaid){
+      params = new HttpParams().set('qaid',data.qaid);
+    }
+
     const url = `${this.url}/qachecked`;
     return this.http.get(url, { params });
+  }
+
+  //To approve articles for QA
+  approveArticle(data:any): Observable<any> {
+    const url = `${this.url}/qaapprove`;
+    return this.http.put(url, data);
   }
 
   //To fetch CR checked articles
@@ -116,15 +143,29 @@ export class ContentService {
     return this.http.post(url, formData);
   }
 
-  //To publish the edited article in view article page
-  publishEditedContent(data:any): Observable<any>{
+  //To finalize the edited article in view article page
+  finalizeEditedContent(data:any): Observable<any>{
     console.log(data);
-
-    const params = new HttpParams().set('contentid',data.contentid);
-    const url = `${this.url}/publish_edited`;
-    console.log(params);
-
+    // const params = new HttpParams().set('contentid',data.contentid);
+    const url = `${this.url}/finalize_edited`;
+    // console.log(params);
     return this.http.post(url, data);
+  }
+
+  getArticleByContentid(contentid:any){
+    const url = `${this.url}/articles/${contentid}`;
+    return this.http.get(url).subscribe((results) => {
+      console.log("results", results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        console.log("updated article", jsObj.data);
+        this.setSelectedArticle(jsObj.data);
+      }
+      else{
+        this.toastr.error(jsObj.message, 'Failed')
+      }
+    })
   }
 
   //To assign QA for a content

@@ -10,6 +10,7 @@
     <option *ngFor="let items of usertypes" [ngValue]="items.usertypeid" [hidden]="items.usertypeid!=selectedMenu" >{{items.type}} menu</option>
   </select>
 
+
 <div class="client-sidenav" *ngIf="selectedMenu === 0">
   <mat-nav-list>
 
@@ -26,18 +27,12 @@
         <mat-icon>login</mat-icon> Login
       </a>
     </mat-list-item>
-    <!-- <a mat-list-item routerLink="/Dashboard" routerLinkActive="list-item-active">
-      <mat-icon>settings</mat-icon> Settings
-    </a> -->
 
     <mat-list-item routerLink="/signup">
       <a routerLink="/signup" *ngIf="!isLoggedIn" routerLinkActive="list-item-active">
         <mat-icon>how_to_reg</mat-icon> Signup
       </a>
     </mat-list-item>
-    <!-- <a mat-list-item routerLink="/Dashboard" routerLinkActive="list-item-active">
-      <mat-icon>settings</mat-icon> Settings
-    </a> -->
 
   </mat-nav-list>
 </div>
@@ -54,17 +49,11 @@
     <!-- <p class=" subheader mt-2">Applications</p> -->
 
     <mat-list-item routerLink="/create" (click)="showNestedList=false" style="background: #3B71CA;">
-      <!-- <button class="create-button btn btn-outline-primary"> -->
       <a routerLink="/create" routerLinkActive="list-item-active">
-        <!-- <button class="create-button btn btn-outline-primary">Create content</button> -->
         <mat-icon>post_add</mat-icon>Create new content
       </a>
-      <!-- </button> -->
     </mat-list-item>
 
-    <!-- <a routerLink="/create" routerLinkActive="list-item-active">
-      <mat-icon>edit</mat-icon> Write content
-    </a> -->
 
     <mat-list-item (click)="toggleNestedList()">
       <a [ngClass]="{'active-list-item': selectedStatus,'not-active-list-item':!showNestedList}"  >
@@ -73,10 +62,7 @@
       </a>
     </mat-list-item>
 
-<!-- ******************nested-list******************** -->
-
-<!-- <mat-list-item *ngIf="showNestedList"> -->
-  <!-- <ng-container *ngIf="showNestedList"> -->
+  <!-- ******************nested-list for author******************** -->
     <div class="nested-list" *ngIf="showNestedList" style="display: flex; flex-direction: column;">
       <mat-list-item (click)="selectAllArticles()" style="padding-left: 40px;">
         <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 1}"><mat-icon>view_list</mat-icon>All articles</p>
@@ -99,14 +85,8 @@
       <mat-list-item (click)="selectPublished()" style="padding-left: 40px;">
         <p [ngClass]="{'list-paragraph':true, 'active-list-item': selectedStatus === 7}"><mat-icon>done_all</mat-icon>Published</p>
       </mat-list-item>
-
     </div>
-
-  <!-- </ng-container> -->
-<!-- </mat-list-item> -->
-
-
-<!-- ******************nested list ends******************** -->
+  <!-- ******************nested list for author ends******************** -->
 
 
     <mat-list-item routerLink="/archives" (click)="showNestedList=false">
@@ -124,14 +104,12 @@
   </mat-nav-list>
 </div>
 
-<mat-drawer mode="side" [opened]="showArticlesList" position="end">
+<mat-drawer mode="side" [opened]="showArticlesList" position="end" *ngIf="selectedMenu === 1">
   <div class="articles-list">
-
     <mat-nav-list>
       <mat-list-item (click)="closeArticlesList()">
         <p style="margin: 10px 0px; color: white;"><mat-icon>arrow_back</mat-icon>Go back</p>
       </mat-list-item>
-
       <div class="scrollable-list">
         <mat-list-item *ngFor="let article of articlesData" matTooltip="{{article.title}}" matTooltipPosition="after" style="height: auto;" (click)="viewArticle(article)">
           <div style="display: flex; flex-direction: row; margin: 10px 0px; color: #94a3b8;">
@@ -144,8 +122,6 @@
             </div>
           </div>
         </mat-list-item>
-
-
       </div>
     </mat-nav-list>
   </div>
@@ -174,37 +150,54 @@
 
     <p class=" subheader mt-2">Applications</p>
 
-    <mat-list-item routerLink="/home">
-      <a routerLink="/home" routerLinkActive="list-item-active">
-        <mat-icon>home</mat-icon> Home
-      </a>
-    </mat-list-item>
-
-    <mat-list-item routerLink="/archives">
-      <a routerLink="/archives" routerLinkActive="list-item-active">
-        <mat-icon>dashboard</mat-icon> Dashboard
-      </a>
-    </mat-list-item>
-
-    <mat-list-item routerLink="/archives">
-      <a routerLink="/archives" routerLinkActive="list-item-active">
-        <mat-icon>task_alt</mat-icon> Check requests
-      </a>
-    </mat-list-item>
-
-    <mat-list-item routerLink="/archives">
-      <a routerLink="/archives" routerLinkActive="list-item-active">
+    <mat-list-item routerLink="/qapool" (click)="showNestedList=false">
+      <a routerLink="/qapool" routerLinkActive="list-item-active">
         <mat-icon>list_alt</mat-icon> Pool
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/archives">
+    <mat-list-item routerLink="/qapending">
+      <a routerLink="/qapending" routerLinkActive="list-item-active">
+        <mat-icon>pending</mat-icon> Pending requests
+      </a>
+    </mat-list-item>
+
+    <mat-list-item routerLink="/qacomplete">
+      <a routerLink="/qacomplete" routerLinkActive="list-item-active">
+        <mat-icon>task_alt</mat-icon> Completed requests
+      </a>
+    </mat-list-item>
+
+
+
+    <!-- <mat-list-item (click)="toggleNestedList()">
+      <a [ngClass]="{'active-list-item': showNestedList,'not-active-list-item':!showNestedList}"  >
+        <mat-icon>rule</mat-icon> Check requests
+        <mat-icon>{{showNestedList ? 'expand_less' : 'expand_more'}}</mat-icon>
+      </a>
+    </mat-list-item>
+
+    <div class="nested-list" *ngIf="showNestedList" style="display: flex; flex-direction: column;">
+      <mat-list-item routerLink="/qapending" style="padding-left: 40px;">
+        <a routerLink="/qapending" routerLinkActive="list-item-active">
+          <mat-icon>pending</mat-icon> Pending requests
+        </a>
+      </mat-list-item>
+      <mat-list-item routerLink="/qacomplete" style="padding-left: 40px;">
+        <a routerLink="/qacomplete" routerLinkActive="list-item-active">
+          <mat-icon>task_alt</mat-icon> Completed requests
+        </a>
+      </mat-list-item>
+    </div> -->
+
+
+    <mat-list-item routerLink="/archives" (click)="showNestedList=false">
       <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>description</mat-icon> Archives
       </a>
     </mat-list-item>
 
-    <mat-list-item routerLink="/error">
+    <mat-list-item routerLink="/error" (click)="showNestedList=false">
       <a routerLink="/error" routerLinkActive="list-item-active">
         <mat-icon>settings</mat-icon> Settings
       </a>

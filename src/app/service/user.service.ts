@@ -105,7 +105,7 @@ export class UserService {
             case 1:
               this.router.navigate(['/create']); break;
             case 2:
-              this.router.navigate(['/dashboard']); break;
+              this.router.navigate(['/qapool']); break;
             case 3:
               this.router.navigate(['/error']); break;
             case 4:

@@ -7,7 +7,7 @@
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
           <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
           <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" (mouseenter)="isSaveButtonHidden = !isSaveButtonHidden" (mouseleave)="isSaveButtonHidden = !isSaveButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon><span *ngIf="!isSaveButtonHidden"></span>Save</button>
-          <button type="button" (click)="publishContent()" class="btn btn-success" (mouseenter)="isPublishButtonHidden = !isPublishButtonHidden" (mouseleave)="isPublishButtonHidden = !isPublishButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon><span *ngIf="!isPublishButtonHidden">Publish</span></button>
+          <button type="button" (click)="finalizeContent()" class="btn btn-success" (mouseenter)="isPublishButtonHidden = !isPublishButtonHidden" (mouseleave)="isPublishButtonHidden = !isPublishButtonHidden" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>publish</mat-icon><span *ngIf="!isPublishButtonHidden">Finalize</span></button>
         </div>
 
         <label for="title"></label>

@@ -145,8 +145,8 @@ export class CreateComponent implements OnInit {
     })
   }
 
-  //Function to publish content
-  publishContent(){
+  //Function to finalize content
+  finalizeContent(){
     if(this.formNotSaved){
       this.toastr.info("Please save the article first", 'Info');
       return
@@ -175,7 +175,7 @@ export class CreateComponent implements OnInit {
       console.log(jsObj);
       if(jsObj.success){
         const data = {title: formData.get('title'), author: formData.get('author')}
-        this.contentService.publishArticle(data).subscribe((results)=>{
+        this.contentService.finalizeArticle(data).subscribe((results)=>{
           var resultString=JSON.stringify(results);
           var jsObj = JSON.parse(resultString);
           console.log(jsObj);

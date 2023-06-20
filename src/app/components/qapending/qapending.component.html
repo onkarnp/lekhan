@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="title-box p-4">Pending requests</div>
+  <div class="main-content">
+
+    <div class="table-responsive" style="width: 100%;">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Finalized date</th>
+            <th scope="col">Last edits by</th>
+            <th scope="col">Last edited on</th>
+            <th scope="col">Quality Assurance</th>
+            <th scope="col">Status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of FinalizedArticles">
+            <th scope="row" (click)="openCardDetails(article)">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before" (click)="openCardDetails(article)">{{article.title}}</td>
+            <td (click)="openCardDetails(article)">{{article.authorname}}</td>
+            <td (click)="openCardDetails(article)">{{article.submissiondate}}</td>
+            <td (click)="openCardDetails(article)">{{article.lasteditedbyname}}</td>
+            <td (click)="openCardDetails(article)">{{article.lastediteddate}}</td>
+            <td (click)="openCardDetails(article)">{{article.assignedqaname}}</td>
+            <td (click)="openCardDetails(article)">Quality check pending</td>
+            <!-- <td class="text-success"><span>Read</span><span>Edit</span><span>Mark as checked</span></td> -->
+            <td class="text-primary"><button style="margin-right: 5px;" class="btn btn-primary">Edit</button><button class="btn btn-success" (click)="approveArticle(article)">Approve</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>

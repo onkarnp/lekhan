@@ -38,6 +38,10 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ArchivesComponent } from './components/archives/archives.component';
 import { ViewarticleComponent } from './components/viewarticle/viewarticle.component';
+import { QapoolComponent } from './components/qapool/qapool.component';
+import { QapendingComponent } from './components/qapending/qapending.component';
+import { QacompleteComponent } from './components/qacomplete/qacomplete.component';
+import { QaeditComponent } from './components/qaedit/qaedit.component';
 
 
 
@@ -58,6 +62,10 @@ import { ViewarticleComponent } from './components/viewarticle/viewarticle.compo
     UnauthorizedComponent,
     ArchivesComponent,
     ViewarticleComponent,
+    QapoolComponent,
+    QapendingComponent,
+    QacompleteComponent,
+    QaeditComponent,
   ],
   imports: [
     BrowserModule,

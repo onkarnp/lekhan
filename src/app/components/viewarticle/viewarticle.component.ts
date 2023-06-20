@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/service/content.service';
@@ -36,7 +37,7 @@ export class ViewarticleComponent implements OnInit{
   selectedStatusSubscription: Subscription = new Subscription();
   selectedArticleSubscription: Subscription = new Subscription();
 
-  constructor(private contentService:ContentService, private formBuilder: FormBuilder,private userService:UserService ,private http:HttpClient, private toastr: ToastrService){}
+  constructor(private contentService:ContentService, private formBuilder: FormBuilder,private userService:UserService ,private http:HttpClient, private toastr: ToastrService, private router: Router){}
 
 
   ngOnInit(){
@@ -60,7 +61,8 @@ export class ViewarticleComponent implements OnInit{
     this.selectedArticleSubscription = this.contentService.selected_article.subscribe(value => {
       this.selected_article = value;
       console.log("selected_article", this.selected_article);
-
+      this.editingmode = false;
+      this.showRequestQADiv = false;
     })
 
     this.contentForm = new FormGroup({
@@ -151,6 +153,7 @@ export class ViewarticleComponent implements OnInit{
     formData.append('contentid', this.selected_article.contentid);
     formData.append('title', this.contentForm.value.title);
     formData.append('description', this.contentForm.value.description);
+    formData.append('userid', this.userDetails.userid);
     // const fileBlob = new Blob([this.fileContentArrayBuffer])
     if(this.selectedFile)
       formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -159,14 +162,13 @@ export class ViewarticleComponent implements OnInit{
     console.log(formData.get('description'));
     if(this.selectedFile)
       console.log(formData.get('file'));
-
     this.contentService.saveEditedArticle(formData).subscribe((results)=>{
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       console.log(jsObj);
       if(jsObj.success){
         this.formNotSaved = false;
-        this.editingmode = false;
+        // this.editingmode = false;
         this.toastr.success(jsObj.message, 'Success');
       }
       else{
@@ -178,19 +180,21 @@ export class ViewarticleComponent implements OnInit{
     })
   }
 
-  //Function to publish edited content
-  publishEditedContent(){
+  //Function to finalize edited content
+  finalizeEditedContent(){
     if(this.formNotSaved){
       this.toastr.info("Kindly save the unsaved changes", 'Info');
-      return
+      return;
     }
-    const data = { contentid: this.selected_article.contentid };
-    this.contentService.publishEditedContent(data).subscribe((results) => {
+    const data = { contentid: this.selected_article.contentid, userid: this.userDetails.userid };
+    this.contentService.finalizeEditedContent(data).subscribe((results) => {
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       console.log(jsObj);
       if(jsObj.success){
+        // this.contentService.getArticleByContentid(this.selected_article.contentid);
         this.editingmode = false;
+        this.router.navigate(['/viewarticle']);
         this.toastr.success(jsObj.message, 'Success');
       }
       else{
@@ -214,55 +218,55 @@ export class ViewarticleComponent implements OnInit{
     this.editingmode = false;
   }
 
-  //Function to publish content
-  publishContent(){
-    if(this.formNotSaved){
-      this.toastr.info("Please save the article first", 'Info');
-      return
-    }
-    if(!this.contentForm.valid){
-      this.toastr.info("Please input all fields");
-      return
-    }
-    const formData = new FormData()
-    formData.append('title', this.contentForm.value.title);
-    formData.append('description', this.contentForm.value.description);
-    // const fileBlob = new Blob([this.fileContentArrayBuffer])
-    formData.append('file', this.selectedFile, this.selectedFile.name);
-    formData.append('author', this.userDetails.userid);
-    formData.append('status', 'saved');
+  // //Function to publish content
+  // publishContent(){
+  //   if(this.formNotSaved){
+  //     this.toastr.info("Please save the article first", 'Info');
+  //     return
+  //   }
+  //   if(!this.contentForm.valid){
+  //     this.toastr.info("Please input all fields");
+  //     return
+  //   }
+  //   const formData = new FormData()
+  //   formData.append('title', this.contentForm.value.title);
+  //   formData.append('description', this.contentForm.value.description);
+  //   // const fileBlob = new Blob([this.fileContentArrayBuffer])
+  //   formData.append('file', this.selectedFile, this.selectedFile.name);
+  //   formData.append('author', this.userDetails.userid);
+  //   formData.append('status', 'saved');
 
 
-    console.log(formData.get('title'));
-    console.log(formData.get('description'));
-    console.log(formData.get('file'));
-    console.log(formData.get('author'));
-    console.log(formData.get('status'));
-    this.contentService.saveArticle(formData).subscribe((results)=>{
-      var resultString=JSON.stringify(results);
-      var jsObj = JSON.parse(resultString);
-      console.log(jsObj);
-      if(jsObj.success){
-        const data = {title: formData.get('title'), author: formData.get('author')}
-        this.contentService.publishArticle(data).subscribe((results)=>{
-          var resultString=JSON.stringify(results);
-          var jsObj = JSON.parse(resultString);
-          console.log(jsObj);
-          if(jsObj.success){
-            this.toastr.success(jsObj.message, 'Success');
-          }
-          else{
-            this.toastr.error(jsObj.message, 'Failed')
-          }
-        })
-      }
-      else{
-        this.toastr.error(jsObj.message, 'Failed')
-      }
-    }, (err) => {
-      console.log(err);
-      this.toastr.error(err.error.message, 'Error')
-    })
-  }
+  //   console.log(formData.get('title'));
+  //   console.log(formData.get('description'));
+  //   console.log(formData.get('file'));
+  //   console.log(formData.get('author'));
+  //   console.log(formData.get('status'));
+  //   this.contentService.saveArticle(formData).subscribe((results)=>{
+  //     var resultString=JSON.stringify(results);
+  //     var jsObj = JSON.parse(resultString);
+  //     console.log(jsObj);
+  //     if(jsObj.success){
+  //       const data = {title: formData.get('title'), author: formData.get('author')}
+  //       this.contentService.finalizeArticle(data).subscribe((results)=>{
+  //         var resultString=JSON.stringify(results);
+  //         var jsObj = JSON.parse(resultString);
+  //         console.log(jsObj);
+  //         if(jsObj.success){
+  //           this.toastr.success(jsObj.message, 'Success');
+  //         }
+  //         else{
+  //           this.toastr.error(jsObj.message, 'Failed')
+  //         }
+  //       })
+  //     }
+  //     else{
+  //       this.toastr.error(jsObj.message, 'Failed')
+  //     }
+  //   }, (err) => {
+  //     console.log(err);
+  //     this.toastr.error(err.error.message, 'Error')
+  //   })
+  // }
 
 }

@@ -1,0 +1,37 @@
+<div class="container-fluid">
+  <div class="title-box p-4">Completed requests</div>
+  <div class="main-content">
+
+    <div class="table-responsive" style="width: 100%;">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Finalized date</th>
+            <th scope="col">Last edits by</th>
+            <th scope="col">Last edited on</th>
+            <th scope="col">Quality assurance</th>
+            <th scope="col">Quality approved date</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of ApprovedArticles">
+            <th scope="row" (click)="openCardDetails(article)">{{article.contentid}}</th>
+            <td matTooltip="{{article.title}}" matTooltipPosition="before" (click)="openCardDetails(article)">{{article.title}}</td>
+            <td (click)="openCardDetails(article)">{{article.authorname}}</td>
+            <td (click)="openCardDetails(article)">{{article.submissiondate}}</td>
+            <td (click)="openCardDetails(article)">{{article.lasteditedbyname}}</td>
+            <td (click)="openCardDetails(article)">{{article.lastediteddate}}</td>
+            <td (click)="openCardDetails(article)">{{article.assignedqaname}}</td>
+            <td (click)="openCardDetails(article)">{{article.qacheckeddate}}</td>
+            <td class="text-success" (click)="openCardDetails(article)">Approved</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>

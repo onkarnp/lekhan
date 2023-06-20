@@ -234,8 +234,9 @@ export class SidenavComponent implements OnInit, OnDestroy{
   }
 
   viewArticle(article:any){
-    this.contentService.setSelectedStatus(this.selectedStatus);
     this.contentService.setSelectedArticle(article);
+    // this.contentService.getArticleByContentid(article.contentid);
+    this.contentService.setSelectedStatus(this.selectedStatus);
     this.router.navigate(['/viewarticle']);
   }
 
