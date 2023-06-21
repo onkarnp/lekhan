@@ -88,6 +88,11 @@ export class QapendingComponent implements OnInit, OnDestroy {
     });
   }
 
+  editArticle(article:any){
+    this.contentService.setSelectedArticle(article);
+    this.router.navigate(['/qaedit']);
+  }
+
 
 
   ngOnDestroy() {

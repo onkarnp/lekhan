@@ -15,6 +15,7 @@ import { QapoolComponent } from './components/qapool/qapool.component';
 import { QapendingComponent } from './components/qapending/qapending.component';
 import { QacompleteComponent } from './components/qacomplete/qacomplete.component';
 import { QaeditComponent } from './components/qaedit/qaedit.component';
+import { MyarticlesComponent } from './components/myarticles/myarticles.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
   {path: 'qapending', component:QapendingComponent},
   {path: 'qacomplete', component:QacompleteComponent},
   {path: 'qaedit', component:QaeditComponent},
+  {path: 'myarticles', component:MyarticlesComponent},
 
   //The error route must be last route
   {path: '**', component:ErrorComponent}

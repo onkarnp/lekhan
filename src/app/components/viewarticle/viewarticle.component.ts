@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './viewarticle.component.html',
   styleUrls: ['./viewarticle.component.css']
 })
-export class ViewarticleComponent implements OnInit{
+export class ViewarticleComponent implements OnInit, OnDestroy{
   isSaveButtonHidden=true;
   isPublishButtonHidden=true;
   formNotSaved = false;
@@ -154,6 +154,7 @@ export class ViewarticleComponent implements OnInit{
     formData.append('title', this.contentForm.value.title);
     formData.append('description', this.contentForm.value.description);
     formData.append('userid', this.userDetails.userid);
+    formData.append('usertypeid', this.userDetails.usertypeid);
     // const fileBlob = new Blob([this.fileContentArrayBuffer])
     if(this.selectedFile)
       formData.append('file', this.selectedFile, this.selectedFile.name);
@@ -268,5 +269,13 @@ export class ViewarticleComponent implements OnInit{
   //     this.toastr.error(err.error.message, 'Error')
   //   })
   // }
+
+
+  ngOnDestroy() {
+    this.isLoggedInSubscription.unsubscribe();
+    this.userDetailsSubscription.unsubscribe();
+    this.selectedStatusSubscription.unsubscribe();
+    this.selectedArticleSubscription.unsubscribe();
+  }
 
 }

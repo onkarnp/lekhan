@@ -1,0 +1,370 @@
+<div class="container-fluid">
+  <div class="title-box p-4">My articles
+    <!-- <span style="font-size: 25px;">My articles</span> -->
+
+  </div>
+  <div class="main-content">
+
+    <div class="togglebar-div">
+      <div class="image-div row">
+        <div class="col-lg-8 col-md-12 p-4" style="display: flex; justify-content: start;">
+          <mat-button-toggle-group class="toggle-group-container" (change)="onStatusChange()" [(ngModel)]="selectedStatus">
+            <mat-button-toggle value=0>All</mat-button-toggle>
+            <mat-button-toggle value=1>Saved</mat-button-toggle>
+            <mat-button-toggle value=2>Finalized</mat-button-toggle>
+            <mat-button-toggle value=3>QA Requested</mat-button-toggle>
+            <mat-button-toggle value=4>QA Approved</mat-button-toggle>
+            <mat-button-toggle value=5>CR Requested</mat-button-toggle>
+            <mat-button-toggle value=6>Published</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class="col-lg-4 col-md-12 p-4" style="display: flex; justify-content: end; ">
+          <mat-button-toggle-group class="toggle-group-container" (change)="onViewChange()" [(ngModel)]="selectedView">
+            <mat-button-toggle value=0><mat-icon>grid_view</mat-icon></mat-button-toggle>
+            <mat-button-toggle value=1><mat-icon>view_list</mat-icon></mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-sub-content">
+
+      <div *ngFor="let article of allArticles">
+        <mat-card *ngIf="selectedStatus==0 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==0 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Quality assurance</th>
+              <th scope="col">Quality assurance date</th>
+              <th scope="col">Control room</th>
+              <th scope="col">Published date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of allArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate?article.submissiondate:"--"}}</td>
+              <td>{{article.lasteditedbyname?article.lasteditedbyname:"--"}}</td>
+              <td>{{article.lastediteddate?article.lastediteddate:"--"}}</td>
+              <td>{{article.assignedqaname?article.assignedqaname:"--"}}</td>
+              <td>{{article.qacheckeddate?article.qacheckeddate:"--"}}</td>
+              <td>{{article.assignedcrname?article.assignedcrname:"--"}}</td>
+              <td>{{article.crcheckeddate?article.crcheckeddate:"--"}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div *ngFor="let article of savedArticles">
+        <mat-card *ngIf="selectedStatus==1 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==1 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of savedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate}}</td>
+              <td>{{article.lasteditedbyname}}</td>
+              <td>{{article.lastediteddate}}</td>
+              <td class="text-primary">Saved</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngFor="let article of finalizedArticles">
+        <mat-card *ngIf="selectedStatus==2 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==2 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of finalizedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate}}</td>
+              <td>{{article.lasteditedbyname}}</td>
+              <td>{{article.lastediteddate}}</td>
+              <td class="text-primary">Finalized</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div *ngFor="let article of qaRequestedArticles">
+        <mat-card *ngIf="selectedStatus==3 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==3 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Quality assurance</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of qaRequestedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate?article.submissiondate:"--"}}</td>
+              <td>{{article.lasteditedbyname?article.lasteditedbyname:"--"}}</td>
+              <td>{{article.lastediteddate?article.lastediteddate:"--"}}</td>
+              <td>{{article.assignedqaname?article.assignedqaname:"--"}}</td>
+              <td class="text-primary">Quality approval pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngFor="let article of qaApprovedArticles">
+        <mat-card *ngIf="selectedStatus==4 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==4 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Quality assurance</th>
+              <th scope="col">Quality assurance date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of qaApprovedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate?article.submissiondate:"--"}}</td>
+              <td>{{article.lasteditedbyname?article.lasteditedbyname:"--"}}</td>
+              <td>{{article.lastediteddate?article.lastediteddate:"--"}}</td>
+              <td>{{article.assignedqaname?article.assignedqaname:"--"}}</td>
+              <td>{{article.qacheckeddate?article.qacheckeddate:"--"}}</td>
+              <td class="text-primary">Quality approved</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngFor="let article of crRequestedArticles">
+        <mat-card *ngIf="selectedStatus==5 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==5 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Quality assurance</th>
+              <th scope="col">Quality assurance date</th>
+              <th scope="col">Control room</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of crRequestedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate?article.submissiondate:"--"}}</td>
+              <td>{{article.lasteditedbyname?article.lasteditedbyname:"--"}}</td>
+              <td>{{article.lastediteddate?article.lastediteddate:"--"}}</td>
+              <td>{{article.assignedqaname?article.assignedqaname:"--"}}</td>
+              <td>{{article.qacheckeddate?article.qacheckeddate:"--"}}</td>
+              <td>{{article.assignedcrname?article.assignedcrname:"--"}}</td>
+              <td class="text-primary">CR approval pending</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div *ngFor="let article of publishedArticles">
+        <mat-card *ngIf="selectedStatus==6 && selectedView==0" class="content-card" mat-elevation-z="24" (click)="openCardDetails(article)">
+          <mat-card-header style="margin:5px">
+            <mat-card-title><strong>{{article.title}}</strong></mat-card-title>
+          </mat-card-header>
+          <img mat-card-image class="img-fluid" src="{{article.base64FileData}}">
+          <mat-card-content>
+            <p style="margin-top: 8px;">{{ article.description | slice:0:maxChars }}{{ article.description.length > maxChars ? '...' : '' }}<a><span style="cursor: pointer; font-style: italic;" *ngIf="article.description.length > maxChars">Read more</span></a></p>
+            <!-- <mat-card-subtitle style="display: flex; align-items: center; color: black;"><i>{{article.authorname}}</i></mat-card-subtitle> -->
+            <mat-card-subtitle>{{article.submissiondate}}</mat-card-subtitle>
+          </mat-card-content>
+          <!-- <mat-card-actions>
+            <button mat-button>LIKE</button>
+            <button mat-button>SHARE</button>
+          </mat-card-actions> -->
+        </mat-card>
+      </div>
+      <div *ngIf="selectedStatus==6 && selectedView==1" class="table-responsive" style="width: 100%;">
+        <table class="table table-striped table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Finalized date</th>
+              <th scope="col">Last edited by</th>
+              <th scope="col">Last edited on</th>
+              <th scope="col">Quality assurance</th>
+              <th scope="col">Quality assurance date</th>
+              <th scope="col">Control room</th>
+              <th scope="col">Published date</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+              <th scope="row">{{article.contentid}}</th>
+              <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
+              <td>{{article.authorname}}</td>
+              <td>{{article.submissiondate?article.submissiondate:"--"}}</td>
+              <td>{{article.lasteditedbyname?article.lasteditedbyname:"--"}}</td>
+              <td>{{article.lastediteddate?article.lastediteddate:"--"}}</td>
+              <td>{{article.assignedqaname?article.assignedqaname:"--"}}</td>
+              <td>{{article.qacheckeddate?article.qacheckeddate:"--"}}</td>
+              <td>{{article.assignedcrname?article.assignedcrname:"--"}}</td>
+              <td>{{article.crcheckeddate?article.crcheckeddate:"--"}}</td>
+              <td class="text-success">Published</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+</div>

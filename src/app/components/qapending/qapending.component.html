@@ -28,7 +28,7 @@
             <td (click)="openCardDetails(article)">{{article.assignedqaname}}</td>
             <td (click)="openCardDetails(article)">Quality check pending</td>
             <!-- <td class="text-success"><span>Read</span><span>Edit</span><span>Mark as checked</span></td> -->
-            <td class="text-primary"><button style="margin-right: 5px;" class="btn btn-primary">Edit</button><button class="btn btn-success" (click)="approveArticle(article)">Approve</button></td>
+            <td class="text-primary"><button style="margin-right: 5px;" class="btn btn-primary" (click)="editArticle(article)">Edit</button><button class="btn btn-success" (click)="approveArticle(article)">Approve</button></td>
           </tr>
         </tbody>
       </table>

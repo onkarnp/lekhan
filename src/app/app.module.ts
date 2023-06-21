@@ -21,6 +21,14 @@ import { CreateComponent } from './components/create/create.component';
 import { TemplateComponent } from './components/template/template.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { CardDetailsComponent } from './components/card-details/card-details.component';
+import { ArchivesComponent } from './components/archives/archives.component';
+import { ViewarticleComponent } from './components/viewarticle/viewarticle.component';
+import { QapoolComponent } from './components/qapool/qapool.component';
+import { QapendingComponent } from './components/qapending/qapending.component';
+import { QacompleteComponent } from './components/qacomplete/qacomplete.component';
+import { QaeditComponent } from './components/qaedit/qaedit.component';
+import { MyarticlesComponent } from './components/myarticles/myarticles.component';
+
 
 //Material components module
 import { MatButtonModule } from '@angular/material/button';
@@ -34,14 +42,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { ArchivesComponent } from './components/archives/archives.component';
-import { ViewarticleComponent } from './components/viewarticle/viewarticle.component';
-import { QapoolComponent } from './components/qapool/qapool.component';
-import { QapendingComponent } from './components/qapending/qapending.component';
-import { QacompleteComponent } from './components/qacomplete/qacomplete.component';
-import { QaeditComponent } from './components/qaedit/qaedit.component';
 
 
 
@@ -66,6 +69,7 @@ import { QaeditComponent } from './components/qaedit/qaedit.component';
     QapendingComponent,
     QacompleteComponent,
     QaeditComponent,
+    MyarticlesComponent,
   ],
   imports: [
     BrowserModule,
@@ -93,7 +97,9 @@ import { QaeditComponent } from './components/qaedit/qaedit.component';
     MatCardModule,
     MatSelectModule,
     MatDialogModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatButtonToggleModule,
+
   ],
   providers: [CookieService, AuthGuard],
   bootstrap: [AppComponent]

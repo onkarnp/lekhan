@@ -69,7 +69,7 @@ export class ContentService {
   //To fetch saved articles
   fetchSavedArticles(data:any): Observable<any>{
     console.log(data);
-    const params = new HttpParams().set('userid',data.userid).set('status',data.status);
+    const params = new HttpParams().set('userid',data.userid).set('status','saved');
     console.log(params);
 
     const url = `${this.url}/saved`;
@@ -80,10 +80,10 @@ export class ContentService {
   fetchFinalizedArticles(data:any): Observable<any>{
     let params;
     if(data.userid){
-      params = new HttpParams().set('status',data.status).set('userid',data.userid);
+      params = new HttpParams().set('status','finalized').set('userid',data.userid);
     }
     else{
-      params = new HttpParams().set('status',data.status);
+      params = new HttpParams().set('status','finalized');
     }
     const url = `${this.url}/finalized`;
     return this.http.get(url, { params });

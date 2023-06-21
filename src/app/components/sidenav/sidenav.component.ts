@@ -122,7 +122,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   selectSaved():void {
     this.selectedStatus = 2;
     this.showArticlesList = true;
-    const data = { userid: this.userDetails.userid, status: 'saved' }
+    const data = { userid: this.userDetails.userid }
     this.contentService.fetchSavedArticles(data).subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);
@@ -141,7 +141,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   selectFinalized():void {
     this.selectedStatus = 3;
     this.showArticlesList = true;
-    const data = { userid: this.userDetails.userid, status: 'finalized' }
+    const data = { userid: this.userDetails.userid }
     this.contentService.fetchFinalizedArticles(data).subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);

@@ -2,5 +2,40 @@
   <div class="title-box p-4">Edit article</div>
   <div class="main-content">
 
+    <div class="editContentDiv container m-lg-4"  style="height: 100%; width: 100%; margin: 10px;">
+      <form [formGroup]="contentForm" (ngSubmit)="saveEditedContent()">
+
+        <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
+          <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
+          <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" style="border:none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
+          <button type="button" routerLink="/qapending" class="btn btn-inverse btn-success" style="border: none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>check</mat-icon>Done</button>
+
+        </div>
+
+        <label for="title"></label>
+        <input class="form-control" type="text" formControlName="title" id="title" placeholder="Input title here..." required>
+
+
+        <div class="image-div row p-5">
+          <div *ngIf="filePreviewUrl" style="display: flex; justify-content: end;">
+            <button type="button" (click)="filePreviewUrl=''" class="btn btn-inverse btn-outline-secondary" style="border: none; display: flex; justify-content: center;"><mat-icon>cancel</mat-icon>Delete</button>
+          </div>
+          <div *ngIf="filePreviewUrl" class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <img id="imagePreview" [src]="filePreviewUrl" alt="Can't show preview, check image again">
+          </div>
+
+          <div *ngIf="!filePreviewUrl" class="col-lg-6 col-md-12" style="display: flex; justify-content: center; text-align: center;">
+            <label for="file"></label>
+            <input class="form-control" type="file" formControlName="file" id="file" (change)="onFileSelected($event)" accept=".png, .jpg, .jpeg, .svg">
+          </div>
+        </div>
+
+        <label for="description"></label>
+        <textarea class="form-control" id="description" formControlName="description" required (input)="adjustTextAreaHeight()" placeholder="Write your thoughts..."></textarea>
+
+      </form>
+    </div>
+
+
   </div>
 </div>
