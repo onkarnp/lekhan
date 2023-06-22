@@ -36,6 +36,7 @@ export class QapoolComponent implements OnInit, OnDestroy {
     this.userDetailsSubscription = this.userService.userDetails.subscribe(value => {
       this.userDetails = value;
       console.log(this.userDetails);
+      this.getArticlesPool();
     });
 
     this.selectedArticleSubscription = this.contentService.selected_article.subscribe(value => {
@@ -43,7 +44,7 @@ export class QapoolComponent implements OnInit, OnDestroy {
       console.log("selected_article", this.selected_article);
     })
 
-    this.getArticlesPool();
+
   }
 
 
@@ -58,6 +59,7 @@ export class QapoolComponent implements OnInit, OnDestroy {
         console.log("FinalizedArticles",this.FinalizedArticles);
       }
       else{
+        this.FinalizedArticles = null;
         console.log(jsObj.message);
       }
     })

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import User from '../model/user'
 import { Router } from '@angular/router';
@@ -22,6 +22,12 @@ export class ContentService {
   httpMultipartOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'multipart/form-data' }),
     withCredentials: true
+  }
+
+  articleChanged = new EventEmitter<void>();
+
+  triggerArticleChanged() {
+    this.articleChanged.emit();
   }
 
   setSelectedStatus(value: number) {
@@ -89,6 +95,14 @@ export class ContentService {
     return this.http.get(url, { params });
   }
 
+  //To fetch articles at QA stage
+  fetchArticlesAtQAStage(data:any): Observable<any>{
+    const params = new HttpParams().set('userid',data.userid);
+    const url = `${this.url}/atqastage`;
+    return this.http.get(url, { params });
+  }
+
+
    //To fetch QA requested articles
   fetchQARequestedArticles(data:any): Observable<any>{
     let params;
@@ -117,15 +131,21 @@ export class ContentService {
     return this.http.get(url, { params });
   }
 
-  //To approve articles for QA
+  //To approve articles for QA and CR
   approveArticle(data:any): Observable<any> {
-    const url = `${this.url}/qaapprove`;
+    const url = `${this.url}/approvearticle`;
     return this.http.put(url, data);
   }
 
   //To fetch CR checked articles
   fetchCRRequestedArticles(data:any): Observable<any>{
-    const params = new HttpParams().set('userid',data.userid);
+    let params;
+    if(data.userid){
+      params = new HttpParams().set('userid',data.userid);
+    }
+    if(data.crid){
+      params = new HttpParams().set('crid',data.crid);
+    }
     const url = `${this.url}/crrequested`;
     return this.http.get(url, { params });
   }
@@ -152,26 +172,23 @@ export class ContentService {
     return this.http.post(url, data);
   }
 
-  getArticleByContentid(contentid:any){
+  //To get article using contentid
+  getArticleByContentid(contentid:any): Observable<any>{
     const url = `${this.url}/articles/${contentid}`;
-    return this.http.get(url).subscribe((results) => {
-      console.log("results", results);
-      var resultString=JSON.stringify(results);
-      var jsObj = JSON.parse(resultString);
-      if(jsObj.success){
-        console.log("updated article", jsObj.data);
-        this.setSelectedArticle(jsObj.data);
-      }
-      else{
-        this.toastr.error(jsObj.message, 'Failed')
-      }
-    })
+    return this.http.get(url);
   }
 
   //To assign QA for a content
   assignQA(data:any): Observable<any>{
     const params = new HttpParams().set('assignedqa',data.assignedqa).set('contentid',data.contentid);
     const url = `${this.url}/assignqa`;
+    return this.http.get(url, { params });
+  }
+
+  //To assign CR for a content
+  assignCR(data:any): Observable<any>{
+    const params = new HttpParams().set('assignedcr',data.assignedcr).set('contentid',data.contentid);
+    const url = `${this.url}/assigncr`;
     return this.http.get(url, { params });
   }
 

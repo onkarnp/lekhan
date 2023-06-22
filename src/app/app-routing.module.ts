@@ -16,10 +16,13 @@ import { QapendingComponent } from './components/qapending/qapending.component';
 import { QacompleteComponent } from './components/qacomplete/qacomplete.component';
 import { QaeditComponent } from './components/qaedit/qaedit.component';
 import { MyarticlesComponent } from './components/myarticles/myarticles.component';
+import { CrpoolComponent } from './components/crpool/crpool.component';
+import { CrpendingComponent } from './components/crpending/crpending.component';
+import { QatrackingComponent } from './components/qatracking/qatracking.component';
 
 
 const routes: Routes = [
-  {path: '', redirectTo: 'home', pathMatch: 'full'},
+  // {path: '', redirectTo: 'home', pathMatch: 'full'},
   {path: 'home', component:HomeComponent},
   {path: 'dashboard', component:DashboardComponent},
   {path: 'about', component:HomeComponent},
@@ -36,9 +39,12 @@ const routes: Routes = [
   {path: 'qacomplete', component:QacompleteComponent},
   {path: 'qaedit', component:QaeditComponent},
   {path: 'myarticles', component:MyarticlesComponent},
+  {path: 'crpool', component:CrpoolComponent},
+  {path: 'crpending', component:CrpendingComponent},
+  {path: 'qatracking', component:QatrackingComponent},
 
   //The error route must be last route
-  {path: '**', component:ErrorComponent}
+  // {path: '**', component:ErrorComponent}
 ];
 
 @NgModule({

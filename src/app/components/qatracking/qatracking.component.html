@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="title-box p-4">Archives</div>
+  <div class="title-box p-4">Tracking</div>
   <div class="main-content">
     <div class="table-responsive" style="width: 100%;">
       <table class="table table-striped table-hover">
@@ -12,21 +12,19 @@
             <th scope="col">Quality assurance</th>
             <th scope="col">Approved date</th>
             <th scope="col">Control room</th>
-            <th scope="col">Published date</th>
             <th scope="col">Status</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of publishedArticles" (click)="openCardDetails(article)">
+          <tr *ngFor="let article of QAApprovedArticles" (click)="openCardDetails(article)">
             <!-- <th scope="row">{{article.contentid}}</th> -->
             <td matTooltip="{{article.title}}" matTooltipPosition="before">{{article.title}}</td>
             <td>{{article.authorname}}</td>
             <td>{{article.submissiondate}}</td>
             <td>{{article.assignedqaname}}</td>
             <td>{{article.qacheckeddate}}</td>
-            <td>{{article.assignedcrname}}</td>
-            <td>{{article.crcheckeddate}}</td>
-            <td class="text-success">Published</td>
+            <td>{{article.assignedcrname?article.assignedcrname:'--'}}</td>
+            <td  [ngClass]="{'text-primary':article.assignedcrname, 'text-info':!article.assignedcrname}" >{{article.assignedcrname?'CR approval pending':'Waiting for CR'}}</td>
           </tr>
         </tbody>
       </table>

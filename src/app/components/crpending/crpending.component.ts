@@ -9,12 +9,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-qapending',
-  templateUrl: './qapending.component.html',
-  styleUrls: ['./qapending.component.css']
+  selector: 'app-crpending',
+  templateUrl: './crpending.component.html',
+  styleUrls: ['./crpending.component.css']
 })
-export class QapendingComponent implements OnInit, OnDestroy {
-  FinalizedArticles:any;
+export class CrpendingComponent implements OnInit, OnDestroy {
+  RequestedArticles:any;
   isLoggedIn: boolean = false;
   userDetails: any = null;
   selected_article: any = null;
@@ -33,7 +33,7 @@ export class QapendingComponent implements OnInit, OnDestroy {
     this.userDetailsSubscription = this.userService.userDetails.subscribe(value => {
       this.userDetails = value;
       console.log(this.userDetails);
-      this.getQARequestedArticles();
+      this.getCRRequestedArticles();
     });
 
     this.selectedArticleSubscription = this.contentService.selected_article.subscribe(value => {
@@ -41,37 +41,38 @@ export class QapendingComponent implements OnInit, OnDestroy {
       console.log("selected_article", this.selected_article);
     })
 
+
   }
 
-  async getQARequestedArticles(){
-    const data = { qaid: this.userDetails.userid }
-    await this.contentService.fetchQARequestedArticles(data).subscribe((results) => {
+  async getCRRequestedArticles(){
+    const data = { crid: this.userDetails.userid }
+    await this.contentService.fetchCRRequestedArticles(data).subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
-        this.FinalizedArticles = jsObj.data;
-        console.log("FinalizedArticles",this.FinalizedArticles);
+        this.RequestedArticles = jsObj.data;
+        console.log("RequestedArticles",this.RequestedArticles);
       }
       else{
-        this.FinalizedArticles = null;
+        this.RequestedArticles =  null;
         console.log(jsObj.message);
       }
     })
   }
 
   async approveArticle(article:any){
-    const data = {contentid: article.contentid, qaid: this.userDetails.userid};
+    const data = {contentid: article.contentid, crid: this.userDetails.userid};
     await this.contentService.approveArticle(data).subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
         this.toastr.success(jsObj.message, 'Success');
-        this.getQARequestedArticles();
+        this.getCRRequestedArticles();
       }
       else
-        this.toastr.error(jsObj.message, 'Failed');
+        this.toastr.success(jsObj.message, 'Success');
     }, (err) => {
       console.log(err);
       this.toastr.error(err.error.message, 'Error')

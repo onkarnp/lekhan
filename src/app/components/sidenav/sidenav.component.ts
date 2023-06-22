@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/service/content.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -14,9 +15,15 @@ export class SidenavComponent implements OnInit, OnDestroy{
   usertypes: any;
   selectedMenu = 0;
   showNestedList = false;
+  myArticlesList = false;
+  trackArticlesList = false;
+  rejectedArticlesList = false;
   selectedStatus = 0;
   showArticlesList = false;
   articlesData:any;
+  savedArticles:any;
+  trackArticles:any;
+  rejectedArticles:any;
   isLoggedIn: boolean = false;
   userDetails: any = null;
   selected_status: number = 0;
@@ -26,7 +33,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
   selectedStatusSubscription: Subscription = new Subscription();
   selectedArticleSubscription: Subscription = new Subscription();
 
-  constructor(private formBuilder:FormBuilder, private userService:UserService, private contentService:ContentService,private http:HttpClient, private router:Router){}
+  constructor(private formBuilder:FormBuilder, private userService:UserService, private contentService:ContentService,private http:HttpClient, private router:Router,private toastr: ToastrService){}
   ngOnInit(): void{
 
     // this.userService.checkIfLoggedIn();
@@ -63,6 +70,11 @@ export class SidenavComponent implements OnInit, OnDestroy{
     },(errors) => {
       console.log(errors);
     });
+
+    this.contentService.articleChanged.subscribe(() => {
+      this.selectSaved();
+      this.selectArticlesAtQAStage();
+    });
   }
 
 
@@ -94,6 +106,30 @@ export class SidenavComponent implements OnInit, OnDestroy{
       this.showNestedList = true;
       this.selectedStatus = 0;
     }
+  }
+
+  toggleMyArticles(){
+    if(this.myArticlesList){
+      this.myArticlesList = false;
+    }
+    else{
+      this.trackArticlesList = false;
+      this.myArticlesList = true;
+      this.selectedStatus = 1;
+    }
+    this.selectSaved();
+  }
+
+  toggleTrackArticles(){
+    if(this.trackArticlesList){
+      this.trackArticlesList = false;
+    }
+    else{
+      this.myArticlesList = false;
+      this.trackArticlesList = true;
+      this.selectedStatus = 1;
+    }
+    this.selectArticlesAtQAStage();
   }
 
   closeArticlesList():void{
@@ -129,10 +165,12 @@ export class SidenavComponent implements OnInit, OnDestroy{
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
         this.articlesData = jsObj.data;
+        this.savedArticles = jsObj.data;
         console.log("Saved articles: ",this.articlesData);
       }
       else{
         this.articlesData = null;
+        this.savedArticles = null;
         console.log(jsObj.message);
       }
     })
@@ -152,6 +190,28 @@ export class SidenavComponent implements OnInit, OnDestroy{
       }
       else{
         this.articlesData = null;
+        console.log(jsObj.message);
+      }
+    })
+  }
+
+
+  selectArticlesAtQAStage():void {
+    this.selectedStatus = 3;
+    this.showArticlesList = true;
+    const data = { userid: this.userDetails.userid }
+    this.contentService.fetchArticlesAtQAStage(data).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        this.articlesData = jsObj.data;
+        this.trackArticles = jsObj.data;
+        console.log("Finalized articles: ",this.articlesData);
+      }
+      else{
+        this.articlesData = null;
+        this.trackArticles = null;
         console.log(jsObj.message);
       }
     })
@@ -233,7 +293,25 @@ export class SidenavComponent implements OnInit, OnDestroy{
     })
   }
 
-  viewArticle(article:any){
+  async getUpdatedContent(article:any){
+    await this.contentService.getArticleByContentid(article.contentid).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        console.log("updated article", jsObj.data);
+        this.contentService.setSelectedArticle(jsObj.data);
+        this.router.navigate(['/viewarticle']);
+      }
+      else{
+        this.toastr.error(jsObj.message, 'Failed')
+      }
+    })
+  }
+
+
+  async viewArticle(article:any){
+    // await this.getUpdatedContent(article);
     this.contentService.setSelectedArticle(article);
     // this.contentService.getArticleByContentid(article.contentid);
     this.contentService.setSelectedStatus(this.selectedStatus);

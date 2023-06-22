@@ -25,6 +25,7 @@ export class ArchivesComponent implements OnInit{
         console.log("publishedArticles",this.publishedArticles);
       }
       else{
+        this.publishedArticles = null;
         console.log(jsObj.message);
       }
     })

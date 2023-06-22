@@ -8,8 +8,7 @@
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
           <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
           <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" style="border:none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
-          <button type="button" routerLink="/qapending" class="btn btn-inverse btn-success" style="border: none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>check</mat-icon>Done</button>
-
+          <button type="button" [disabled]="formNotSaved" (click)="approveArticle()" class="btn btn-inverse btn-success" style="border: none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>check</mat-icon>Approve</button>
         </div>
 
         <label for="title"></label>

@@ -8,7 +8,7 @@
           <button *ngIf="showRequestQADiv" class="btn btn-inverse btn-outline-danger" (click)="showRequestQADiv=false" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>cancel</mat-icon><span>Cancel</span></button>
         </div>
 
-        <div class="request_qa_div" *ngIf="showRequestQADiv">
+        <div class="request_qa_div" *ngIf="selected_article.status=='finalized' && selected_article.assignedqa==null && showRequestQADiv">
           <form [formGroup]="assignQAForm" (ngSubmit)="assignQA(assignQAForm)" style="display: flex; flex-direction: row; justify-content: center; align-items: center; vertical-align: middle;">
             <select class="form-select" formControlName="requestedQA" aria-placeholder="Request QA for your article">
               <option disabled hidden value="">Select QA</option>
@@ -29,15 +29,15 @@
 
         <p id="view_description">{{selected_article.description}}</p>
         <div id="view_description">
-          <label for=""><strong>Status track:</strong></label>
+          <label for=""><strong>Tracking:</strong></label>
           <p>Author: <span>{{selected_article.authorname?selected_article.authorname:'--'}}</span></p>
           <p>Creation date: <span>{{selected_article.submissiondate?selected_article.submissiondate:'--'}}</span></p>
           <p>Last edits by: <span>{{selected_article.lasteditedbyname?selected_article.lasteditedbyname:'--'}}</span></p>
           <p>Last edited on: <span>{{selected_article.lastediteddate?selected_article.lastediteddate:'--'}}</span></p>
-          <p>Quality Assurance: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'--'}}</span></p>
-          <p>Approved date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
-          <p>Control room: <span>{{selected_article.assignedcrname?selected_article.assignedcrname:'--'}}</span></p>
-          <p>Published Date: <span>{{selected_article.crcheckeddate?selected_article.crcheckeddate:'--'}}</span></p>
+          <p *ngIf="selected_article.status!='saved'">Quality Assurance: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'--'}}</span></p>
+          <p *ngIf="selected_article.status!='saved'">Approved date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
+          <!-- <p *ngIf="selected_article.status!='saved'">Control room: <span>{{selected_article.assignedcrname?selected_article.assignedcrname:'--'}}</span></p>
+          <p *ngIf="selected_article.status!='saved'">Published Date: <span>{{selected_article.crcheckeddate?selected_article.crcheckeddate:'--'}}</span></p> -->
         </div>
     </div>
 

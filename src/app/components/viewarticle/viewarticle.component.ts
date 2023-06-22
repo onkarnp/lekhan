@@ -80,9 +80,27 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
     })
   }
 
-  openRequestQADiv(){
+
+  async getUpdatedContent(){
+    await this.contentService.getArticleByContentid(this.selected_article.contentid).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        console.log("updated article", jsObj.data);
+        this.contentService.setSelectedArticle(jsObj.data);
+      }
+      else{
+        this.toastr.error(jsObj.message, 'Failed')
+      }
+    })
+  }
+
+
+
+  async openRequestQADiv(){
     this.showRequestQADiv = true;
-    this.userService.getAllQA().subscribe((results) => {
+    await this.userService.getAllQA().subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
@@ -99,20 +117,22 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
 
   }
 
-  assignQA(form: FormGroup){
+  async assignQA(form: FormGroup){
     if(!this.assignQAForm.valid){
       this.toastr.info('Input not valid', 'Error')
       return;
     }
     const data = {assignedqa: form.value.requestedQA, contentid: this.selected_article.contentid};
     console.log(data);
-    this.contentService.assignQA(data).subscribe((results) => {
+    await this.contentService.assignQA(data).subscribe((results) => {
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
         this.toastr.success(jsObj.message, 'Success');
         this.showRequestQADiv = false;
+        this.contentService.triggerArticleChanged();
+        // this.getUpdatedContent();
       }
       else
         this.toastr.success(jsObj.message, 'Success');
@@ -148,7 +168,7 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
 
 
   //Function to save edited content
-  saveEditedContent(){
+  async saveEditedContent(){
     const formData = new FormData()
     formData.append('contentid', this.selected_article.contentid);
     formData.append('title', this.contentForm.value.title);
@@ -163,7 +183,7 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
     console.log(formData.get('description'));
     if(this.selectedFile)
       console.log(formData.get('file'));
-    this.contentService.saveEditedArticle(formData).subscribe((results)=>{
+    await this.contentService.saveEditedArticle(formData).subscribe((results)=>{
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       console.log(jsObj);
@@ -171,6 +191,8 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
         this.formNotSaved = false;
         // this.editingmode = false;
         this.toastr.success(jsObj.message, 'Success');
+        this.contentService.triggerArticleChanged();
+        // this.getUpdatedContent();
       }
       else{
         this.toastr.error(jsObj.message, 'Failed')
@@ -182,21 +204,22 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
   }
 
   //Function to finalize edited content
-  finalizeEditedContent(){
+  async finalizeEditedContent(){
     if(this.formNotSaved){
       this.toastr.info("Kindly save the unsaved changes", 'Info');
       return;
     }
     const data = { contentid: this.selected_article.contentid, userid: this.userDetails.userid };
-    this.contentService.finalizeEditedContent(data).subscribe((results) => {
+    await this.contentService.finalizeEditedContent(data).subscribe((results) => {
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       console.log(jsObj);
       if(jsObj.success){
-        // this.contentService.getArticleByContentid(this.selected_article.contentid);
         this.editingmode = false;
         this.router.navigate(['/viewarticle']);
         this.toastr.success(jsObj.message, 'Success');
+        this.contentService.triggerArticleChanged();
+        // this.getUpdatedContent();
       }
       else{
         this.toastr.error(jsObj.message, 'Failed')
@@ -218,58 +241,6 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
   editModeoff(){
     this.editingmode = false;
   }
-
-  // //Function to publish content
-  // publishContent(){
-  //   if(this.formNotSaved){
-  //     this.toastr.info("Please save the article first", 'Info');
-  //     return
-  //   }
-  //   if(!this.contentForm.valid){
-  //     this.toastr.info("Please input all fields");
-  //     return
-  //   }
-  //   const formData = new FormData()
-  //   formData.append('title', this.contentForm.value.title);
-  //   formData.append('description', this.contentForm.value.description);
-  //   // const fileBlob = new Blob([this.fileContentArrayBuffer])
-  //   formData.append('file', this.selectedFile, this.selectedFile.name);
-  //   formData.append('author', this.userDetails.userid);
-  //   formData.append('status', 'saved');
-
-
-  //   console.log(formData.get('title'));
-  //   console.log(formData.get('description'));
-  //   console.log(formData.get('file'));
-  //   console.log(formData.get('author'));
-  //   console.log(formData.get('status'));
-  //   this.contentService.saveArticle(formData).subscribe((results)=>{
-  //     var resultString=JSON.stringify(results);
-  //     var jsObj = JSON.parse(resultString);
-  //     console.log(jsObj);
-  //     if(jsObj.success){
-  //       const data = {title: formData.get('title'), author: formData.get('author')}
-  //       this.contentService.finalizeArticle(data).subscribe((results)=>{
-  //         var resultString=JSON.stringify(results);
-  //         var jsObj = JSON.parse(resultString);
-  //         console.log(jsObj);
-  //         if(jsObj.success){
-  //           this.toastr.success(jsObj.message, 'Success');
-  //         }
-  //         else{
-  //           this.toastr.error(jsObj.message, 'Failed')
-  //         }
-  //       })
-  //     }
-  //     else{
-  //       this.toastr.error(jsObj.message, 'Failed')
-  //     }
-  //   }, (err) => {
-  //     console.log(err);
-  //     this.toastr.error(err.error.message, 'Error')
-  //   })
-  // }
-
 
   ngOnDestroy() {
     this.isLoggedInSubscription.unsubscribe();

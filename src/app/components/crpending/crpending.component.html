@@ -12,13 +12,14 @@
             <th scope="col">Finalized date</th>
             <th scope="col">Last edits by</th>
             <th scope="col">Last edited on</th>
-            <th scope="col">Quality Assurance</th>
+            <th scope="col">Quality assurance</th>
+            <th scope="col">QA approval date</th>
             <th scope="col">Status</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let article of FinalizedArticles">
+          <tr *ngFor="let article of RequestedArticles">
             <!-- <th scope="row" (click)="openCardDetails(article)">{{article.contentid}}</th> -->
             <td matTooltip="{{article.title}}" matTooltipPosition="before" (click)="openCardDetails(article)">{{article.title}}</td>
             <td (click)="openCardDetails(article)">{{article.authorname}}</td>
@@ -26,10 +27,10 @@
             <td (click)="openCardDetails(article)">{{article.lasteditedbyname}}</td>
             <td (click)="openCardDetails(article)">{{article.lastediteddate}}</td>
             <td (click)="openCardDetails(article)">{{article.assignedqaname}}</td>
+            <td (click)="openCardDetails(article)">{{article.qacheckeddate}}</td>
             <td (click)="openCardDetails(article)" class="text-primary">Approval pending</td>
             <!-- <td class="text-success"><span>Read</span><span>Edit</span><span>Mark as checked</span></td> -->
-            <td class="text-primary"><button style="margin-right: 5px;" class="btn btn-primary" (click)="editArticle(article)">Edit</button></td>
-            <!-- <button class="btn btn-success" (click)="approveArticle(article)">Approve</button> -->
+            <td class="text-primary"><button class="btn btn-success" (click)="approveArticle(article)">Approve</button></td>
           </tr>
         </tbody>
       </table>

@@ -103,15 +103,15 @@ export class UserService {
           this.toastr.success(jsObj.message, 'Success');
           switch(jsObj.data.usertypeid){
             case 1:
-              this.router.navigate(['/create']); break;
+              this.router.navigate(['/']); break;
             case 2:
-              this.router.navigate(['/qapool']); break;
+              this.router.navigate(['/']); break;
             case 3:
-              this.router.navigate(['/error']); break;
+              this.router.navigate(['/']); break;
             case 4:
-              this.router.navigate(['/error']); break;
+              this.router.navigate(['/']); break;
             default:
-              this.router.navigate(['/error']); break;
+              this.router.navigate(['/']); break;
           }
           // this.router.navigate(['/home'])
         })

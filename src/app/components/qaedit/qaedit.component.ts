@@ -67,6 +67,27 @@ export class QaeditComponent implements OnInit, OnDestroy{
   }
 
 
+  async approveArticle(){
+    const data = {contentid: this.selected_article.contentid, qaid: this.userDetails.userid};
+    await this.contentService.approveArticle(data).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        this.toastr.success(jsObj.message, 'Success');
+        this.router.navigate(['/qapending']);
+      }
+      else
+        this.toastr.error(jsObj.message, 'Failed');
+    }, (err) => {
+      console.log(err);
+      this.toastr.error(err.error.message, 'Error')
+    })
+
+  }
+
+
+
   adjustTextAreaHeight(){
     const textarea: HTMLElement|any = document.querySelector('textarea');
     textarea.style.height= 'auto';

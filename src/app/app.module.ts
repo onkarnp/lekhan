@@ -45,6 +45,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { CrpoolComponent } from './components/crpool/crpool.component';
+import { CrpendingComponent } from './components/crpending/crpending.component';
+import { QatrackingComponent } from './components/qatracking/qatracking.component';
 
 
 
@@ -70,6 +73,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
     QacompleteComponent,
     QaeditComponent,
     MyarticlesComponent,
+    CrpoolComponent,
+    CrpendingComponent,
+    QatrackingComponent,
   ],
   imports: [
     BrowserModule,
