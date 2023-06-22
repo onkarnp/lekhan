@@ -30,7 +30,7 @@
             <td (click)="openCardDetails(article)">{{article.qacheckeddate}}</td>
             <td (click)="openCardDetails(article)" class="text-primary">Approval pending</td>
             <!-- <td class="text-success"><span>Read</span><span>Edit</span><span>Mark as checked</span></td> -->
-            <td class="text-primary"><button class="btn btn-success" (click)="approveArticle(article)">Approve</button></td>
+            <td><button class="btn btn-success" (click)="approveArticle(article)">Approve</button><button class="btn btn-danger" (click)="rejectArticle(article)">Reject</button></td>
           </tr>
         </tbody>
       </table>

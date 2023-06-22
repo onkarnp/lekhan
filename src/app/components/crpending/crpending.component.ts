@@ -77,7 +77,24 @@ export class CrpendingComponent implements OnInit, OnDestroy {
       console.log(err);
       this.toastr.error(err.error.message, 'Error')
     })
+  }
 
+  async rejectArticle(article:any){
+    const data = {contentid: article.contentid, userid: this.userDetails.userid};
+    await this.contentService.rejectArticle(data).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        this.toastr.success(jsObj.message, 'Success');
+        this.getCRRequestedArticles();
+      }
+      else
+        this.toastr.error(jsObj.message, 'Failed');
+    }, (err) => {
+      console.log(err);
+      this.toastr.error(err.error.message, 'Error')
+    })
   }
 
   openCardDetails(article:any){

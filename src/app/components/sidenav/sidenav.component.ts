@@ -74,6 +74,7 @@ export class SidenavComponent implements OnInit, OnDestroy{
     this.contentService.articleChanged.subscribe(() => {
       this.selectSaved();
       this.selectArticlesAtQAStage();
+      this.selectRejectedArticles();
     });
   }
 
@@ -113,8 +114,9 @@ export class SidenavComponent implements OnInit, OnDestroy{
       this.myArticlesList = false;
     }
     else{
-      this.trackArticlesList = false;
       this.myArticlesList = true;
+      this.trackArticlesList = false;
+      this.rejectedArticlesList = false;
       this.selectedStatus = 1;
     }
     this.selectSaved();
@@ -125,11 +127,25 @@ export class SidenavComponent implements OnInit, OnDestroy{
       this.trackArticlesList = false;
     }
     else{
-      this.myArticlesList = false;
       this.trackArticlesList = true;
+      this.myArticlesList = false;
+      this.rejectedArticlesList = false;
       this.selectedStatus = 1;
     }
     this.selectArticlesAtQAStage();
+  }
+
+  toggleRejectedArticles(){
+    if(this.rejectedArticlesList){
+      this.rejectedArticlesList = false;
+    }
+    else{
+      this.rejectedArticlesList = true;
+      this.myArticlesList = false;
+      this.trackArticlesList = false;
+      this.selectedStatus = 1;
+    }
+    this.selectRejectedArticles();
   }
 
   closeArticlesList():void{
@@ -212,6 +228,28 @@ export class SidenavComponent implements OnInit, OnDestroy{
       else{
         this.articlesData = null;
         this.trackArticles = null;
+        console.log(jsObj.message);
+      }
+    })
+  }
+
+
+  selectRejectedArticles():void {
+    this.selectedStatus = 3;
+    this.showArticlesList = true;
+    const data = { userid: this.userDetails.userid }
+    this.contentService.fetchRejectedArticles(data).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        this.articlesData = jsObj.data;
+        this.rejectedArticles = jsObj.data;
+        console.log("Rejeted articles: ",this.articlesData);
+      }
+      else{
+        this.articlesData = null;
+        this.rejectedArticles = null;
         console.log(jsObj.message);
       }
     })

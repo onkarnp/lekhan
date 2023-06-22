@@ -3,7 +3,7 @@
   <div class="main-content">
     <div class="viewContentDiv container m-lg-4" *ngIf="!editingmode" style="height: 100%; width: 100%; margin: 10px; padding: 30px;">
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
-          <button *ngIf="selected_article.status=='saved'" class="btn btn-inverse btn-outline-success" (click)="editModeOn()" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>edit_note</mat-icon><span></span>Edit</button>
+          <button *ngIf="selected_article.status=='saved' || selected_article.status=='rejected'" class="btn btn-inverse btn-outline-success" (click)="editModeOn()" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>edit_note</mat-icon><span></span>Edit</button>
           <button *ngIf="selected_article.status=='finalized' && selected_article.assignedqa==null && !showRequestQADiv" (click)="openRequestQADiv()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>person</mat-icon><span>Request QA</span></button>
           <button *ngIf="showRequestQADiv" class="btn btn-inverse btn-outline-danger" (click)="showRequestQADiv=false" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>cancel</mat-icon><span>Cancel</span></button>
         </div>
@@ -34,8 +34,10 @@
           <p>Creation date: <span>{{selected_article.submissiondate?selected_article.submissiondate:'--'}}</span></p>
           <p>Last edits by: <span>{{selected_article.lasteditedbyname?selected_article.lasteditedbyname:'--'}}</span></p>
           <p>Last edited on: <span>{{selected_article.lastediteddate?selected_article.lastediteddate:'--'}}</span></p>
-          <p *ngIf="selected_article.status!='saved'">Quality Assurance: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'--'}}</span></p>
-          <p *ngIf="selected_article.status!='saved'">Approved date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
+          <p *ngIf="selected_article.status=='finalized'">Quality Assurance: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'Waiting for QA'}}</span></p>
+          <p *ngIf="selected_article.assignedqa">Approved date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
+          <p *ngIf="selected_article.status=='rejected'">Status: <span>{{selected_article.status}}</span></p>
+          <p *ngIf="selected_article.status=='rejected'">Rejected by: <span>{{selected_article.rejectedbyname}}</span></p>
           <!-- <p *ngIf="selected_article.status!='saved'">Control room: <span>{{selected_article.assignedcrname?selected_article.assignedcrname:'--'}}</span></p>
           <p *ngIf="selected_article.status!='saved'">Published Date: <span>{{selected_article.crcheckeddate?selected_article.crcheckeddate:'--'}}</span></p> -->
         </div>
@@ -54,7 +56,7 @@
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
           <span *ngIf="formNotSaved" style="color: #aaa;">Unsaved</span>
           <button type="submit" [disabled]="!formNotSaved"  class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>save</mat-icon>Save</button>
-          <button type="button" *ngIf="selected_article.status=='saved'" (click)="finalizeEditedContent()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>publish</mat-icon>Finalize</button>
+          <button type="button" [disabled]="formNotSaved" *ngIf="selected_article.status=='saved' || selected_article.status=='rejected'" (click)="finalizeEditedContent()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>publish</mat-icon>Finalize</button>
           <button type="button" (click)="editModeoff()" class="btn btn-inverse btn-outline-danger" style="border: none; padding: 10px; margin: 2px; display: flex; justify-content: center;"><mat-icon>cancel</mat-icon>Cancel editing</button>
 
         </div>

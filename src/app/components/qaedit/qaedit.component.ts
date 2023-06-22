@@ -83,7 +83,24 @@ export class QaeditComponent implements OnInit, OnDestroy{
       console.log(err);
       this.toastr.error(err.error.message, 'Error')
     })
+  }
 
+  async rejectArticle(){
+    const data = {contentid: this.selected_article.contentid, userid: this.userDetails.userid};
+    await this.contentService.rejectArticle(data).subscribe((results) => {
+      console.log(results);
+      var resultString=JSON.stringify(results);
+      var jsObj = JSON.parse(resultString);
+      if(jsObj.success){
+        this.toastr.success(jsObj.message, 'Success');
+        this.router.navigate(['/qapending']);
+      }
+      else
+        this.toastr.error(jsObj.message, 'Failed');
+    }, (err) => {
+      console.log(err);
+      this.toastr.error(err.error.message, 'Error')
+    })
   }
 
 
@@ -120,6 +137,7 @@ export class QaeditComponent implements OnInit, OnDestroy{
     formData.append('description', this.contentForm.value.description);
     formData.append('userid', this.userDetails.userid);
     formData.append('usertypeid', this.userDetails.usertypeid);
+    formData.append('status', 'finalized');
     // const fileBlob = new Blob([this.fileContentArrayBuffer])
     if(this.selectedFile)
       formData.append('file', this.selectedFile, this.selectedFile.name);

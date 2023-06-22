@@ -102,6 +102,13 @@ export class ContentService {
     return this.http.get(url, { params });
   }
 
+  //To fetch rejected articles
+  fetchRejectedArticles(data:any): Observable<any>{
+    const params = new HttpParams().set('userid',data.userid);
+    const url = `${this.url}/rejected`;
+    return this.http.get(url, { params });
+  }
+
 
    //To fetch QA requested articles
   fetchQARequestedArticles(data:any): Observable<any>{
@@ -134,6 +141,12 @@ export class ContentService {
   //To approve articles for QA and CR
   approveArticle(data:any): Observable<any> {
     const url = `${this.url}/approvearticle`;
+    return this.http.put(url, data);
+  }
+
+  //To reject articles for QA and CR
+  rejectArticle(data:any): Observable<any> {
+    const url = `${this.url}/rejectarticle`;
     return this.http.put(url, data);
   }
 

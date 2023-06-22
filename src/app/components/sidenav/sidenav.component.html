@@ -143,17 +143,17 @@
 
 
 
-    <mat-list-item (click)="toggleTrackArticles()">
+    <mat-list-item (click)="toggleRejectedArticles()">
       <a [ngClass]="{'active-list-item': selectedStatus,'not-active-list-item':!showNestedList}"  >
-        <mat-icon>timeline</mat-icon> Tracking
-        <mat-icon>{{trackArticlesList ? 'expand_less' : 'expand_more'}}</mat-icon>
+        <mat-icon>rule</mat-icon> Rejections
+        <mat-icon>{{rejectedArticlesList ? 'expand_less' : 'expand_more'}}</mat-icon>
       </a>
     </mat-list-item>
 
-    <div class="nested-list" *ngIf="trackArticlesList" style="display: flex; flex-direction: column;">
+    <div class="nested-list" *ngIf="rejectedArticlesList" style="display: flex; flex-direction: column;">
       <mat-nav-list>
         <div class="scrollable-list">
-          <mat-list-item *ngFor="let article of trackArticles" matTooltip="{{article.title}} {{article.submissiondate}}" matTooltipPosition="after" style="height: auto;" (click)="viewArticle(article)">
+          <mat-list-item *ngFor="let article of rejectedArticles" matTooltip="{{article.title}} {{article.submissiondate}}" matTooltipPosition="after" style="height: auto;" (click)="viewArticle(article)">
             <div style="display: flex; flex-direction: row; margin: 10px 0px; color: #94a3b8;">
               <div style="display: flex; align-items: center; justify-content: center;">
                 <mat-icon class="icon">stars</mat-icon>
@@ -161,8 +161,8 @@
               <div>
                 <p style="font-size: medium; margin: 0%;">{{article.title}}</p>
                 <p style="font-size: smaller; margin: 0%;">{{article.submissiondate}}</p>
-                <p style="font-size: smaller; margin: 0%;">{{article.assignedqa?'Approval pending-':'Waiting for QA'}}</p>
-                <p *ngIf="article.assignedqa" style="font-size: smaller; margin: 0%;">{{article.assignedqaname}}</p>
+                <p style="font-size: smaller; margin: 0%;">{{article.status}} by-</p>
+                <p *ngIf="article.rejectedby" style="font-size: smaller; margin: 0%;">{{article.rejectedbyname}}</p>
               </div>
             </div>
           </mat-list-item>

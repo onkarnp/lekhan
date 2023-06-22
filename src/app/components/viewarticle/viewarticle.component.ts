@@ -175,6 +175,7 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
     formData.append('description', this.contentForm.value.description);
     formData.append('userid', this.userDetails.userid);
     formData.append('usertypeid', this.userDetails.usertypeid);
+    formData.append('status', 'saved');
     // const fileBlob = new Blob([this.fileContentArrayBuffer])
     if(this.selectedFile)
       formData.append('file', this.selectedFile, this.selectedFile.name);
