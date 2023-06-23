@@ -19,6 +19,7 @@ import { MyarticlesComponent } from './components/myarticles/myarticles.componen
 import { CrpoolComponent } from './components/crpool/crpool.component';
 import { CrpendingComponent } from './components/crpending/crpending.component';
 import { QatrackingComponent } from './components/qatracking/qatracking.component';
+import { QarejectionsComponent } from './components/qarejections/qarejections.component';
 
 
 const routes: Routes = [
@@ -42,6 +43,7 @@ const routes: Routes = [
   {path: 'crpool', component:CrpoolComponent},
   {path: 'crpending', component:CrpendingComponent},
   {path: 'qatracking', component:QatrackingComponent},
+  {path: 'qarejections', component:QarejectionsComponent},
 
   //The error route must be last route
   // {path: '**', component:ErrorComponent}

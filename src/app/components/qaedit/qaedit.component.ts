@@ -74,7 +74,12 @@ export class QaeditComponent implements OnInit, OnDestroy{
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
-        this.toastr.success(jsObj.message, 'Success');
+        if(this.selected_article.status=='crrejected'){
+          this.toastr.success('Article applied for approval', 'Success');
+        }
+        else{
+          this.toastr.success(jsObj.message, 'Success');
+        }
         this.router.navigate(['/qapending']);
       }
       else
@@ -86,21 +91,33 @@ export class QaeditComponent implements OnInit, OnDestroy{
   }
 
   async rejectArticle(){
-    const data = {contentid: this.selected_article.contentid, userid: this.userDetails.userid};
-    await this.contentService.rejectArticle(data).subscribe((results) => {
-      console.log(results);
-      var resultString=JSON.stringify(results);
-      var jsObj = JSON.parse(resultString);
-      if(jsObj.success){
-        this.toastr.success(jsObj.message, 'Success');
-        this.router.navigate(['/qapending']);
-      }
-      else
-        this.toastr.error(jsObj.message, 'Failed');
-    }, (err) => {
-      console.log(err);
-      this.toastr.error(err.error.message, 'Error')
-    })
+    const rejectedRemark = prompt("Enter remark: ");
+    console.log("rejectedRemark: " + rejectedRemark);
+    if(rejectedRemark==null || rejectedRemark==''){
+      this.toastr.info('Input field is mandetory', 'Info');
+    }
+    else{
+      const data = {contentid: this.selected_article.contentid, qaid: this.userDetails.userid, rejectedRemark: rejectedRemark };
+      await this.contentService.rejectArticle(data).subscribe((results) => {
+        console.log(results);
+        var resultString=JSON.stringify(results);
+        var jsObj = JSON.parse(resultString);
+        if(jsObj.success){
+          if(this.selected_article.status=='crrejected'){
+            this.toastr.success('Article sent back to author', 'Success');
+          }
+          else{
+            this.toastr.success(jsObj.message, 'Success');
+          }
+          this.router.navigate(['/qapending']);
+        }
+        else
+          this.toastr.error(jsObj.message, 'Failed');
+      }, (err) => {
+        console.log(err);
+        this.toastr.error(err.error.message, 'Error')
+      })
+    }
   }
 
 

@@ -1,0 +1,50 @@
+<div class="container-fluid">
+  <div class="title-box p-4">Rejected articles</div>
+  <div class="main-content">
+
+    <div class="table-responsive" style="width: 100%;">
+      <table class="table table-striped table-hover">
+        <thead>
+          <tr class="table-primary">
+            <!-- <th scope="col">#</th> -->
+            <th scope="col">Title</th>
+            <th scope="col">Author</th>
+            <th scope="col">Finalized date</th>
+            <th scope="col">Last edits by</th>
+            <th scope="col">Last edited on</th>
+            <th scope="col">Status</th>
+            <th scope="col">Rejected by</th>
+            <th scope="col">Remark</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let article of CRRejectedArticles">
+            <!-- <th scope="row" (click)="openCardDetails(article)">{{article.contentid}}</th> -->
+            <td matTooltip="{{article.title}}" matTooltipPosition="before" (click)="openCardDetails(article)">{{article.title}}</td>
+            <td (click)="openCardDetails(article)">{{article.authorname}}</td>
+            <td (click)="openCardDetails(article)">{{article.submissiondate}}</td>
+            <td (click)="openCardDetails(article)">{{article.lasteditedbyname}}</td>
+            <td (click)="openCardDetails(article)">{{article.lastediteddate}}</td>
+            <td (click)="openCardDetails(article)" class="text-danger">{{article.status=='crrejected'?'Rejected':'NA'}}</td>
+            <td (click)="openCardDetails(article)">{{article.rejectedbyname}}</td>
+
+            <td matTooltip="{{article.rejectedremark}}" matTooltipPosition="before" (click)="openCardDetails(article)">{{ article.rejectedremark | slice:0:maxChars }}{{ article.rejectedremark.length > maxChars ? '...' : '' }}</td>
+            <!-- <td class="text-success"><span>Read</span><span>Edit</span><span>Mark as checked</span></td> -->
+            <td class="text-primary"><button style="margin-right: 5px;" class="btn btn-primary" (click)="editArticle(article)">Edit</button></td>
+            <!-- <button class="btn btn-success" (click)="approveArticle(article)">Approve</button> -->
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+  </div>
+</div>
+
+
+<script>
+  function showFullParagraph(){
+    this.maxChars = this.article.rejectedremark.length;
+  }
+</script>

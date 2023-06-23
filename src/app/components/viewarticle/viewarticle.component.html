@@ -3,7 +3,7 @@
   <div class="main-content">
     <div class="viewContentDiv container m-lg-4" *ngIf="!editingmode" style="height: 100%; width: 100%; margin: 10px; padding: 30px;">
         <div style="display: flex; flex-direction: row; justify-content: flex-end; align-items: center;">
-          <button *ngIf="selected_article.status=='saved' || selected_article.status=='rejected'" class="btn btn-inverse btn-outline-success" (click)="editModeOn()" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>edit_note</mat-icon><span></span>Edit</button>
+          <button *ngIf="selected_article.status=='saved' || selected_article.status=='qarejected'" class="btn btn-inverse btn-outline-success" (click)="editModeOn()" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>edit_note</mat-icon><span></span>Edit</button>
           <button *ngIf="selected_article.status=='finalized' && selected_article.assignedqa==null && !showRequestQADiv" (click)="openRequestQADiv()" class="btn btn-inverse btn-outline-success" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>person</mat-icon><span>Request QA</span></button>
           <button *ngIf="showRequestQADiv" class="btn btn-inverse btn-outline-danger" (click)="showRequestQADiv=false" style="padding: 10px; margin: 2px; display: flex; justify-content: center; border: none;"><mat-icon>cancel</mat-icon><span>Cancel</span></button>
         </div>
@@ -36,8 +36,9 @@
           <p>Last edited on: <span>{{selected_article.lastediteddate?selected_article.lastediteddate:'--'}}</span></p>
           <p *ngIf="selected_article.status=='finalized'">Quality Assurance: <span>{{selected_article.assignedqaname?selected_article.assignedqaname:'Waiting for QA'}}</span></p>
           <p *ngIf="selected_article.assignedqa">Approved date: <span>{{selected_article.qacheckeddate?selected_article.qacheckeddate:'--'}}</span></p>
-          <p *ngIf="selected_article.status=='rejected'">Status: <span>{{selected_article.status}}</span></p>
-          <p *ngIf="selected_article.status=='rejected'">Rejected by: <span>{{selected_article.rejectedbyname}}</span></p>
+          <p *ngIf="selected_article.status=='qarejected'">Status: <span>Rejected</span></p>
+          <p *ngIf="selected_article.status=='qarejected'">Rejected by: <span>{{selected_article.rejectedbyname}}</span></p>
+          <p *ngIf="selected_article.status=='qarejected'">Rejected remark: <span>{{selected_article.rejectedremark}}</span></p>
           <!-- <p *ngIf="selected_article.status!='saved'">Control room: <span>{{selected_article.assignedcrname?selected_article.assignedcrname:'--'}}</span></p>
           <p *ngIf="selected_article.status!='saved'">Published Date: <span>{{selected_article.crcheckeddate?selected_article.crcheckeddate:'--'}}</span></p> -->
         </div>

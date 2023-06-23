@@ -48,7 +48,7 @@
 
     <!-- <p class=" subheader mt-2">Applications</p> -->
 
-    <mat-list-item routerLink="/create" (click)="showNestedList=false" style="background: #3B71CA;">
+    <mat-list-item routerLink="/create" (click)="showNestedList=false; myArticlesList=false; trackArticlesList=false; rejectedArticlesList=false;" style="background: #3B71CA;">
       <a routerLink="/create" routerLinkActive="list-item-active">
         <mat-icon>post_add</mat-icon>Create
       </a>
@@ -161,7 +161,7 @@
               <div>
                 <p style="font-size: medium; margin: 0%;">{{article.title}}</p>
                 <p style="font-size: smaller; margin: 0%;">{{article.submissiondate}}</p>
-                <p style="font-size: smaller; margin: 0%;">{{article.status}} by-</p>
+                <p style="font-size: smaller; margin: 0%;">Rejected by-</p>
                 <p *ngIf="article.rejectedby" style="font-size: smaller; margin: 0%;">{{article.rejectedbyname}}</p>
               </div>
             </div>
@@ -174,7 +174,7 @@
 
 
 
-    <mat-list-item routerLink="/archives" (click)="showNestedList=false">
+    <mat-list-item routerLink="/archives" (click)="showNestedList=false; myArticlesList=false; trackArticlesList=false; rejectedArticlesList=false;">
       <a routerLink="/archives" routerLinkActive="list-item-active">
         <mat-icon>table</mat-icon> Archives
       </a>
@@ -294,6 +294,12 @@
     <mat-list-item routerLink="/qapool" (click)="showNestedList=false">
       <a routerLink="/qapool" routerLinkActive="list-item-active">
         <mat-icon>list_alt</mat-icon> Pool
+      </a>
+    </mat-list-item>
+
+    <mat-list-item routerLink="/qarejections" (click)="showNestedList=false">
+      <a routerLink="/qarejections" routerLinkActive="list-item-active">
+        <mat-icon>rule</mat-icon> Rejections
       </a>
     </mat-list-item>
 

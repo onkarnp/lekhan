@@ -104,7 +104,13 @@ export class ContentService {
 
   //To fetch rejected articles
   fetchRejectedArticles(data:any): Observable<any>{
-    const params = new HttpParams().set('userid',data.userid);
+    let params;
+    if(data.userid){
+      params = new HttpParams().set('userid',data.userid);
+    }
+    if(data.qaid){
+      params = new HttpParams().set('qaid',data.qaid);
+    }
     const url = `${this.url}/rejected`;
     return this.http.get(url, { params });
   }
@@ -146,6 +152,7 @@ export class ContentService {
 
   //To reject articles for QA and CR
   rejectArticle(data:any): Observable<any> {
+    console.log(data);
     const url = `${this.url}/rejectarticle`;
     return this.http.put(url, data);
   }

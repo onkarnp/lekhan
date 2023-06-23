@@ -48,6 +48,7 @@ import { AuthGuard } from 'src/auth/auth.guard';
 import { CrpoolComponent } from './components/crpool/crpool.component';
 import { CrpendingComponent } from './components/crpending/crpending.component';
 import { QatrackingComponent } from './components/qatracking/qatracking.component';
+import { QarejectionsComponent } from './components/qarejections/qarejections.component';
 
 
 
@@ -76,6 +77,7 @@ import { QatrackingComponent } from './components/qatracking/qatracking.componen
     CrpoolComponent,
     CrpendingComponent,
     QatrackingComponent,
+    QarejectionsComponent,
   ],
   imports: [
     BrowserModule,

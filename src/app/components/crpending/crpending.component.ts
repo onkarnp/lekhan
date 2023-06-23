@@ -80,21 +80,33 @@ export class CrpendingComponent implements OnInit, OnDestroy {
   }
 
   async rejectArticle(article:any){
-    const data = {contentid: article.contentid, userid: this.userDetails.userid};
-    await this.contentService.rejectArticle(data).subscribe((results) => {
-      console.log(results);
-      var resultString=JSON.stringify(results);
-      var jsObj = JSON.parse(resultString);
-      if(jsObj.success){
-        this.toastr.success(jsObj.message, 'Success');
-        this.getCRRequestedArticles();
-      }
-      else
-        this.toastr.error(jsObj.message, 'Failed');
-    }, (err) => {
-      console.log(err);
-      this.toastr.error(err.error.message, 'Error')
-    })
+    const rejectedRemark = prompt("Enter remark for rejection: ");
+    console.log("rejectedRemark: " + rejectedRemark);
+    if(rejectedRemark==null || rejectedRemark==''){
+      this.toastr.info('Input field is mandetory', 'Info');
+    }
+    else{
+      const data = {contentid: article.contentid, crid: this.userDetails.userid, rejectedRemark: rejectedRemark};
+      await this.contentService.rejectArticle(data).subscribe((results) => {
+        console.log(results);
+        var resultString=JSON.stringify(results);
+        var jsObj = JSON.parse(resultString);
+        if(jsObj.success){
+          this.toastr.success(jsObj.message, 'Success');
+          this.getCRRequestedArticles();
+        }
+        else
+          this.toastr.error(jsObj.message, 'Failed');
+      }, (err) => {
+        console.log(err);
+        this.toastr.error(err.error.message, 'Error')
+      })
+    }
+  }
+
+  checkPrompt(){
+    const userInput = prompt("Enter your name:");
+    console.log("User entered: " + userInput);
   }
 
   openCardDetails(article:any){
