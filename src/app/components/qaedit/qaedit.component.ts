@@ -186,6 +186,8 @@ export class QaeditComponent implements OnInit, OnDestroy{
     this.isLoggedInSubscription.unsubscribe();
     this.userDetailsSubscription.unsubscribe();
     this.selectedArticleSubscription.unsubscribe();
+    console.log("changes from new branch");
+
   }
 
 }
