@@ -204,7 +204,7 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
     })
   }
 
-  //Function to finalize edited content
+  //Function to finalize edited content.
   async finalizeEditedContent(){
     if(this.formNotSaved){
       this.toastr.info("Kindly save the unsaved changes", 'Info');
