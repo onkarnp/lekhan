@@ -7,6 +7,7 @@ import { CardDetailsComponent } from '../card-details/card-details.component';
 import { Subscription, filter, switchMap, take, of } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-crpending',
@@ -68,7 +69,14 @@ export class CrpendingComponent implements OnInit, OnDestroy {
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
-        this.toastr.success(jsObj.message, 'Success');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Article has been approved',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        // this.toastr.success(jsObj.message, 'Success');
         this.getCRRequestedArticles();
       }
       else
@@ -80,10 +88,22 @@ export class CrpendingComponent implements OnInit, OnDestroy {
   }
 
   async rejectArticle(article:any){
-    const rejectedRemark = prompt("Enter remark for rejection: ");
+    const { value: rejectedRemark } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Rejection remark',
+      inputPlaceholder: 'Enter your remark...',
+      inputAttributes: {
+        'aria-label': 'Enter your remark here'
+      },
+      // showCancelButton: true,
+      confirmButtonText: 'Submit',
+    })
+
+    // const rejectedRemark = prompt("Enter remark for rejection: ");
     console.log("rejectedRemark: " + rejectedRemark);
     if(rejectedRemark==null || rejectedRemark==''){
-      this.toastr.info('Input field is mandetory', 'Info');
+      this.toastr.info('Remark is mandetory to reject an article!', 'Info');
+      return;
     }
     else{
       const data = {contentid: article.contentid, crid: this.userDetails.userid, rejectedRemark: rejectedRemark};
@@ -92,7 +112,14 @@ export class CrpendingComponent implements OnInit, OnDestroy {
         var resultString=JSON.stringify(results);
         var jsObj = JSON.parse(resultString);
         if(jsObj.success){
-          this.toastr.success(jsObj.message, 'Success');
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'The article has been rejected and sent back!',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          // this.toastr.success(jsObj.message, 'Success');
           this.getCRRequestedArticles();
         }
         else

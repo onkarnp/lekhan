@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/service/content.service';
 import { UserService } from 'src/app/service/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-qaedit',
@@ -75,7 +76,14 @@ export class QaeditComponent implements OnInit, OnDestroy{
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
         if(this.selected_article.status=='crrejected'){
-          this.toastr.success('Article applied for approval', 'Success');
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: 'Article has been approved',
+            showConfirmButton: false,
+            timer: 2000
+          })
+          // this.toastr.success('Article applied for approval', 'Success');
         }
         else{
           this.toastr.success(jsObj.message, 'Success');
@@ -91,10 +99,22 @@ export class QaeditComponent implements OnInit, OnDestroy{
   }
 
   async rejectArticle(){
-    const rejectedRemark = prompt("Enter remark: ");
+    const { value: rejectedRemark } = await Swal.fire({
+      input: 'textarea',
+      inputLabel: 'Rejection remark',
+      inputPlaceholder: 'Enter your remark...',
+      inputAttributes: {
+        'aria-label': 'Enter your remark here'
+      },
+      // showCancelButton: true,
+      confirmButtonText: 'Submit',
+    })
+
+    // const rejectedRemark = prompt("Enter remark: ");
     console.log("rejectedRemark: " + rejectedRemark);
     if(rejectedRemark==null || rejectedRemark==''){
-      this.toastr.info('Input field is mandetory', 'Info');
+      this.toastr.info('Remark is mandetory to reject an article!', 'Info');
+      return;
     }
     else{
       const data = {contentid: this.selected_article.contentid, qaid: this.userDetails.userid, rejectedRemark: rejectedRemark };
@@ -104,7 +124,14 @@ export class QaeditComponent implements OnInit, OnDestroy{
         var jsObj = JSON.parse(resultString);
         if(jsObj.success){
           if(this.selected_article.status=='crrejected'){
-            this.toastr.success('Article sent back to author', 'Success');
+            Swal.fire({
+              icon: 'success',
+              title: 'Success',
+              text: 'The article has been rejected and sent back!',
+              showConfirmButton: false,
+              timer: 2000
+            })
+            // this.toastr.success('Article sent back to author', 'Success');
           }
           else{
             this.toastr.success(jsObj.message, 'Success');
@@ -170,7 +197,14 @@ export class QaeditComponent implements OnInit, OnDestroy{
       if(jsObj.success){
         this.formNotSaved = false;
         // this.editingmode = false;
-        this.toastr.success(jsObj.message, 'Success');
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: jsObj.message,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        // this.toastr.success(jsObj.message, 'Success');
       }
       else{
         this.toastr.error(jsObj.message, 'Failed')
