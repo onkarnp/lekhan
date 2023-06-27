@@ -20,6 +20,7 @@ import { CrpoolComponent } from './components/crpool/crpool.component';
 import { CrpendingComponent } from './components/crpending/crpending.component';
 import { QatrackingComponent } from './components/qatracking/qatracking.component';
 import { QarejectionsComponent } from './components/qarejections/qarejections.component';
+import { UnsavedChangesGuard } from './guards/unsaved-changes.guard';
 
 
 const routes: Routes = [
@@ -30,15 +31,15 @@ const routes: Routes = [
   {path: 'contact', component:HomeComponent},
   {path: 'signup', component:SignupComponent},
   {path: 'login', component:LoginComponent},
-  {path: 'create', component:CreateComponent, canActivate: [AuthGuard], data: {allowedUserTypes: [1,2]}},
+  {path: 'create', component:CreateComponent, canDeactivate: [UnsavedChangesGuard], canActivate: [AuthGuard], data: {allowedUserTypes: [1,2]}},
   {path: 'unauthorized', component:UnauthorizedComponent},
   {path: 'notfound', component:NotfoundComponent},
   {path: 'archives', component:ArchivesComponent},
-  {path: 'viewarticle', component:ViewarticleComponent},
+  {path: 'viewarticle', component:ViewarticleComponent, canDeactivate: [UnsavedChangesGuard]},
   {path: 'qapool', component:QapoolComponent},
   {path: 'qapending', component:QapendingComponent},
   {path: 'qacomplete', component:QacompleteComponent},
-  {path: 'qaedit', component:QaeditComponent},
+  {path: 'qaedit', component:QaeditComponent, canDeactivate: [UnsavedChangesGuard]},
   {path: 'myarticles', component:MyarticlesComponent},
   {path: 'crpool', component:CrpoolComponent},
   {path: 'crpending', component:CrpendingComponent},
