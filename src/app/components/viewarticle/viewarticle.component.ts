@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
 import { ContentService } from 'src/app/service/content.service';
 import { UserService } from 'src/app/service/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-viewarticle',
@@ -218,8 +219,15 @@ export class ViewarticleComponent implements OnInit, OnDestroy{
       if(jsObj.success){
         this.editingmode = false;
         this.router.navigate(['/viewarticle']);
-        this.toastr.success(jsObj.message, 'Success');
+        // this.toastr.success(jsObj.message, 'Success');
         this.contentService.triggerArticleChanged();
+        Swal.fire({
+          icon: 'success',
+          title: 'Congratulations 🎉🎉',
+          text: jsObj.message,
+          showConfirmButton: false,
+          timer: 2000,
+        })
         // this.getUpdatedContent();
       }
       else{
