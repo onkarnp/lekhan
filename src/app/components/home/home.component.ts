@@ -6,6 +6,7 @@ import { Emitters } from 'src/app/shared/emitters';
 import { SlicePipe } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog'
 import { CardDetailsComponent } from '../card-details/card-details.component'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit{
   constructor(private dialog: MatDialog, private userService:UserService, private contentService:ContentService ,private http:HttpClient){}
   ngOnInit(): void {
     this.contentService.getPublishedArticles().subscribe((results) => {
+      // Swal.showLoading()
       console.log(results);
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);

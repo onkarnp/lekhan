@@ -5,6 +5,7 @@ import User from '../model/user'
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { BehaviorSubject, Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +74,15 @@ export class UserService {
       var resultString=JSON.stringify(results);
       var jsObj = JSON.parse(resultString);
       if(jsObj.success){
-        this.toastr.success(jsObj.message, 'Success');
+        Swal.fire({
+          icon: 'success',
+          position: 'top-end',
+          title: jsObj.message,
+          // text: jsObj.message,
+          showConfirmButton: false,
+          timer: 1000
+        })
+        // this.toastr.success(jsObj.message, 'Success');
         this.router.navigate(['/login']);
       }
       else{
@@ -100,7 +109,7 @@ export class UserService {
           this.setLoggedIn(true);
           this.setUserDetails(jsObj.data);
 
-          this.toastr.success(jsObj.message, 'Success');
+          // this.toastr.success(jsObj.message, 'Success');
           switch(jsObj.data.usertypeid){
             case 1:
               this.router.navigate(['/']); break;
@@ -113,6 +122,15 @@ export class UserService {
             default:
               this.router.navigate(['/']); break;
           }
+
+          Swal.fire({
+            icon: 'success',
+            title: jsObj.message,
+            position: 'top-end',
+            // text: jsObj.message,
+            showConfirmButton: false,
+            timer: 1000
+          })
           // this.router.navigate(['/home'])
         })
 
@@ -184,6 +202,14 @@ export class UserService {
     // this.setLoggedIn(false);
     this.userDetails.next(null);
     // this.setUserDetails(null);
+    Swal.fire({
+      icon: 'success',
+      title: 'Logged out successfully!',
+      position: 'top-end',
+      // text: 'Logged out successfully!',
+      showConfirmButton: false,
+      timer: 1000
+    })
     this.router.navigate(['/home']);
   }
 

@@ -6,6 +6,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from 'src/app/service/user.service';
 import { ContentService } from 'src/app/service/content.service';
 import { NavigationStart, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create',
@@ -180,7 +181,14 @@ export class CreateComponent implements OnInit {
           var jsObj = JSON.parse(resultString);
           console.log(jsObj);
           if(jsObj.success){
-            this.toastr.success(jsObj.message, 'Success');
+            Swal.fire({
+              icon: 'success',
+              title: 'Congratulations 🎉🎉',
+              text: jsObj.message,
+              showConfirmButton: false,
+              timer: 2000,
+            })
+            // this.toastr.success(jsObj.message, 'Success');
           }
           else{
             this.toastr.error(jsObj.message, 'Failed')
